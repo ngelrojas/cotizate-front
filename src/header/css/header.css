@@ -1,0 +1,271 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+a{
+    
+    color:#000000 !important;
+    
+}
+.nav-item {
+    font-family: 'Segoe UI', Roboto;
+    margin: 0 auto;
+    padding: 1em 1em;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.nav-item a {
+    color: #FFF;
+    text-decoration: none;
+    font-family: 'Segoe UI', Roboto;
+    margin: 0px 10px;
+    padding: 10px 10px;
+    position: relative;
+    z-index: 0;
+}
+.nav-item > a:hover{
+    color: #f37a22!important;
+}
+.navbar{
+    display: block!important;
+}
+.nav-item .active{
+    color: #f37a22!important;
+}
+.form-control-reg{
+    background-color: #ffffff!important;
+    border-top: 0px solid #ffffff!important;
+    border-left: 0px solid #ffffff!important;
+    border-right: 0px solid #ffffff!important;
+    border-bottom:1pz solid #f37a22!important;
+}
+/*btn close form register*/
+.btn-close-wrapper{
+    position: absolute;
+    top: 2%;
+}
+.btn-close-wrapp{
+    position: relative;
+    margin-left: 90%;
+}
+.btnclose{
+    width: 65%;
+}
+/**/
+.btn-close-wrapper-fpw{
+    position: absolute;
+    top: 3%;
+}
+.btn-close-wrapp-fpw{
+    position: relative;
+    margin-left: 90%;
+}
+.btnclose-fwp{
+    width: 65%;
+}
+/**/
+.btn-close-wrapper-reg{
+    position: absolute;
+    top: 1%;
+    width: 100%;
+}
+.btn-close-wrapp-reg{
+    position: relative;
+    width: 100%;
+}
+.btnclose-reg{
+    width: 5%;
+    float: right;
+    margin-right: 1%;
+}
+
+/**/
+.btn-close-wrapper-login{
+    position: absolute;
+    top: 2%;
+}
+.btn-close-wrapp-login{
+    position: relative;
+    margin-left: 90%;
+}
+.btnclose-login{
+    width: 65%;
+}
+/* Top & Bottom Borders Out */
+/*.topBotomBordersOut a:before, .topBotomBordersOut a:after {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 2px;
+    background: #FFF;
+    content:"";
+    opacity: 0;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.topBotomBordersOut a:before {
+    top: 0px;
+    transform: translateY(10px);
+}
+.topBotomBordersOut a:after {
+    bottom: 0px;
+    transform: translateY(-10px);
+}
+.topBotomBordersOut a:hover:before, .topBotomBordersOut a:hover:after {
+    opacity: 1;
+    transform: translateY(0px);
+}*/
+ /* searching */
+
+
+#custom-search-input {
+    margin:0;
+    margin-top: 10px;
+    padding: 0;
+}
+.cotizate-on_form > .search-query{
+    border-bottom: 0px solid #eeeeef!important;
+}
+#custom-search-input .search-query {
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 3px;
+    padding-left: 4px \9;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#custom-search-input button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color:#D9230F;
+}
+#custom-search-input .search-query{
+    margin-bottom: 2%;
+    background-color: #eeeeee;
+    border: none;
+}
+.cotizate-on_form button{
+    position: relative;
+    float: right;
+    top: -38px;
+    margin-right: 2%;
+}
+
+.cotizate-on_form .cotizate-on_search{
+    width: 100%;
+    position: absolute;
+}
+
+.cotizate-on_form .search-query{
+    width: 100%;
+    background-color: #eeeeee;
+    border: none;
+}
+.cotizate-on_form .search-query:focus{
+    border: none;
+}
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):hover, input:not([type="button"]):not([type="submit"]):not([type="reset"]):focus, textarea:hover, textarea:focus, select:hover, select:focus {
+    border-color: #eeeeee;
+    box-shadow: none;
+    border-bottom: 1px solid #1e84c6;
+}
+.btn-submit:hover{
+    background-color: #eeeeee!important;
+}
+
+.cotizate-modal-reg{
+    margin: 2%;
+    padding: 2%;
+}
+.title-form-reg{
+    text-align: center;
+    color: #1e84c6;
+    margin-bottom: 10%;
+}
+.title-form-reg > .title-welcome{
+    font-size: 13px;
+    font-weight: 700;
+}
+.btn-reg-content{
+    text-align: center;
+}
+.btn-reg{
+    border-radius: 0%;
+    font-weight: 500;
+}
+.text-iniciar{
+    font-weight: 600;
+    font-size: 10px;
+}
+.text-agree{
+    color: #1e84c6;
+    font-size: 10px;
+    font-weight: 400;
+    float: right;
+    margin-top: 3.5%;
+}
+
+.text-terms > a{
+    color: #f37a22!important;
+    font-size: 10px;
+    font-weight: 400;
+    text-decoration: none;
+}
+.text-label{
+    font-weight: 700;
+    color: #9a9a9a;
+}
+.social-networks > ul{
+    list-style-type: none;
+}
+.social-networks > ul > li{
+    display: inline;
+    margin-right: 10%;
+}
+.social-networks > ul > li > a >img{
+    width: 10%;
+}
+.text-forget > a, .text-register >a{
+    color: #f37a22!important;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+.text-register > a{
+    float: right;
+}
+.text-remember-me{
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e84c6;
+    margin-top: 5%;
+}
+.text-remember-me > .label-remember-me{
+    margin-top: -2%;
+    float: right;
+    margin-left: 7px;
+}
+.nav-logo-cotizate{
+    position: relative;
+    width: 187px
+}
+.nav-logo-cotizate > a >img{
+    position: absolute;
+    width: 100%;
+    margin-left: -90px;
+    top: -8px;
+}

@@ -1,0 +1,131 @@
+.preview-row{
+    margin-top: 5%;
+}
+.preview-h{
+    margin-bottom: 5%;
+    color: #1e84c6;
+    font-weight: bold;
+}
+.preview-spans > div{
+    color: #9a9a9a;
+    font-size: 14px;
+}
+.tab-list-item {
+    padding: 0.5rem 2rem!important;
+}
+.preview-p{
+    color: #9a9a9a;
+}
+.botton-save{
+    border-radius: 0px;
+    font-weight: bold;
+}
+.h5-t{
+    color: #9a9a9a;
+    font-size: 15px;
+}
+.avatar{
+    overflow: hidden;
+}
+.avatar > img{
+    width: 25%;
+    float: left;
+}
+.avatar > .data-preview{
+    font-size: 12px;
+    margin-left: 28%;
+    padding-top: 4%;
+}
+.avatar > .data-preview > p{
+    margin-bottom: 0px!important;
+    color: #9a9a9a;
+}
+.data-preview-meta{
+    color: #1e84c6;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+.progress-bar{
+    width: 55%!important;
+}
+.data-preview-apoyado > p{
+    font-size: 13px;
+    color: #9a9a9a;
+}
+.btn-apoyar{
+    border-radius: 0px!important;
+    background-color: #f37a22!important;
+    color: #dddddd;
+    border-color: #f37a22!important;
+}
+.btn-apoyar:hover{
+    background-color: #f37a22!important;
+    color: #dddddd;
+}
+.data-preview-followers{
+    font-size: 12px;
+    margin-top: 4%;
+    overflow: hidden;
+}
+.data-preview-followers > .heart{
+    float: left;
+    width: 45%;
+}
+.data-preview-followers > .heart-count{
+    float: right;
+    width: 45%;
+}
+.data-preview-followers > .heart-count > span{
+    float: right;
+}
+.data-preview-followers > .heart > span > .img-heart{
+    width: 12%;
+    cursor: pointer;
+}
+.icons-social-networks > div > div > .img-responsive-social-preview{
+    width: 100%;
+    cursor: pointer;
+}
+.inline-form{
+    margin-top: 30%;
+}
+.btn-contributions{
+    background-color: #f37a22!important;
+    color: #dddddd;
+    border-color: #f37a22!important;
+    border-radius: 0px!important;
+}
+.btn-contributions:hover{
+    color: #dddddd;
+}
+
+.box-contributions > .box-txt{
+    color: #1e84c6;
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+.box-contributions-1 > span{
+    color: #f37a22;
+}
+.box-contributions-2 > span{
+    color: #f37a22;
+    float: right;
+}
+.box-contributions-3{
+    margin-top: 3%;
+}
+.box-contributions-3 > div > span{
+    color: #f37a22;
+}
+.box-contributions-4{
+    margin-top: 5%;
+}
+.box-contributions-bnt{
+    margin-top: 5%;
+}
+.box-contributions-bnt > .btn-contributions{
+    border-radius: 0px;
+    background-color: #f37a22;
+    border-color: #f37a22;
+    color: #dddddd;
+}

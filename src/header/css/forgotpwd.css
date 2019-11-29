@@ -1,0 +1,23 @@
+/* form forgot password */
+.fpw-title{
+    color: #f37a22;
+    text-transform: uppercase;
+    margin-top: 20%;
+    margin-bottom: 20%;
+    text-align: center;
+    
+}
+.form-control-fpwd{
+    background-color: #ffffff!important;
+    border-radius: 0px!important;
+    border-top: 0px solid #ffffff!important;
+    border-left: 0px solid #ffffff!important;
+    border-right: 0px solid #ffffff!important;
+    border-bottom: 1px solid #f37a22;
+}
+.btn-fpw{
+    border-radius: 0px;
+}
+.content-btn-fpwd{
+    text-align: center;
+}

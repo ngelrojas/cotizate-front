@@ -1,0 +1,42 @@
+.form-step-one{
+    margin-top: 5%;
+}
+.btn-step-one{
+    border-radius: 0px;
+    color: #ffffff!important;
+}
+.form-sub-title{
+    color: #9a9a9a;
+    font-weight: bold;
+}
+.justify-cotizate{
+    text-align: center;
+}
+.btn-group-form-person{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.box-form{
+    margin-bottom: 3%;
+}
+.label-form{
+    color: #9a9a9a;
+    font-weight: bold;
+}
+.form-control{
+    background-color: #eeeeef;
+    border-bottom: 1px solid #f37a22!important;
+    border-radius: 0px!important;
+    border-top: 0px solid #eeeeef!important;
+    border-left: 0px solid #eeeeef!important;
+    border-right: 0px solid #eeeeef!important;
+}
+.form-control:hover{
+    border-bottom: 1px solid #1e84c6!important;
+}
+.form-control:focus{
+    background-color: #eeeeef;
+}
+.rdw-editor-main{
+    background-color: #ffffff;
+}

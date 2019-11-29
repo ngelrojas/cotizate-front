@@ -1,0 +1,32 @@
+.title-create{
+    color: #1e84c6;
+    margin-top: 5%;
+}
+.h5-center > h5{
+    text-align: center;
+}
+
+.title-create-sub{
+    color: #9a9a9a;
+    margin-top: 4%;
+}
+.h5-center_btn{
+    margin-top: 5%;
+    text-align: center;
+    margin-bottom: 10%;
+}
+.h5-center_btn > a{
+    color: #eeeeee!important;
+    font-weight: bold;
+    border-radius: 0px;
+}
+.btn-want{
+    background-color: #f37a22;
+    color: #eeeeee;
+    border-color: #f37a22;
+}
+.btn-want:hover{
+    background-color: #eeeeee;
+    color: #f37a22!important;
+    border: #eeeeee;
+}

@@ -1,0 +1,74 @@
+.card-img-top{
+    /*max-width: 100%!important;*/
+    min-width: 100%!important;
+}
+.art-title{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.art-title > p > a{
+    text-transform: uppercase!important;
+    color: #f37a22!important;
+    font-weight: bold;
+    text-decoration: none;
+}
+.art-author > p{
+    color: #b3b3b3;
+    font-weight: bold;
+    font-size: 13px;
+}
+.art-author > p > a{
+    color: #b3b3b3!important;
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: none;
+}
+.card-text > a{
+    color: black!important;
+    text-decoration: none;
+    font-weight: 400;
+}
+.card-category .name-category{
+    text-transform: uppercase;
+    color: #1e84c6;
+    font-size: 12px;
+}
+.card-category .name-category > a{
+    text-decoration: none;
+    color: #1e84c6!important;
+}
+.progress{
+    height: 8.5px;
+    border-radius: 2rem;
+    margin-bottom: 2%;
+    background-color: #e0e0e0;
+}
+.progress > .progress-bar{
+    width: 80%;
+    background-color: #f37a22;
+    height: 40px;
+}
+.card-coin-percent{overflow: hidden; margin-bottom: 2%;}
+.card-coin-percent > .coin{float: left;}
+.card-coin-percent > .percent{float: right;}
+.card-coin-percent > .coin > span{color: #1e84c6;}
+.card-coin-percent > .percent > span{color: #1e84c6; text-align: right;}
+.art-footer > p{
+    text-align: right;
+    font-size: 12px;
+    color: #b3b3b3;
+}
+.art-footer > p > .art-marquer{
+    margin-right: 2%;
+}
+.art-marquer > .img-responsive-cotizate{
+    width: 4%;
+}
+.card-article{
+    margin-bottom: 4%;
+}
+.card-article:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 8px 1px #797877;
+    padding: 0px!important;
+}
