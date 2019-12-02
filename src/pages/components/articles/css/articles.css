@@ -70,5 +70,6 @@
 .card-article:hover{
     cursor: pointer;
     box-shadow: 1px 2px 8px 1px #797877;
-    padding: 0px!important;
+    transform: translateZ(0);
+    transition: transform 0.25s ease-out;
 }
