@@ -194,7 +194,7 @@ input:not([type="button"]):not([type="submit"]):not([type="reset"]):hover, input
 .title-form-reg{
     text-align: center;
     color: #1e84c6;
-    margin-bottom: 10%;
+    margin-bottom: 7%;
 }
 .title-form-reg > .title-welcome{
     font-size: 13px;
@@ -219,6 +219,9 @@ input:not([type="button"]):not([type="submit"]):not([type="reset"]):hover, input
     margin-top: 3.5%;
 }
 
+.text-terms{
+    margin-top: 3rem;
+}
 .text-terms > a{
     color: #f37a22!important;
     font-size: 10px;
@@ -228,6 +231,7 @@ input:not([type="button"]):not([type="submit"]):not([type="reset"]):hover, input
 .text-label{
     font-weight: 700;
     color: #9a9a9a;
+    margin-top: 2%;
 }
 .social-networks > ul{
     list-style-type: none;

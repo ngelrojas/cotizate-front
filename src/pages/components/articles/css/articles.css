@@ -66,10 +66,11 @@
 }
 .card-article{
     margin-bottom: 4%;
+    transform: translateZ(0);
+    transition: transform 0.25s ease-out;
 }
 .card-article:hover{
     cursor: pointer;
     box-shadow: 1px 2px 8px 1px #797877;
-    transform: translateZ(0);
-    transition: transform 0.25s ease-out;
+    transform: scale(1.05);
 }

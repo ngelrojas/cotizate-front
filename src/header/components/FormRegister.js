@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import { NavLink } from 'react-router-dom';
-import facebook from '../../footer/img/facebook.svg';
-import linkedin from '../../footer/img/linkedin.svg';
-import twitter from '../../footer/img/twitter.svg';
-import instagram from '../../footer/img/instagram.svg';
-import './css/validation.css';
+import React, {Component} from 'react'
+import { NavLink } from 'react-router-dom'
+import facebook from '../../footer/img/facebook.svg'
+import linkedin from '../../footer/img/linkedin.svg'
+import twitter from '../../footer/img/twitter.svg'
+import instagram from '../../footer/img/instagram.svg'
+import { Input } from '../components/input/input.js'
+import { Password } from '../components/pwd/password.js'
 
 
 class FormRegister extends Component
@@ -12,12 +13,15 @@ class FormRegister extends Component
     constructor(){
         super()
         this.state = {
+            hidden: true,
             fields: {},
-            errors: {}
+            errors: {},
+            success: {}
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.submitRegister = this.submitRegister.bind(this)
+        this.toogleShow = this.toogleShow.bind(this)
     }
 
     handleChange(e){
@@ -29,16 +33,27 @@ class FormRegister extends Component
         })
     }
 
+    toogleShow(){
+        this.setState({hidden: !this.state.hidden}) 
+    }
+
     submitRegister(e){
         e.preventDefault()
         if(this.validateForm()){
             let fields = {}
+            let success = {}
             fields["first_name"] = ""
             fields["last_name"] = ""
             fields["email"] = ""
             fields["password"] = ""
-            fields["repeat_password"] = ""
-            this.setState({fields: fields})
+            fields["dni"] = ""
+            fields["cellphone"] = ""
+            success["msg"] = "enviamos un email para su confirmacion."
+            this.setState({
+                fields: fields,
+                success: success
+            })
+            
         }
     }
 
@@ -46,21 +61,75 @@ class FormRegister extends Component
         let fields = this.state.fields
         let errors = {}
         let formIsValid = true
-        console.log(fields["first_name"])
+        let success = {}
+
         if(!fields["first_name"]){
-            formIsValid = false;
-            errors["first_name"] = "*porfavor ingrese un nombre"
+            formIsValid = false
+            errors["first_name"] = "porfavor ingrese un nombre."
         }
 
         if(typeof fields["first_name"] !== "undefined"){
             if(!fields["first_name"].match(/^[a-zA-Z ]*$/)){
                 formIsValid = false
-                errors["first_name"] = "porfavor ingrese nombres validos"
+                errors["first_name"] = "porfavor ingrese un nombre valido."
             } 
         }
 
+        if(typeof fields["last_name"] !== "undefined"){
+            if(!fields["last_name"].match(/^[a-zA-Z ]*$/)){
+                formIsValid = false
+                errors["last_name"] = "porfavor ingrese un apillido valido."
+            } 
+        }
+
+        if(!fields["email"]){
+            formIsValid = false
+            errors["email"] = "porfavor ingrese un email."
+        }
+
+        if (typeof fields["email"] !== "undefined") {
+            //regular expression for email validation
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            if (!pattern.test(fields["email"])) {
+              formIsValid = false;
+              errors["email"] = "porfavor ingrese un email valido.";
+            }
+          }
+
+        if (!fields["password"]) {
+            formIsValid = false;
+            errors["password"] = "porfavor ingrese una contraseña.";
+        }
+
+        if (typeof fields["password"] !== "undefined") {
+            if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+              formIsValid = false;
+              errors["password"] = "porfavor la contraseña debe contener letras Mayusculas numero y caracteres especiales.";
+            }
+        }
+
+        if(!fields["dni"]){
+            formIsValid = false
+            errors["dni"] = "porfavor ingrese su cedula de identidad."
+        }
+
+        if(!fields["cellphone"]){
+            formIsValid = false
+            errors["cellphone"] = "porfavor ingrese un numero de celular."
+             
+        }
+
+        if(typeof fields["cellphone"] !== "undefined"){
+            if(!fields["cellphone"].match(/^[0-9 ]*$/)){
+                formIsValid = false
+                errors["cellphone"] = "porfavor ingrese un numero de celular valido."
+            } 
+        }
+
+
         this.setState({
-            errors: errors 
+            errors: errors,
+            success: success
         })
 
         return formIsValid
@@ -75,30 +144,70 @@ class FormRegister extends Component
                         <form method="POST" name="submitRegisterForm" className="form row" onSubmit={this.submitRegister}>
                             <div className="form-group col-6">
                                 <label className="text-label">Nombre</label>
-                                <input type="text" 
-                                       name="first_name" 
-                                       value={this.state.fields.first_name} 
-                                       onChange={this.handleChange} 
-                                       className="form-control form-control-reg" />
+ 
+                                   <Input 
+                                       type={"text"} 
+                                       name={"first_name"} 
+                                       value={this.state.fields.first_name}
+                                       onChange={this.handleChange}
+                                   />
                                 <div className="errorsMsg">{this.state.errors.first_name}</div>
                             </div>
                             <div className="form-group col-6">
                                 <label className="text-label">Apellido</label>
-                                <input type="text" name="last_name" className="form-control form-control-reg"/>
+                                <Input 
+                                       type={"text"} 
+                                       name={"last_name"} 
+                                       value={this.state.fields.last_name}
+                                       onChange={this.handleChange}
+                                />
+                                <div className="errorsMsg">{this.state.errors.last_name}</div>
                             </div>
                             <div className="form-group col-6">
                                 <label className="text-label">Email</label>
-                                <input type="text" name="email" className="form-control form-control-reg"/>
+                                <Input 
+                                       type={"email"} 
+                                       name={"email"} 
+                                       value={this.state.fields.email}
+                                       onChange={this.handleChange}
+                                />
+                                <div className="errorsMsg">{this.state.errors.email}</div>
+                                
+                            </div>
+                            <div className="form-group col-6">
+                                <label className="text-label">Cedula de Identidad</label>
+                                <Input 
+                                       type={"text"} 
+                                       name={"dni"} 
+                                       value={this.state.fields.dni}
+                                       onChange={this.handleChange}
+                                />
+                                <div className="errorsMsg">{this.state.errors.dni}</div>
+                            </div>
+                            <div className="form-group col-6">
+                                <label className="text-label">Numero de celular</label>
+                                <Input 
+                                       type={"number"} 
+                                       name={"cellphone"} 
+                                       value={this.state.fields.cellphone}
+                                       onChange={this.handleChange}
+                                />
+                                <div className="errorsMsg">{this.state.errors.cellphone}</div>
                             </div>
                             <div className="form-group col-6">
                                 <label className="text-label">Contraseña</label>
-                                <input type="password" name="password" className="form-control form-control-reg"/>
+                                <Password
+                                    type={this.state.hidden ? "password": "text"}
+                                    value={this.state.fields.password}
+                                    name="password"
+                                    onChange={this.handleChange}
+                                    tshow={this.toogleShow}
+                                />
+                                <div className="errorsMsg">{this.state.errors.password}</div>
                             </div>
-                            <div className="form-group col-6">
-                                <label className="text-label">Repetir Contraseña</label>
-                                <input type="password" name="repeat_password" className="form-control form-control-reg"/>
+                            <div className="successMsg">
+                                <span>{this.state.success.msg}</span>
                             </div>
-                            
                             <div className="form-group text-terms col-12">
                                 
                                 <a href="/termsandcontiditions">

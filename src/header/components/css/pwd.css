@@ -1,0 +1,22 @@
+.btn-hide-show{
+    border: none;
+    padding: 0px!important;
+    font-size: 2rem!important;
+    background-color: #ffffff;
+    border-radius: 0px;
+}
+.btn-hide-show:hover{
+    background-color: #ffffff!important;
+    color: #000000;
+}
+
+.btn-container-hiden-show{
+    position: relative;
+}
+
+.btn-container-hiden-show > .btn-hide-show{
+    position: absolute;
+    top: -11px;
+    right: 20px;
+    cursor: pointer;
+}
