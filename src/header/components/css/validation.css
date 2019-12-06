@@ -19,3 +19,11 @@
     position: absolute;
     width: 100%;
 }
+
+.successMsg > .msgerror{
+    color: red;
+}
+
+.successMsg > .msgsuccess{
+    color: blue;
+}

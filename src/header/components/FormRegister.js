@@ -34,7 +34,6 @@ class FormRegister extends Component
     }
     
     DataSend = () =>{
-        const url = "127.0.0.1:8000/api/v1/user/create/"
         const dataSend = {
             name: this.state.fields.first_name,
             last_name: this.state.fields.last_name,
@@ -47,13 +46,22 @@ class FormRegister extends Component
         fetch('http://127.0.0.1:8000/api/v1/user/create/',
             {
                 method: 'POST',
-                body: JSON.stringify(dataSend),
-                headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}
+                body: JSON.stringify({
+                    name: this.state.fields.first_name,
+                    last_name: this.state.fields.last_name,
+                    email: this.state.fields.email,
+                    password: this.state.fields.password,
+                    dni: this.state.fields.dni,
+                    cellphone: this.state.fields.cellphone
+                }),
+                headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}
             }
         ).then(
             res => res.json() 
         ).catch(
-            error => console.log("error:", error)
+            error =>{
+                return false 
+            }
         )          
     }
 
@@ -64,17 +72,29 @@ class FormRegister extends Component
     submitRegister(e){
         e.preventDefault()
         if(this.validateForm()){
-            console.log(this.state.fields.first_name)
-            this.DataSend();
+
+            let resp = this.DataSend();
             let fields = {}
             let success = {}
-            fields["first_name"] = ""
-            fields["last_name"] = ""
-            fields["email"] = ""
-            fields["password"] = ""
-            fields["dni"] = ""
-            fields["cellphone"] = ""
-            success["msg"] = "enviamos un email para su confirmacion."
+            
+            if(!resp){
+                fields["first_name"] = ""
+                fields["last_name"] = ""
+                fields["email"] = ""
+                fields["password"] = ""
+                fields["dni"] = ""
+                fields["cellphone"] = ""
+                success['msg'] = "oops..! tuvismos un error, intentalo mas tarde por favor." 
+            }else{
+                fields["first_name"] = ""
+                fields["last_name"] = ""
+                fields["email"] = ""
+                fields["password"] = ""
+                fields["dni"] = ""
+                fields["cellphone"] = ""
+                success["msg"] = "enviamos un email para su confirmacion."
+            }
+            
             this.setState({
                 fields: fields,
                 success: success
