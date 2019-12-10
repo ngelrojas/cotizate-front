@@ -51,7 +51,7 @@ class HomePage extends Component{
 
         if(this.state.articles.length > 0){
             
-            console.log(this.state.articles);
+            //console.log(this.state.articles);
         }
         
         if( listArt.length > 0){

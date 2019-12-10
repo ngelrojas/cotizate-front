@@ -17,7 +17,7 @@ const Slider = (props) => {
   if( listcat.length > 0){
       // this.state.articles.map() replace with datajson.map
       listimg = listcat.map( function(cate) {
-          console.log(cate);
+          // console.log(cate);
           return(
             <NavLink key={cate.id} to={cate.url_link}><img src={cate.img} alt="cotizate" /></NavLink>
           )

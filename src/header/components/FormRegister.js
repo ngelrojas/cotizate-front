@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import axios from 'axios'
+import API from '../../conf/api.js'
 import { NavLink } from 'react-router-dom'
 import facebook from '../../footer/img/facebook.svg'
 import linkedin from '../../footer/img/linkedin.svg'
@@ -16,7 +18,8 @@ class FormRegister extends Component
             hidden: true,
             fields: {},
             errors: {},
-            success: {}
+            success: {},
+            serverResponse: []
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -33,36 +36,18 @@ class FormRegister extends Component
         })
     }
     
-    DataSend = () =>{
-        const dataSend = {
-            name: this.state.fields.first_name,
-            last_name: this.state.fields.last_name,
-            email: this.state.fields.email,
-            password: this.state.fields.password,
-            dni: this.state.fields.dni,
-            cellphone: this.state.fields.cellphone
-        }
-
-        fetch('http://127.0.0.1:8000/api/v1/user/create/',
+    async DataSend() {
+        let resp = await API.post(`/user/create/`,
             {
-                method: 'POST',
-                body: JSON.stringify({
-                    name: this.state.fields.first_name,
-                    last_name: this.state.fields.last_name,
-                    email: this.state.fields.email,
-                    password: this.state.fields.password,
-                    dni: this.state.fields.dni,
-                    cellphone: this.state.fields.cellphone
-                }),
-                headers: {'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*'}
-            }
-        ).then(
-            res => res.json() 
-        ).catch(
-            error =>{
-                return false 
-            }
-        )          
+                name: this.state.fields.first_name,
+                last_name: this.state.fields.last_name,
+                email: this.state.fields.email,
+                password: this.state.fields.password,
+                dni: this.state.fields.dni,
+                cellphone: this.state.fields.cellphone
+            })
+        return resp
+        
     }
 
     toogleShow(){
@@ -77,15 +62,7 @@ class FormRegister extends Component
             let fields = {}
             let success = {}
             
-            if(!resp){
-                fields["first_name"] = ""
-                fields["last_name"] = ""
-                fields["email"] = ""
-                fields["password"] = ""
-                fields["dni"] = ""
-                fields["cellphone"] = ""
-                success['msg'] = "oops..! tuvismos un error, intentalo mas tarde por favor." 
-            }else{
+            if(!resp){      
                 fields["first_name"] = ""
                 fields["last_name"] = ""
                 fields["email"] = ""
@@ -93,8 +70,16 @@ class FormRegister extends Component
                 fields["dni"] = ""
                 fields["cellphone"] = ""
                 success["msg"] = "enviamos un email para su confirmacion."
+            }else{ 
+                fields["first_name"] = ""
+                fields["last_name"] = ""
+                fields["email"] = ""
+                fields["password"] = ""
+                fields["dni"] = ""
+                fields["cellphone"] = ""
+                success['msg'] = "oops..! tuvismos un error, intentalo mas tarde por favor."
             }
-            
+             
             this.setState({
                 fields: fields,
                 success: success
