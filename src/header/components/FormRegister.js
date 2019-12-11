@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import API from '../../conf/api.js'
 import { NavLink } from 'react-router-dom'
 import facebook from '../../footer/img/facebook.svg'
@@ -19,7 +18,7 @@ class FormRegister extends Component
             fields: {},
             errors: {},
             success: {},
-            serverResponse: []
+            serverResponse: {}
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -36,8 +35,9 @@ class FormRegister extends Component
         })
     }
     
-    async DataSend() {
-        let resp = await API.post(`/user/create/`,
+    async DataSend(){
+        
+        const resp = await API.post(`/user/create/`,
             {
                 name: this.state.fields.first_name,
                 last_name: this.state.fields.last_name,
@@ -46,7 +46,7 @@ class FormRegister extends Component
                 dni: this.state.fields.dni,
                 cellphone: this.state.fields.cellphone
             })
-        return resp
+        return await resp
         
     }
 
@@ -58,10 +58,14 @@ class FormRegister extends Component
         e.preventDefault()
         if(this.validateForm()){
 
-            let resp = this.DataSend();
+            this.DataSend()
+                .then(resp => this.setState({serverResponse: resp}))
+                .catch(error => this.setState({serverResponse: error}))
+
             let fields = {}
             let success = {}
-            
+            let resp = this.state.serverResponse
+            console.log(resp)
             if(!resp){      
                 fields["first_name"] = ""
                 fields["last_name"] = ""
