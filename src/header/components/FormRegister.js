@@ -18,11 +18,10 @@ class FormRegister extends Component
             fields: {},
             errors: {},
             success: {},
-            serverResponse: {}
+            serverResponse: '' 
         }
 
         this.handleChange = this.handleChange.bind(this)
-        this.submitRegister = this.submitRegister.bind(this)
         this.toogleShow = this.toogleShow.bind(this)
     }
 
@@ -34,56 +33,48 @@ class FormRegister extends Component
             fields 
         })
     }
-    
-    async DataSend(){
-        
-        const resp = await API.post(`/user/create/`,
-            {
-                name: this.state.fields.first_name,
-                last_name: this.state.fields.last_name,
-                email: this.state.fields.email,
-                password: this.state.fields.password,
-                dni: this.state.fields.dni,
-                cellphone: this.state.fields.cellphone
-            })
-        return await resp
-        
-    }
 
     toogleShow(){
         this.setState({hidden: !this.state.hidden}) 
     }
 
-    submitRegister(e){
+    clear_fields = (fields) => {
+        fields["first_name"] = ""
+        fields["last_name"] = ""
+        fields["email"] = ""
+        fields["password"] = ""
+        fields["dni"] = ""
+        fields["cellphone"] = ""
+    }
+
+    submitRegister = async e =>{
         e.preventDefault()
         if(this.validateForm()){
 
-            this.DataSend()
-                .then(resp => this.setState({serverResponse: resp}))
-                .catch(error => this.setState({serverResponse: error}))
-
             let fields = {}
             let success = {}
-            let resp = this.state.serverResponse
-            console.log(resp)
-            if(!resp){      
-                fields["first_name"] = ""
-                fields["last_name"] = ""
-                fields["email"] = ""
-                fields["password"] = ""
-                fields["dni"] = ""
-                fields["cellphone"] = ""
-                success["msg"] = "enviamos un email para su confirmacion."
-            }else{ 
-                fields["first_name"] = ""
-                fields["last_name"] = ""
-                fields["email"] = ""
-                fields["password"] = ""
-                fields["dni"] = ""
-                fields["cellphone"] = ""
-                success['msg'] = "oops..! tuvismos un error, intentalo mas tarde por favor."
-            }
-             
+            
+           await API.post(`/user/create/`,
+                {
+                    name: this.state.fields.first_name,
+                    last_name: this.state.fields.last_name,
+                    email: this.state.fields.email,
+                    password: this.state.fields.password,
+                    dni: this.state.fields.dni,
+                    cellphone: this.state.fields.cellphone
+                })
+                .then(resp => {
+                    this.clear_fields(fields)
+                    success["msg"] = "enviamos un email para su confirmacion."
+                })
+                .catch(error => {
+                    if(error.request.response){
+                        this.clear_fields(fields) 
+                        success['msg'] = "este email ya esta registrado."
+                    }
+                     
+                })
+
             this.setState({
                 fields: fields,
                 success: success
@@ -139,7 +130,7 @@ class FormRegister extends Component
         if (typeof fields["password"] !== "undefined") {
             if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
               formIsValid = false;
-              errors["password"] = "porfavor la contraseña debe contener letras Mayusculas numero y caracteres especiales.";
+              errors["password"] = "porfavor la contraseña debe contener letras Mayusculas numeros y caracteres especiales.";
             }
         }
 
@@ -182,7 +173,7 @@ class FormRegister extends Component
                                    <Input 
                                        type={"text"} 
                                        name={"first_name"} 
-                                       value={this.state.fields.first_name}
+                                       value={this.state.fields.first_name || ''}
                                        onChange={this.handleChange}
                                    />
                                 <div className="errorsMsg">{this.state.errors.first_name}</div>
@@ -192,7 +183,7 @@ class FormRegister extends Component
                                 <Input 
                                        type={"text"} 
                                        name={"last_name"} 
-                                       value={this.state.fields.last_name}
+                                       value={this.state.fields.last_name || ''}
                                        onChange={this.handleChange}
                                 />
                                 <div className="errorsMsg">{this.state.errors.last_name}</div>
@@ -202,7 +193,7 @@ class FormRegister extends Component
                                 <Input 
                                        type={"email"} 
                                        name={"email"} 
-                                       value={this.state.fields.email}
+                                       value={this.state.fields.email || ''}
                                        onChange={this.handleChange}
                                 />
                                 <div className="errorsMsg">{this.state.errors.email}</div>
@@ -213,7 +204,7 @@ class FormRegister extends Component
                                 <Input 
                                        type={"text"} 
                                        name={"dni"} 
-                                       value={this.state.fields.dni}
+                                       value={this.state.fields.dni || ''}
                                        onChange={this.handleChange}
                                 />
                                 <div className="errorsMsg">{this.state.errors.dni}</div>
@@ -223,7 +214,7 @@ class FormRegister extends Component
                                 <Input 
                                        type={"number"} 
                                        name={"cellphone"} 
-                                       value={this.state.fields.cellphone}
+                                       value={this.state.fields.cellphone || ''}
                                        onChange={this.handleChange}
                                 />
                                 <div className="errorsMsg">{this.state.errors.cellphone}</div>
@@ -232,7 +223,7 @@ class FormRegister extends Component
                                 <label className="text-label">Contraseña</label>
                                 <Password
                                     type={this.state.hidden ? "password": "text"}
-                                    value={this.state.fields.password}
+                                    value={this.state.fields.password || ''}
                                     name="password"
                                     onChange={this.handleChange}
                                     tshow={this.toogleShow}
@@ -252,7 +243,7 @@ class FormRegister extends Component
                                 <button className="btn btn-primary btn-reg">REGISTRARSE</button>
                             </div>
                             <div className="form-group btn-reg-content">
-                                <p className="text-iniciar">INICIAR SESION CON</p>
+                                <p className="text-iniciar">REGISTRARSE CON</p>
                                 <div className="social-networks">
                                     <ul className="list-social-networks">
                                         <li><NavLink to=""><img src={linkedin} className="img-responsive" alt="cotizate linkedin"/></NavLink></li>
