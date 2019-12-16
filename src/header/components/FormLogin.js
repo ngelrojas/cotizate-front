@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import API from '../../conf/api.js';
 import { NavLink } from 'react-router-dom';
 import Modal from 'react-awesome-modal';
 import facebook from '../../footer/img/facebook.svg';
@@ -8,15 +9,92 @@ import instagram from '../../footer/img/instagram.svg';
 import FormForgotPwd from './FormForgotPassword';
 import FormReg from './FormRegister';
 import close from '../img/cancel.svg';
+import { Input } from '../components/input/input.js';
+import { Password } from '../components/pwd/password.js';
+import './css/validation.css';
 
 
 class FormLogin extends Component
-{
-    state = {
-        visible: false,
-        regvisible: false,
-        forgotpwdvisible: false
+{   
+    constructor(){
+        super()
+        this.state = {
+            visible: false,
+            regvisible: false,
+            forgotpwdvisible: false,
+            fields: {},
+            errors: {},
+            hidden: true
+        }
     }
+
+    handleChange = e => {
+        e.preventDefault()
+        let fields = this.state.fields
+        fields[e.target.name] = e.target.value
+        this.setState({
+            fields 
+        })
+    }
+
+    toogleShow = () => {
+        this.setState({
+            hidden: !this.state.hidden 
+        }) 
+    }
+
+    validateForm(){
+        let fields = this.state.fields
+        let errors = {}
+        let formIsValid = true
+
+        if(!fields["email"]){
+            formIsValid = false
+            errors["email"] = "porfavor ingrese un email."
+        }
+
+        if (typeof fields["email"] !== "undefined") {
+            //regular expression for email validation
+            var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+            if (!pattern.test(fields["email"])) {
+              formIsValid = false;
+              errors["email"] = "porfavor ingrese un email valido.";
+            }
+        }
+
+        this.setState({
+            errors: errors 
+        })
+
+        return formIsValid
+    }
+
+    submitLogin = async e =>{
+        e.preventDefault();
+        if(this.validateForm()){
+            let fields = {}
+            let errors = {}
+            const { history } = this.props
+
+            await API.post(`/user/token/`,
+                {
+                    email: this.state.fields.email,
+                    password: this.state.fields.password
+                }).then( resp => {
+                    window.sessionStorage.setItem('token', resp.data.token)
+                    window.location = '/'
+                    }).catch(err => {
+                        if(err.request.response){
+                            errors['msg'] = 'las credenciales no son correctas.' 
+                        }
+                    })
+
+            this.setState({
+                errors: errors 
+            }) 
+        }
+    }
+
     openModalForgotPassword() {
         this.setState({
             forgotpwdvisible : true
@@ -44,14 +122,29 @@ class FormLogin extends Component
                     <div className="form-cotizate-reg">
                         <h4 className="title-form-reg"><span className="title-welcome">INGRESAR</span></h4>
                         
-                        <form className="">
+                        <form className="" method="POST" onSubmit={this.submitLogin}>
                             <div className="form-group">
                                 <label className="text-label">Email</label>
-                                <input type="email" className="form-control form-control-reg"/>
+                                <Input 
+                                    type={"email"} 
+                                    name={"email"}
+                                    value={this.state.fields.email || ''}
+                                    onChange={this.handleChange}
+                                />
+                                <div className="errorLogin">{this.state.errors.email}</div>
                             </div>
                             <div className="form-group">
                                 <label className="text-label">Contraseña</label>
-                                <input type="password" className="form-control form-control-reg"/>
+                                <Password
+                                    type={this.state.hidden ? "password": "text"}
+                                    value={this.state.fields.password || ''}
+                                    name="password"
+                                    onChange={this.handleChange}
+                                    tshow={this.toogleShow}
+                                />
+                            </div>
+                            <div className="errorLogin">
+                                <span>{this.state.errors.msg}</span>
                             </div>
                             <div className="form-group">
                                 <label className="text-remember-me">

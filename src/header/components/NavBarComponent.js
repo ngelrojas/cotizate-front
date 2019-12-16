@@ -1,24 +1,36 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import Modal from 'react-awesome-modal';
 import FormReg from './FormRegister';
 import FormLogin from './FormLogin';
 import LogoCotizate from '../img/cotizate.png';
 import close from '../img/cancel.svg';
+import { MdInput, MdExpandMore } from 'react-icons/md';
+import API from '../../conf/api.js';
+import './css/menus.css'
 
 
 class NavBarComponent extends Component
 {
-    state = {
-        visible: false,
-        regvisible: false,
-        logvisible: false
-    }
+    constructor(){
+        super()
+        this.state = {
+            visible: false,
+            regvisible: false,
+            logvisible: false,
+            isToken: '',
+            showSubMenu: false,
+            isCreateProject: false,
+            data_user: {}
+        } 
+    } 
+    
     openModalReg() {
         this.setState({
             regvisible : true
         });
     }
+
     openModalLogin(){
         this.setState({
             logvisible: true
@@ -37,21 +49,86 @@ class NavBarComponent extends Component
         });
     }
 
+    openSubmenu = () =>{
+        this.setState({showSubMenu: true }, () => {
+            document.addEventListener('click', this.closeSubmenu) 
+        }) 
+    }
+
+    closeSubmenu = () =>{
+        this.setState({showSubMenu: false}, () =>{
+            document.removeEventListener('click', this.closeSubmenu) 
+        }) 
+    }
+
+    isLogin = () => {
+        let is_token = window.sessionStorage.getItem('token')
+        return is_token 
+    }
+
+    Logout = () => {
+        window.sessionStorage.removeItem('token')
+        window.location = '/'
+    }
+
+    handlerCP = () =>{
+        
+        let islogin = this.isLogin()
+
+        API.get(`/user/me`,{ 
+            headers:{'Authorization': 'token '+islogin}
+        })
+        .then(ans => {
+            this.setState({data_user: ans.data})
+        }).catch(e =>{})
+
+    }
+
+    componentDidMount(){
+        this.isLogin()
+        this.handlerCP()
+    }
+
     render(){
         return(
             <div className="container-fluid">
                     
                 <div className="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsingNavbar2">
-                    <ul className="topBotomBordersOut navbar-nav mx-auto text-center">
+                    {
+                        this.isLogin() ? (
+                            <ul className="user-menu topBotomBordersOut navbar-nav mx-auto text-center"> 
+                                <li className="nav-item"><NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink></li>
+                                <li className="nav-item"><NavLink to="/create-project">CREAR PROYECTOS</NavLink> </li>
+                                <li className="nav-logo-cotizate"><NavLink to="/"><img src={LogoCotizate} alt="cotizate"/></NavLink> </li> 
+                                <li className="nav-item"><NavLink to="#" onClick={() => this.openModalReg()}>MENU</NavLink> </li> 
+                                <li className="nav-item"><NavLink to="/#" onClick={()=> this.openModalLogin()}>MENU</NavLink> </li>  
+                                <li className="nav-item user-menu__name">
+                                    <NavLink to="#" onClick={ ()=> this.openSubmenu() }>hola, {this.state.data_user.name} <MdExpandMore /></NavLink>
+                                {
+                                    this.state.showSubMenu ? (
+                                        <ul className="submenu-user">
+                                            <li><NavLink to='/#' onClick={ () => this.Logout() } >Salir <MdInput /></NavLink></li>
+                                        </ul>  
+                                    ):(null) 
+                                } 
+                                </li>
+                                
+                            </ul>
+                            
+                        ):(
+                            <ul className="topBotomBordersOut navbar-nav mx-auto text-center">
 
-                        <li className="nav-item"><NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink></li>
-                        <li className="nav-item"><NavLink to="/create-project">CREAR PROYECTOS</NavLink> </li>
-                        <li className="nav-logo-cotizate"><NavLink to="/"><img src={LogoCotizate} alt="cotizate"/></NavLink> </li>
-                        <li className="nav-item"><NavLink to="#" onClick={() => this.openModalReg()}>REGISTRARSE</NavLink> </li>
-                        <li className="nav-item"><NavLink to="/#" onClick={()=> this.openModalLogin()}>ENTRAR</NavLink> </li>
-                        <li className="nav-item"><NavLink to="/#">MENU</NavLink> </li>
-
-                    </ul>
+                                <li className="nav-item"><NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink></li>
+                                <li className="nav-item"><NavLink to="/#" onClick={() => this.openModalLogin()}>CREAR PROYECTOS</NavLink> </li>
+                                <li className="nav-logo-cotizate"><NavLink to="/"><img src={LogoCotizate} alt="cotizate"/></NavLink> </li> 
+                                <li className="nav-item"><NavLink to="#" onClick={() => this.openModalReg()}>REGISTRARSE</NavLink> </li> 
+                                <li className="nav-item"><NavLink to="/#" onClick={()=> this.openModalLogin()}>ENTRAR</NavLink> </li>  
+                                <li className="nav-item"><NavLink to="/#">MENU</NavLink> </li>
+                                
+                            </ul>
+                        ) 
+                    }
+                    
                 </div>
 
                 <Modal 
