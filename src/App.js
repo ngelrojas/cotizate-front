@@ -11,6 +11,8 @@ import PreviewProject from './pages/create_projects/components/preview/preview_p
 import DescriptionProject from './pages/create_projects/components/preview/preview_project';
 import HomePage from './pages/home/HomePage';
 import TermsPage from './pages/terms/TermsComponent';
+import ActivationRegister from './pages/activation/activation_register'
+import ProfileUser from './pages/profile/profile.js'
 
 
 class App extends Component {
@@ -27,9 +29,11 @@ class App extends Component {
               <Route path='/project/step-one' component={CreateProjectStepOne} />
               <Route path='/project/step-two' component={CreateProjectStepTwo} />
               <Route path='/project/step-three' component={CreateProjectStepThree} />
-              <Route path='/project/preview' component={PreviewProject}/>
-              <Route path='/description' component={DescriptionProject}/>
-              <Route path='/termsandcontiditions' component={TermsPage}/>
+              <Route path='/project/preview' component={PreviewProject} />
+              <Route path='/description' component={DescriptionProject} />
+              <Route path='/terms-and-contiditions' component={TermsPage} />
+              <Route path='/activation-account/:uuid/:token' component={ActivationRegister} />
+              <Route path='/profile/me' component={ProfileUser} />
             </Switch>
           
         </div>

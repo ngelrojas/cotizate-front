@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import FooterHome from '../../../../footer/FooterComponent'
-import Tabs from '../../../explore_projects/components/Tabs';
+import Tabs from '../../../tabs/Tabs.js';
 import FormPerson from '../forms/form_person';
 import FormCompany from '../forms/form_company';
 

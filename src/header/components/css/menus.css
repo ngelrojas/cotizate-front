@@ -9,6 +9,8 @@
 }
 .submenu-user > li{
     text-align: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .submenu-user > li > a{
     text-align: center;

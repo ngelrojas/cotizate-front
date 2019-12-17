@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import FooterHome from '../../../../footer/FooterComponent';
 import YouTube from 'react-youtube';
 import '../../css/preview.css';
-import Tabs from '../../../explore_projects/components/Tabs';
+import Tabs from '../../../tabs/Tabs';
 import img_p from './img/background-one.jpg';
 import avatar from './img/rounded.jpg';
 import heart from './img/heart.svg';

@@ -235,7 +235,7 @@ class FormRegister extends Component
                             </div>
                             <div className="form-group text-terms col-12">
                                 
-                                <a href="/termsandcontiditions">
+                                <a href="/terms-and-contiditions">
                                     TERMINOS DE USO Y POLITICAS DE PRIVACIDAD
                                 </a>
                             </div>

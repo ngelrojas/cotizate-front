@@ -5,7 +5,7 @@ import FormReg from './FormRegister';
 import FormLogin from './FormLogin';
 import LogoCotizate from '../img/cotizate.png';
 import close from '../img/cancel.svg';
-import { MdInput, MdExpandMore } from 'react-icons/md';
+import { MdInput, MdExpandMore,  MdPersonOutline } from 'react-icons/md';
 import API from '../../conf/api.js';
 import './css/menus.css'
 
@@ -107,6 +107,7 @@ class NavBarComponent extends Component
                                 {
                                     this.state.showSubMenu ? (
                                         <ul className="submenu-user">
+                                            <li><NavLink to='/profile/me'>Mi perfil <MdPersonOutline /></NavLink></li>
                                             <li><NavLink to='/#' onClick={ () => this.Logout() } >Salir <MdInput /></NavLink></li>
                                         </ul>  
                                     ):(null) 

@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import axios from 'axios';
 import FooterHome from '../../footer/FooterComponent';
 import bannerhome from '../../pages/home/img/cotizate-tech.png';
-import Tabs from './components/Tabs';
+import Tabs from '../tabs/Tabs.js'
 import './css/explorer_projects.css';
 import Articles from '../components/articles/ArticlesComponent';
 
