@@ -13,6 +13,7 @@ import HomePage from './pages/home/HomePage';
 import TermsPage from './pages/terms/TermsComponent';
 import ActivationRegister from './pages/activation/activation_register'
 import ProfileUser from './pages/profile/profile.js'
+import RecoveryPassword from './pages/recoverypwd/recovery-pwd.js'
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
               <Route path='/description' component={DescriptionProject} />
               <Route path='/terms-and-contiditions' component={TermsPage} />
               <Route path='/activation-account/:uuid/:token' component={ActivationRegister} />
+              <Route path='/recovery-password/:uuid/:token' component={RecoveryPassword} />
               <Route path='/profile/me' component={ProfileUser} />
             </Switch>
           

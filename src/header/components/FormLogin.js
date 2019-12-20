@@ -72,9 +72,7 @@ class FormLogin extends Component
     submitLogin = async e =>{
         e.preventDefault();
         if(this.validateForm()){
-            let fields = {}
             let errors = {}
-            const { history } = this.props
 
             await API.post(`/user/token/`,
                 {
