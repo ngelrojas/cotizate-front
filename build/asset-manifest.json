@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.15b92892.chunk.css",
+    "main.js": "/static/js/main.309bf565.chunk.js",
+    "main.js.map": "/static/js/main.309bf565.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.841bf76c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.841bf76c.js.map",
+    "static/css/2.398032ed.chunk.css": "/static/css/2.398032ed.chunk.css",
+    "static/js/2.4a66899b.chunk.js": "/static/js/2.4a66899b.chunk.js",
+    "static/js/2.4a66899b.chunk.js.map": "/static/js/2.4a66899b.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.5e06096fc4db2a2482bd7d68f736d3e4.js": "/precache-manifest.5e06096fc4db2a2482bd7d68f736d3e4.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.398032ed.chunk.css.map": "/static/css/2.398032ed.chunk.css.map",
+    "static/css/main.15b92892.chunk.css.map": "/static/css/main.15b92892.chunk.css.map",
+    "static/media/background-one.jpg": "/static/media/background-one.3b70e2c3.jpg",
+    "static/media/cancel.svg": "/static/media/cancel.14b18e86.svg",
+    "static/media/cotizate-tech.png": "/static/media/cotizate-tech.9a1e152c.png",
+    "static/media/facebook.svg": "/static/media/facebook.20caac44.svg",
+    "static/media/gps.svg": "/static/media/gps.77c4fc22.svg",
+    "static/media/heart.svg": "/static/media/heart.9d53d97b.svg",
+    "static/media/instagram.svg": "/static/media/instagram.8eb327b7.svg",
+    "static/media/styles.css": "/static/media/right-arrow.1ee4c3ee.svg",
+    "static/media/linkedin.svg": "/static/media/linkedin.db444cb6.svg",
+    "static/media/mastercard.svg": "/static/media/mastercard.f1a9d1d8.svg",
+    "static/media/rounded.jpg": "/static/media/rounded.a29e3021.jpg",
+    "static/media/search.svg": "/static/media/search.7b3eeb22.svg",
+    "static/media/twitter.svg": "/static/media/twitter.59c8c84e.svg",
+    "static/media/visa.svg": "/static/media/visa.c6b17962.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.841bf76c.js",
+    "static/css/2.398032ed.chunk.css",
+    "static/js/2.4a66899b.chunk.js",
+    "static/css/main.15b92892.chunk.css",
+    "static/js/main.309bf565.chunk.js"
+  ]
+}
