@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './pages/css/app.css';
 import HeaderContent from './header/HeaderContent';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { Route, Switch, HashRouter} from 'react-router-dom';
 import ExplorerProject from './pages/explore_projects/explorer_projects';
 import CreateProject from './pages/create_projects/create_projects';
 import CreateProjectStepOne from './pages/create_projects/components/create_form/step_one';
@@ -19,7 +19,7 @@ import RecoveryPassword from './pages/recoverypwd/recovery-pwd.js'
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div className="container-fluid-main">
           
             <HeaderContent />
@@ -39,7 +39,7 @@ class App extends Component {
             </Switch>
           
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

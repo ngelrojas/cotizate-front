@@ -67,7 +67,7 @@ class ForgotPassword extends Component
 
             }).catch(err => {
                 console.log(err.request.status)
-                if(err.request.status == 404){
+                if(err.request.status === 404){
                    console.log('here 404') 
                     errors['msg'] = 'Email no registrado.' 
                 } 

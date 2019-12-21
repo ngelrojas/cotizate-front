@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Modal from 'react-awesome-modal';
 import FormReg from './FormRegister';

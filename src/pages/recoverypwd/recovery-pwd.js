@@ -76,8 +76,6 @@ class RecoveryPassword extends React.Component{
         e.preventDefault()
 
         if(this.validateForm()){
-            let fields = {}
-            let success = {}
             let errors = {}
             let uuid = this.props.match.params.uuid
 
