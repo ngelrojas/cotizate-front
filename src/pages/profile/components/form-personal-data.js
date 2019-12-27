@@ -1,6 +1,6 @@
 import React from 'react'
 import API from '../../../conf/api.js'
-import { Password } from '../../../header/components/pwd/password.js'
+import { Input } from '../../../header/components/input/input.js'
 
 class PersonalData extends React.Component{
 
@@ -8,7 +8,6 @@ class PersonalData extends React.Component{
         super()
         this.state = {
             fields: {},
-            fields_pwd: {},
             errors: {},
             data_user: {},
             hidden: true
@@ -21,15 +20,6 @@ class PersonalData extends React.Component{
         fields[e.target.name] = e.target.value;
         this.setState({
             fields 
-        })
-    }
-
-    handleChangepwd = e => {
-        e.preventDefault()
-        let fields_pwd = this.state.fields_pwd;
-        fields_pwd[e.target.name] = e.target.value
-        this.setState({
-            fields_pwd 
         })
     }
 
@@ -116,70 +106,6 @@ class PersonalData extends React.Component{
 
     }
 
-    validateForm_pwd(){
-        let fields_pwd = this.state.fields_pwd;
-        let errors = {}
-        let formIsValid = true
-
-        if (!fields_pwd["password"]) {
-            formIsValid = false;
-            errors["password"] = "porfavor ingrese una contraseña.";
-        }
-
-        if (typeof fields_pwd["password"] !== "undefined") {
-            if (!fields_pwd["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
-              formIsValid = false;
-              errors["password"] = "porfavor la contraseña debe contener letras Mayusculas numeros y caracteres especiales.";
-            }
-        }
-
-        if(fields_pwd["password"] !== fields_pwd["password_confirm"]){
-            formIsValid = false
-            errors["password_confirm"] = "las contraseñas deben coincidir."
-        }
-
-        this.setState({
-            errors: errors 
-        })
-
-        return formIsValid
-    }
-
-    submitUpdatePwd = async e => {
-        e.preventDefault()
-        let token = window.sessionStorage.getItem('token')
-        
-        if(this.validateForm_pwd()){
-            let fields_pwd = {}
-            let success = {}
-
-            await API.put('/user/me/password-update/', { 
-                    password: this.state.fields_pwd.password,
-                    password_confirm: this.state.fields_pwd.password_confirm
-                },{
-                    headers:{ 'Authorization': 'token '+ token }
-                    
-                }).then(ans => {
-                    success['msg_pwd'] = 'su contraseña fue actualizada.'
-                    this.setState({errors: success})
-                    fields_pwd["password"] = ""
-                    fields_pwd["password_confirm"] = ""
-
-                }).catch(err => {
-
-                    success['msg_pwd'] = 'asegurate que las contraseña sea valida.'
-                    this.setState({errors: success})
-                    fields_pwd["password"] = ""
-                    fields_pwd["password_confirm"] = ""
-                })
-
-            this.setState({fields_pwd: fields_pwd})
-        }
-
-    }
-
-
-
     submitUpdate = async e => {
         e.preventDefault()
         let token = window.sessionStorage.getItem('token')
@@ -198,7 +124,7 @@ class PersonalData extends React.Component{
                 photo: ''
             },{
                 headers: {
-                    'Authorization': 'token '+ token 
+                    'Authorization': 'token '+token 
                 } 
             }).then(ans => {
                 console.log(ans)
@@ -261,34 +187,18 @@ class PersonalData extends React.Component{
                     </div>
                 </form>
 
-                <form className="form-update-pwd" onSubmit={this.submitUpdatePwd} method="POST">
+                <form className="form-update-pwd">
                     <div className="form-inputs">
                         <h5>ACTUALIZAR CONTRASEÑA</h5>
                     </div>
                     <div className="col-10 form-group form-inputs">
                         <label>Contraseña</label>
-                        <Password
-                            type={this.state.hidden ? "password": "text"}
-                            value={this.state.fields_pwd.password || ''}
-                            name="password"
-                            onChange={this.handleChangepwd}
-                            tshow={this.toogleShow}
-                        />
-                        <div className="errorsMsg">{this.state.errors.password}</div>
+                        <input type="password" className="form-control" name="password" value="" />
                     </div>
                     <div className="col-10 form-group form-inputs">
-                        <label>Repetir Contraseña</label>
-                        
-                        <Password
-                            type={this.state.hidden ? "password" : "text"}
-                            value={this.state.fields_pwd.password_confirm || ''}
-                            name="password_confirm"
-                            onChange={this.handleChangepwd}
-                            tshow={this.toogleShow}
-                        />
-                        <div className="errorsMsg">{this.state.errors.password_confirm}</div>
+                        <label>Repetir contraseña</label>
+                        <input type="password" className="form-control" name="password_confirm" value="" />
                     </div>
-                    <div className="col-12 successMsg_pwd">{this.state.errors.msg_pwd}</div>
                     <div className="col-6 form-group">
                         <button type="submit" className="btn btn-primary">Actualizar Contraseña</button>
                     </div>
