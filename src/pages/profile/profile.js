@@ -1,7 +1,9 @@
 import React from 'react'
 import API from '../../conf/api.js'
 import Tabs from '../tabs/Tabs.js'
+import PersonalData from './components/form-personal-data.js'
 import FooterPages from '../footer/footer.js'
+import './css/profile.css'
 
 
 class ProfileUser extends React.Component{
@@ -19,7 +21,6 @@ class ProfileUser extends React.Component{
         API.get(`/user/me`,{
             headers:{"Authorization": 'token '+ token}     
         }).then(resp => {
-            console.log(resp)
             this.setState({data_user: resp.data}) 
         }).catch( e => {
             window.location = '/' 
@@ -43,7 +44,7 @@ class ProfileUser extends React.Component{
                             <Tabs>
                                 <div label="Datos Personales">
                                     <div className="personal-data">
-                                        persnal data
+                                        <PersonalData /> 
                                     </div>
                                 </div>
                                 <div label="Datos Personales Adicionales">

@@ -1,0 +1,40 @@
+.form-inputs{
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+
+.form-update > .errorMsg{
+    color: red; 
+    
+}
+.form-update > .successMsg{
+    color: #f37a22;
+}
+.form-update-pwd > .successMsg_pwd{
+    color: #f37a22;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.wrapper-personal-data{
+    overflow: hidden;
+}
+
+.form-update{
+    width: 50%;
+    float: left;
+    padding-top: 2%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+}
+
+.form-update-pwd{
+    width: 50%;
+    float: left;
+    padding-top: 2%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+}
+
