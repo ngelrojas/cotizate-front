@@ -4,9 +4,13 @@
 }
 
 .form-update > .errorMsg{
-    color: red; 
-    
+    color: red;  
 }
+
+.form-update-pwd > .errorMsg_pwd{
+    color: red;  
+}
+
 .form-update > .successMsg{
     color: #f37a22;
 }
