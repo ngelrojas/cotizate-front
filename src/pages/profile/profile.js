@@ -2,6 +2,7 @@ import React from 'react'
 import API from '../../conf/api.js'
 import Tabs from '../tabs/Tabs.js'
 import PersonalData from './components/form-personal-data.js'
+import PersonalDataAdd from './components/form-data-aditional.js'
 import FooterPages from '../footer/footer.js'
 import './css/profile.css'
 
@@ -49,7 +50,7 @@ class ProfileUser extends React.Component{
                                 </div>
                                 <div label="Datos Personales Adicionales">
                                     <div className="personal-data-additional">
-                                        personal data additional
+                                        <PersonalDataAdd /> 
                                     </div>
                                 </div>
                             </Tabs>

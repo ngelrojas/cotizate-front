@@ -20,6 +20,10 @@
     margin-bottom: 2%;
 }
 
+.form-inputs > .checkbox{
+    width: 5%;
+}
+
 .wrapper-personal-data{
     overflow: hidden;
 }
