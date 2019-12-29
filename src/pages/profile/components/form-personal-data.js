@@ -148,7 +148,7 @@ class PersonalData extends React.Component{
         let token = window.sessionStorage.getItem('token')
 
         if(this.validateForm()){
-            let fields = {}
+            
             let success = {}
             console.log(this.state.fields)
             await API.put(`/user/me/`,{

@@ -45,4 +45,17 @@
     padding-right: 1%;
     padding-bottom: 1%;
 }
+.form-side-left{
+    width: 50%;
+    float: left;
+    padding: 1%;
+    overflow: hidden;
+}
+.form-side-right{
+    width: 50%;
+    float: left;
+    padding: 1%;
+    overflow: hidden;
+}
+
 
