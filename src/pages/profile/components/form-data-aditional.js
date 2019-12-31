@@ -27,7 +27,6 @@ class PersonalDataAdd extends React.Component{
         API.get(`/user/biography/`,{
             headers: { 'Authorization': 'token ' + token } 
         }).then(resp => {
-            console.log(resp.data)
             this.setState({fields: resp.data}) 
         }).catch(err => {
             console.log(err) 

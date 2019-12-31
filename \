@@ -4,7 +4,16 @@ import API from '../../../../conf/api.js';
 import '../../css/step-one.css';
 
 
-export const StepOne =({state, handleChange, categories}) => {
+export const StepOne =({state, handleChange}) => {
+
+       const  getCategories = () => {
+            API.get(`/category/public/general`)
+                .then(resp => {
+                    console.log(resp.data) 
+                }).catch(err => {
+                    console.log(err) 
+                })
+       } 
 
         return(
             <div className="container-site_on"> 
@@ -29,10 +38,8 @@ export const StepOne =({state, handleChange, categories}) => {
                                 name="category"
                                 onChange={handleChange}>
                                 {
-                                    categories.map(category =>(
-                                        <option>{category.name}</option> 
-                                    )) 
-                                } 
+                                    console.log(getCategories) 
+                                }           
                                 </select>
                             </label>
                         </div>

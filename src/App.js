@@ -4,6 +4,7 @@ import HeaderContent from './header/HeaderContent';
 import { Route, Switch, HashRouter} from 'react-router-dom';
 import ExplorerProject from './pages/explore_projects/explorer_projects';
 import CreateProject from './pages/create_projects/create_projects';
+import CreateProjectForm from './pages/create_projects/components/create_form/create_project.js';
 import CreateProjectStepOne from './pages/create_projects/components/create_form/step_one';
 import CreateProjectStepTwo from './pages/create_projects/components/create_form/step_two';
 import CreateProjectStepThree from './pages/create_projects/components/create_form/step_three';
@@ -27,6 +28,7 @@ class App extends Component {
               <Route exact path='/' component={HomePage} />
               <Route path='/explore-project' component={ExplorerProject} />
               <Route path='/create-project' component={CreateProject} />
+              <Route path='/project/create-project' component={CreateProjectForm} />
               <Route path='/project/step-one' component={CreateProjectStepOne} />
               <Route path='/project/step-two' component={CreateProjectStepTwo} />
               <Route path='/project/step-three' component={CreateProjectStepThree} />

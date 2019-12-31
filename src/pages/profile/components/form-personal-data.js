@@ -164,7 +164,6 @@ class PersonalData extends React.Component{
                     'Authorization': 'token '+token 
                 } 
             }).then(ans => {
-                console.log(ans)
                 success['msg'] = 'sus datos se actualizaron correctamente.'
                 this.setState({errors: success})
             }).catch(err => {

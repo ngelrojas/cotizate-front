@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import {NavLink} from 'react-router-dom';
-import FooterHome from '../../../../footer/FooterComponent';
-import bannerhome from '../../../home/img/cotizate-tech.png';
 
 function uploadImageCallBack(file) {
     return new Promise(
@@ -28,7 +26,7 @@ function uploadImageCallBack(file) {
     );
   }
 
-class StepTwo extends Component
+class StepTwo extends React.Component
 {
     state = {
         editorState: undefined,
@@ -54,13 +52,8 @@ class StepTwo extends Component
 
         return(
             <div className="container-site_on">
-                <div className="container-slider">
-                    <div className="container-slider-2">
-                        <img src={bannerhome} className="d-block w-100" alt="cotizate"/>
-                    </div>
-                </div>
-                <div className="container">
-                    <form action="/" className="form-step-one">
+             
+                    <div  className="container form-step-one">
                         <div className="form-group">
                             <label className="col-md-8">
                                 <p><span className="form-sub-title">Agregar un video o imagen para la parte superior de tu proyecto.</span></p>
@@ -162,16 +155,10 @@ class StepTwo extends Component
                             <label className="btn btn-secondary_">
                                 <input type="radio" name="options" id="option2"  /> A qualquier pais
                             </label>
-                        </div>
+                        </div> 
 
-                        <div className="form-group justify-cotizate">
-                            <NavLink to="step-three" className="btn-step-one btn btn-primary btn-lg">SIGUIENTE</NavLink>
-                        </div>
+                    </div>
 
-                    </form>
-                </div>
-
-                <FooterHome />
             </div>
         )
     }

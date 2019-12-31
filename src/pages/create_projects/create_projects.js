@@ -11,7 +11,8 @@ class CreateProject extends Component{
         super()
         this.state = {
             fields: {},
-            messages: {}
+            messages: {},
+            block: {}
         }
     }
 
@@ -24,10 +25,15 @@ class CreateProject extends Component{
         }).then(resp => {
             console.log('can create a new project.') 
         }).catch(err => {
-            messages['msg'] = 'por favor para continuar debe complatear su perfil' 
-            this.setState({messages: messages})
-            window.location = '/#/profile/me' 
+            let blocks = {}
+            blocks["css_block"] =  'disabled'
+            blocks['msg'] = 'por favor para continuar debe completar su perfil.'
+            this.setState({block: blocks})
         })
+    }
+
+    componentDidMount(){
+        this.getCompleteBio() 
     }
 
     render(){
@@ -41,7 +47,13 @@ class CreateProject extends Component{
                         <h5 className="title-create-sub">Has tu proyecto realidad con CROWFUNDING : Recoge fondos para tus proyectos e ideas.</h5>
                     </div>
                     <div className="h5-center_btn">
-                        <NavLink to="project/step-one" className="btn btn-warning btn-want ">QUIERO DINERO PARA MI PROYECTO</NavLink>
+                        <NavLink 
+                            to={this.state.block.css_block !== '' ? "project/create-project": ""} 
+                            className={`${this.state.block.css_block} btn btn-warning bt-want`}
+                        >QUIERO DINERO PARA MI PROYECTO</NavLink>
+                    </div>
+                    <div className="msg-complete-profile title-create-sub">
+                        {this.state.block.msg}
                     </div>
                 </div>
 

@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
-import FooterHome from '../../../../footer/FooterComponent'
+import React from 'react';
 import Tabs from '../../../tabs/Tabs.js';
 import FormPerson from '../forms/form_person';
 import FormCompany from '../forms/form_company';
 
 
-class StepThree extends Component
+class StepThree extends React.Component
 {
     render(){
         return(
@@ -26,7 +25,6 @@ class StepThree extends Component
                 </Tabs>
 
                 </div>
-                <FooterHome />
             </div>
         )
     }

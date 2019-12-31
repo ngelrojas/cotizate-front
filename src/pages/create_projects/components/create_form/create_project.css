@@ -1,0 +1,11 @@
+.tab-list{
+    text-align: center;
+}
+
+.container-site_on > .title-steps{
+    text-align: center;
+    margin-top: 5%;
+    background: #1e84c6;
+    padding: 2%;
+    color: #eee;
+}
