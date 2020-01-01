@@ -2,11 +2,17 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import FooterHome from '../../../../footer/FooterComponent'
 import Tabs from '../../../tabs/Tabs.js'
-import StepOne from './step_one.js';
-import StepTwo from './step_two.js';
+import { StepOne  } from './step_one.js';
+import { StepTwo } from './step_two.js';
+import { StepFour } from './step_four.js';
 import StepThree from './step_three.js';
 import './create_project.css';
 import API from '../../../../conf/api.js';
+import URL_API from '../../../../conf/apis.js';
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+
 
 
 class CreateProjectForm extends React.Component{
@@ -20,7 +26,32 @@ class CreateProjectForm extends React.Component{
         }
     }
 
-    handleChange(e){
+        /*state = {
+        editorState: undefined,
+        contentState: {}
+    };*/
+
+    onContentStateChange(contentState) {
+        
+        console.log(contentState);
+    };
+    
+    onContentStateChange_(contentState) {
+        
+        console.log(contentState);
+    };
+    
+    _onContentStateChange_(contentState) {
+        
+        console.log(contentState);
+    };
+
+    getToken = () => {
+        let token = window.sessionStorage.getItem('token');
+        return token;
+    }
+
+    handleChange = e =>{
         e.preventDefault();
         let fields = this.state.fields;
         fields[e.target.name] = e.target.value;
@@ -30,7 +61,7 @@ class CreateProjectForm extends React.Component{
     submitProject = async e => {
         e.preventDefault();
         
-        let token = window.sessionStorage.getItem('token');
+        let token = this.getToken();
         await API.put(`/campaing`,{
             title: this.state.fields.title,
             city: this.state.fields.city,
@@ -56,22 +87,23 @@ class CreateProjectForm extends React.Component{
 
     }
 
-    getCategories = () => {
-        API.get(`/category/public/general`)
-            .then(resp => {
-                console.log(resp.data)
-                let data = JSON.parse(resp.data)
-                this.setState({categories: data})
-            }).catch(err => {
-                console.log(err) 
-            })
-       }
+    async getCategories(){
+        const response = await fetch(URL_API + `/category/public/general`);
+        const data = await response.json();
+        this.setState({categories: data}); 
+    }
 
     componentDidMount(){
+        let token = this.getToken();
+        if(token === null){
+            window.location = '/'; 
+        }
+
         this.getCategories() 
     }
 
     render(){
+        const {categories} = this.state;
         return(
             <div className="container-site_on">
                 <div className="title-steps">
@@ -80,21 +112,34 @@ class CreateProjectForm extends React.Component{
                 <form method="post"> 
                     <Tabs>
                         
-                        <div label="Paso 1">
+                        <div label="Basico">
                             <div className="row">
-                                <StepOne state={this.state} handleChange={this.handleChange} categories={this.state.categories} />
+                                <StepOne state={this.state} handleChange={this.handleChange} categories={categories} />
                             </div>
                         </div>
-                        <div label="Paso 2">
+
+                        <div label="Historia">
                             <div className="row">
-                                <StepTwo />
+                                <StepTwo 
+                                    state={this.state} 
+                                    handleChange={this.handleChange}
+                                    onContentStateChange={this.onContentStateChange}
+                                    onContentStateChange_={this.onContentStateChange_}
+                                    _onContentStateChange_={this._onContentStateChange_} />
                             </div>
                         </div>
-                        <div label="Paso 3">
+                        
+                        <div label="Recompensas">
                             <div className="row">
-                                <StepThree /> 
+                                <StepFour 
+                                    state={this.state} 
+                                    handleChange={this.handleChange}
+                                    onContentStateChange={this.onContentStateChange}
+                                    onContentStateChange_={this.onContentStateChange_}
+                                    _onContentStateChange_={this._onContentStateChange_} /> 
                             </div>
                         </div>
+                       
                     
                     </Tabs>
                 </form> 

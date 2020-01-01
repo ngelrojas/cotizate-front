@@ -5,7 +5,8 @@ import '../../css/step-one.css';
 
 
 export const StepOne =({state, handleChange, categories}) => {
-
+        console.log('here')
+        console.log(categories)
         return(
             <div className="container-site_on"> 
                 
@@ -28,9 +29,9 @@ export const StepOne =({state, handleChange, categories}) => {
                                 value={state.fields.category || ''}
                                 name="category"
                                 onChange={handleChange}>
-                                {
+                                {categories &&
                                     categories.map(category =>(
-                                        <option>{category.name}</option> 
+                                        <option key={category.id} value={category.id}>{category.name}</option> 
                                     )) 
                                 } 
                                 </select>
