@@ -34,7 +34,7 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                                 <p><span className="form-sub-title">Los proyectos con videos aumentan un porcentaje mas que los proyectos sin video, Has un video de 2-3 minutos.</span></p>
                                 
                             </label>
-                            <label className="col-md-8"><span className="form-sub-title"> 7.- Coloca un video</span>
+                            <label className="col-md-8"><span className="form-sub-title">Coloca un video</span>
                             <input 
                                 type="text" 
                                 className="form-control"
@@ -45,7 +45,7 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">8.- Cuenta un poco sobre tu proyecto (resumen)</span>
+                            <label className="col-md-8"><span className="form-sub-title">Cuenta un poco sobre tu proyecto (resumen)</span>
                             <Editor
                                 wrapperClassName="demo-wrapper"
                                 editorClassName="demo-editor"
@@ -63,7 +63,7 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">9.- Cuenta por que tu proyecto es tan relevante, has una descripcion completa de tu proyecto.</span>
+                            <label className="col-md-8"><span className="form-sub-title">Cuenta por que tu proyecto es tan relevante, has una descripcion completa de tu proyecto.</span>
                             <Editor
                                 wrapperClassName="demo-wrapper"
                                 editorClassName="demo-editor"

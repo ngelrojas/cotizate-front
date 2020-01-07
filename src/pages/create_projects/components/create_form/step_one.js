@@ -12,7 +12,7 @@ export const StepOne =({state, handleChange, categories}) => {
                 
                     <div className="container form-step-one">
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">1.- Cual es el Titulo del Proyecto ?</span>
+                            <label className="col-md-8"><span className="form-sub-title">Cual es el Titulo del Proyecto ?</span>
                             <input 
                                 type="text" 
                                 className="form-control"
@@ -21,9 +21,20 @@ export const StepOne =({state, handleChange, categories}) => {
                                 onChange={handleChange}/>
                             </label>
                             <div className="errorMsg">{state.errors.title}</div>
+                        </div> 
+                        <div className="form-group">
+                            <label className="col-md-8"><span className="form-sub-title">De donde es tu proyecto ?</span>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                name="city"
+                                value={state.fields.city || ''}
+                                onChange={handleChange}
+                            />
+                            </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">2.- Cual es la Categoria de tu proyecto ?</span>
+                            <label className="col-md-8"><span className="form-sub-title">Cual es la Categoria de tu proyecto ?</span>
                             <select 
                                 className="form-control" 
                                 value={state.fields.category || ''}
@@ -38,18 +49,7 @@ export const StepOne =({state, handleChange, categories}) => {
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">3.- De donde es tu proyecto ?</span>
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                name="city"
-                                value={state.fields.city || ''}
-                                onChange={handleChange}
-                            />
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">4.- Cuanto dinero necesitas para tu proyecto ?</span>
+                            <label className="col-md-6"><span className="form-sub-title">Cuanto dinero necesitas para tu proyecto ?</span>
                             <input 
                                 type="text" 
                                 className="form-control"
@@ -70,7 +70,7 @@ export const StepOne =({state, handleChange, categories}) => {
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">5.- Cuantos dias será la duracion de la campaña ?</span>
+                            <label className="col-md-8"><span className="form-sub-title">Cuantos dias será la duracion de la campaña ?</span>
                             <input 
                                 type="text" 
                                 className="form-control"
@@ -81,7 +81,7 @@ export const StepOne =({state, handleChange, categories}) => {
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">6.- Adicione sus redes sociales (opcional)</span>
+                            <label className="col-md-8"><span className="form-sub-title">Adicione sus redes sociales (opcional)</span>
                             </label>
                             <label className="col-md-8"><span className="form-sub-title">facebook</span>
                             <input 

@@ -151,7 +151,7 @@ class PersonalData extends React.Component{
             
             let success = {}
             console.log(this.state.fields)
-            await API.put(`/user/me/`,{
+            await API.patch(`/user/me/`,{
                 name: this.state.fields.name,
                 last_name: this.state.fields.last_name,
                 dni: this.state.fields.dni,

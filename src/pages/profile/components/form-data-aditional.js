@@ -99,7 +99,8 @@ class PersonalDataAdd extends React.Component{
             <div className="wrapper-personal-data-add">
                 <form method="POST" className="form form-update-add" onSubmit={this.submitUpdateAdd}>
                     <div className="form-inputs">
-                        <h5>DATOS PERSONALES COMPLEMENTARIOS</h5> 
+                        <h4><Tooltip label='DATOS PERSONALES COMPLEMENTARIOS' text={'todos los datos son obligatorios'} /></h4>
+                        
                     </div>
                     <div className="row"> 
                     <div className="col-6 form-side-lef">

@@ -61,31 +61,30 @@ class NavBarComponent extends Component
         }) 
     }
 
-    isLogin = () => {
-        let is_token = window.sessionStorage.getItem('token')
-        return is_token 
-    }
-
     Logout = () => {
-        window.sessionStorage.removeItem('token')
-        window.location = '/'
+        let istoken = window.sessionStorage.removeItem('token');
+        this.setState({isToken: ''});
     }
 
     handlerCP = () =>{
-        
-        let islogin = this.isLogin()
+        let istoken = window.sessionStorage.getItem('token')
 
         API.get(`/user/me`,{ 
-            headers:{'Authorization': 'token '+islogin}
-        })
-        .then(ans => {
-            this.setState({data_user: ans.data})
-        }).catch(e =>{})
+            headers:{'Authorization': 'token '+istoken}
+        }).then(ans => {
+                    
+            this.setState({
+                data_user: ans.data,
+                isToken: istoken
+            });
 
+        }).catch(e =>{
+            this.Logout(); 
+        })
+        
     }
 
     componentDidMount(){
-        this.isLogin()
         this.handlerCP()
     }
 
@@ -95,7 +94,7 @@ class NavBarComponent extends Component
                     
                 <div className="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsingNavbar2">
                     {
-                        this.isLogin() ? (
+                        this.state.isToken ? (
                             <ul className="user-menu topBotomBordersOut navbar-nav mx-auto text-center"> 
                                 <li className="nav-item"><NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink></li>
                                 <li className="nav-item"><NavLink to="/create-project">CREAR PROYECTOS</NavLink> </li>

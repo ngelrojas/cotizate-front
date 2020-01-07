@@ -28,18 +28,9 @@ export const StepFour = ({state, handleChange, onContentStateChange ,onContentSt
             <div className="container-site_on">
              
                     <div  className="container form-step-one">
+                      
                         <div className="form-group">
-                            <label className="col-md-8">
-                                <p><span className="form-sub-title">Agregar un video o imagen para la parte superior de tu proyecto.</span></p>
-                                <p><span className="form-sub-title">Los proyectos con videos aumentan un porcentaje mas que los proyectos sin video, Has un video de 2-3 minutos.</span></p>
-                                
-                            </label>
-                           
-                        </div>
-                        
-                        
-                        <div className="form-group">
-                            <label className="col-md-8"><span className="form-sub-title">10.- Describe cuales son las Recompensas que ofreces.</span>
+                            <label className="col-md-8"><span className="form-sub-title">Describe cuales son las Recompensas que ofreces.</span>
                             </label>
                             <label className="col-md-8"><span className="form-sub-title">Titulo de recompensa</span>
                             <input 
@@ -100,7 +91,16 @@ export const StepFour = ({state, handleChange, onContentStateChange ,onContentSt
 
                             </label>
                         
-                        </div> 
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <button type="submit" className="btn btn-primary">Pre-visualizar</button>
+                            </div>
+                            <div className="col-6">
+                                <button type="submit" className="btn btn-primary">Publicar</button>
+                            </div>
+
+                        </div>
 
                     </div>
 

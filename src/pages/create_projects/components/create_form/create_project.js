@@ -114,7 +114,10 @@ class CreateProjectForm extends React.Component{
                         
                         <div label="Basico">
                             <div className="row">
-                                <StepOne state={this.state} handleChange={this.handleChange} categories={categories} />
+                                <StepOne 
+                                    state={this.state} 
+                                    handleChange={this.handleChange} 
+                                    categories={categories} />
                             </div>
                         </div>
 
@@ -139,8 +142,7 @@ class CreateProjectForm extends React.Component{
                                     _onContentStateChange_={this._onContentStateChange_} /> 
                             </div>
                         </div>
-                       
-                    
+                   
                     </Tabs>
                 </form> 
 
