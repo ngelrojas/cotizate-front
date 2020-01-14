@@ -11,6 +11,7 @@ class PersonalDataAdd extends React.Component{
         this.state = {
             fields: {},
             isChecked: false,
+            msg: ''
         }    
     }
 
@@ -83,8 +84,10 @@ class PersonalDataAdd extends React.Component{
            },{
                 headers: {'Authorization': 'token ' + token}   
            }).then(res => {
+                this.setState({msg: 'sus datos se actualizaron correctament.'})
                 console.log(res) 
-           }).catch(err => {
+                }).catch(err => {
+                    this.setState({msg: 'por favor revise que todos los campos esten completos.'})
                 console.log(err) 
            })
        } 
@@ -323,7 +326,7 @@ class PersonalDataAdd extends React.Component{
                         </div>
                     </div>
                 </div>
-
+                    <div className="col-12 msg_gen">{this.state.msg}</div>
                     <div className="col-6 form-group form-inputs">
                         <button type="submit" className="btn btn-primary">Actualizar</button>
                     </div>

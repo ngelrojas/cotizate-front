@@ -1,6 +1,7 @@
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 
+
 function  uploadImageCallBack(file) {
         return new Promise(
           (resolve, reject) => {
@@ -20,13 +21,44 @@ function  uploadImageCallBack(file) {
             });
           }
         );
+}
+
+
+class HistoryForm extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            fields: {},
+            error: {},
+        }
     }
 
-export const StepTwo = ({state, handleChange, onContentStateChange ,onContentStateChange_, _onContentStateChange_ }) =>
-{
+    onContentStateChange(contentState) {
+        
+        console.log(contentState);
+    };
+    
+    onContentStateChange_(contentState) {
+        
+        console.log(contentState);
+    };
+    
+    _onContentStateChange_(contentState) {
+        
+        console.log(contentState);
+    };
+
+    handleChange = e =>{
+        e.preventDefault();
+        let fields = this.state.fields;
+        fields[e.target.name] = e.target.value;
+        this.setState({fields})
+    }
+
+    render(){
         return(
-            <div className="container-site_on">
-             
+     <div className="container-site_on">
+                <form method="post"> 
                     <div  className="container form-step-one">
                         <div className="form-group">
                             <label className="col-md-8">
@@ -38,9 +70,9 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={state.fields.video || ''}
+                                value={this.state.fields.video || ''}
                                 name="video"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                         </div>
@@ -49,7 +81,7 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                             <Editor
                                 wrapperClassName="demo-wrapper"
                                 editorClassName="demo-editor"
-                                onContentStateChange={_onContentStateChange_}
+                                onContentStateChange={this._onContentStateChange_}
                                 toolbar={{
                                     inline: { inDropdown: true },
                                     list: { inDropdown: true },
@@ -67,7 +99,7 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                             <Editor
                                 wrapperClassName="demo-wrapper"
                                 editorClassName="demo-editor"
-                                onContentStateChange={onContentStateChange_}
+                                onContentStateChange={this.onContentStateChange_}
                                 toolbar={{
                                     inline: { inDropdown: true },
                                     list: { inDropdown: true },
@@ -83,9 +115,10 @@ export const StepTwo = ({state, handleChange, onContentStateChange ,onContentSta
                         
 
                     </div>
-
-            </div>
+                </form>
+            </div>        
         ) 
-};
+    }
+}
 
-export default StepTwo;
+export default HistoryForm;

@@ -1,85 +1,111 @@
 import React from 'react';
-import Tabs from '../../../tabs/Tabs.js';
 import API from '../../../../conf/api.js';
+import API_URL from '../../../../conf/apis.js';
 import '../../css/step-one.css';
 
 
-export const StepOne =({state, handleChange, categories}) => {
-        console.log('here')
-        console.log(categories)
+class BasicForm extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            fields: {},
+            errors: {},
+            categories: []
+        }
+    }
+
+    handleChange = e => {
+        e.preventDefault();
+        let fields = this.state.fields;
+        fields[e.target.name] = e.target.value;
+        this.setState({fields}); 
+    }
+
+    async getCategories(){
+        const response = await fetch(API_URL + `/category/public/general`);
+        const data = await response.json();
+        this.setState({categories: data})
+    }
+
+    componentDidMount(){
+        this.getCategories(); 
+    }
+
+    render(){
+        const { categories } = this.state;
         return(
-            <div className="container-site_on"> 
-                
+            <div className="container-site_on">
+                <form method="post">
                     <div className="container form-step-one">
                         <div className="form-group">
                             <label className="col-md-8"><span className="form-sub-title">Cual es el Titulo del Proyecto ?</span>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 className="form-control"
-                                value={state.fields.title || ''}
+                                value={this.state.fields.title || ''}
                                 name="title"
-                                onChange={handleChange}/>
+                                onChange={this.handleChange}/>
                             </label>
-                            <div className="errorMsg">{state.errors.title}</div>
-                        </div> 
+                        </div>
+
                         <div className="form-group">
                             <label className="col-md-8"><span className="form-sub-title">De donde es tu proyecto ?</span>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 className="form-control"
+                                value={this.state.fields.city || ''}
                                 name="city"
-                                value={state.fields.city || ''}
-                                onChange={handleChange}
-                            />
+                                onChange={this.handleChange}/>
                             </label>
                         </div>
+
                         <div className="form-group">
                             <label className="col-md-8"><span className="form-sub-title">Cual es la Categoria de tu proyecto ?</span>
-                            <select 
-                                className="form-control" 
-                                value={state.fields.category || ''}
+                            <select
+                                className="form-control"
+                                value={this.state.fields.category || ''}
                                 name="category"
-                                onChange={handleChange}>
-                                {categories &&
-                                    categories.map(category =>(
-                                        <option key={category.id} value={category.id}>{category.name}</option> 
-                                    )) 
-                                } 
-                                </select>
+                                onChange={this.handleChange}>
+                                <option>Seleccionar categoria</option>
+                                {
+                                    categories && categories.map( category => (
+                                    <option value={category.id} key={category.id}>{category.name}</option> )) 
+                                }
+                            </select>
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="col-md-6"><span className="form-sub-title">Cuanto dinero necesitas para tu proyecto ?</span>
-                            <input 
-                                type="text" 
+                            <label className="col-md-6"><span className="form-sub-title">Cuanto dinerp necesitas para tu proyecto ?</span>
+                            <input
+                                type="text"
                                 className="form-control"
+                                value={this.state.fields.budget || ''}
                                 name="budget"
-                                value={state.fields.budget || ''}
-                                onChange={handleChange}
-                            />
+                                onChange={this.handleChange}/>
                             </label>
                             <label className="col-md-2"><span className="form-sub-title">Moneda:</span>
                             <select 
                                 className="form-control"
-                                value={state.fields.currencies || ''}
                                 name="currencies"
-                                onChange={handleChange}>
-                                    <option value="1">Bolivianos</option>
-                                    <option value="2">Dolares</option>
+                                onChange={this.handleChange}>
+                                    <option value={this.state.fields.currencies || '1'}>Bolivianos</option>
+                                    <option value={this.state.fields.currencies || '2'}>Dolares</option>
                                 </select>
                             </label>
                         </div>
+
                         <div className="form-group">
                             <label className="col-md-8"><span className="form-sub-title">Cuantos dias será la duracion de la campaña ?</span>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={state.fields.qty_days}
+                                value={this.state.fields.qty_days || ''}
                                 name="qty_days"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                         </div>
+
                         <div className="form-group">
                             <label className="col-md-8"><span className="form-sub-title">Adicione sus redes sociales (opcional)</span>
                             </label>
@@ -87,36 +113,36 @@ export const StepOne =({state, handleChange, categories}) => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={state.fields.facebook || ''}
+                                value={this.state.fields.facebook || ''}
                                 name="facebook"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                             <label className="col-md-8"><span className="form-sub-title">instagram</span>
                             <input 
                                 type="text"
                                 className="form-control"
-                                value={state.fields.instagram || ''}
+                                value={this.state.fields.instagram || ''}
                                 name="instagram"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                             <label className="col-md-8"><span className="form-sub-title">linkedIn</span>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={state.fields.linkedin || ''}
+                                value={this.state.fields.linkedin || ''}
                                 name="linkedin"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                             <label className="col-md-8"><span className="form-sub-title">twitter</span>
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={state.fields.twitter || ''}
+                                value={this.state.fields.twitter || ''}
                                 name="twitter"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                         </div>
@@ -125,18 +151,18 @@ export const StepOne =({state, handleChange, categories}) => {
                             <input 
                                 type="text" 
                                 className="form-control"
-                                value={state.fields.website || ''}
+                                value={this.state.fields.website || ''}
                                 name="website"
-                                onChange={handleChange}
+                                onChange={this.handleChange}
                             />
                             </label>
                         </div>
 
                     </div>
+                </form>
             </div>
-            
-        )
-    
+        ) 
+    }
 }
 
-export default StepOne;
+export default BasicForm;
