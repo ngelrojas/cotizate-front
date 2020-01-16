@@ -10,6 +10,7 @@ class BasicForm extends React.Component{
         this.state = {
             fields: {},
             errors: {},
+            msg: '',
             categories: []
         }
     }
@@ -25,17 +26,90 @@ class BasicForm extends React.Component{
         const response = await fetch(API_URL + `/category/public/general`);
         const data = await response.json();
         this.setState({categories: data})
-    }
+    } 
 
     componentDidMount(){
         this.getCategories(); 
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+
+        let msg = ''
+
+        if(this.validateForm()){
+            let fieldArray = [
+                this.state.fields.title,
+                this.state.fields.city,
+                this.state.fields.category,
+                this.state.fields.budget,
+                this.state.fields.currencies,
+                this.state.fields.qty_days,
+                this.state.fields.facebook,
+                this.state.fields.instagram,
+                this.state.fields.linkedin,
+                this.state.fields.twitter,
+                this.state.fields.website
+            ]
+
+            window.localStorage.setItem("basic", JSON.stringify(fieldArray));
+            msg = 'primera parte del proyecto guardado. '
+            this.setState({
+                msg: msg     
+            }) 
+        }
+        
+
+    }
+
+    validateForm(){
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+        let msg = {}
+
+        if(!fields["title"]){
+            formIsValid = false;
+            errors["title"] = "Tu proyecto debe contener un titulo.";
+        }
+
+        if(!fields["city"]){
+            formIsValid = false;
+            errors["city"] = "Tu proyecto debe tener una ciudad."
+        }
+
+        if(!fields["category"]){
+            formIsValid = false;
+            errors["category"] = "Tu proyecto debe pertenecer a una categoria.";
+        }
+
+        if(!fields["budget"]){
+            formIsValid = false;
+            errors["budget"] = "Tu proyecto debe tener una cantidad de dinero.";
+        }
+
+        if(!fields["currencies"]){
+            formIsValid = false;
+            errors["currencies"] = "Tu proyecto debe contener una moneda.";
+        }
+
+        if(!fields["qty_days"]){
+            formIsValid = false;
+            errors["qty_days"] = "Tu proyecto debe contener una cantidad de dias.";
+        }
+
+        this.setState({
+            errors: errors
+        });
+
+        return formIsValid;
     }
 
     render(){
         const { categories } = this.state;
         return(
             <div className="container-site_on">
-                <form method="post">
+                <form method="post" onSubmit={this.handleSubmit}>
                     <div className="container form-step-one">
                         <div className="form-group">
                             <label className="col-md-8"><span className="form-sub-title">Cual es el Titulo del Proyecto ?</span>
@@ -46,6 +120,7 @@ class BasicForm extends React.Component{
                                 name="title"
                                 onChange={this.handleChange}/>
                             </label>
+                            <div className="errorsMsg">{this.state.errors.title}</div>
                         </div>
 
                         <div className="form-group">
@@ -57,6 +132,7 @@ class BasicForm extends React.Component{
                                 name="city"
                                 onChange={this.handleChange}/>
                             </label>
+                            <div className="errorsMsg">{this.state.errors.city}</div>
                         </div>
 
                         <div className="form-group">
@@ -72,7 +148,8 @@ class BasicForm extends React.Component{
                                     <option value={category.id} key={category.id}>{category.name}</option> )) 
                                 }
                             </select>
-                            </label>
+                        </label>
+                        <div className="errorsMsg">{this.state.errors.category}</div>
                         </div>
                         <div className="form-group">
                             <label className="col-md-6"><span className="form-sub-title">Cuanto dinerp necesitas para tu proyecto ?</span>
@@ -87,11 +164,16 @@ class BasicForm extends React.Component{
                             <select 
                                 className="form-control"
                                 name="currencies"
+                                value={this.state.fields.currencies || ''}
                                 onChange={this.handleChange}>
-                                    <option value={this.state.fields.currencies || '1'}>Bolivianos</option>
-                                    <option value={this.state.fields.currencies || '2'}>Dolares</option>
+                                    <option value=''>Seleccionar</option>
+                                    <option value='1'>Bolivianos</option>
+                                    <option value='2'>Dolares</option>
                                 </select>
+                                <div className="errorsMsg">{this.state.errors.currencies}</div>
                             </label>
+                            <div className="errorsMsg">{this.state.errors.budget}</div>
+                            
                         </div>
 
                         <div className="form-group">
@@ -103,7 +185,8 @@ class BasicForm extends React.Component{
                                 name="qty_days"
                                 onChange={this.handleChange}
                             />
-                            </label>
+                        </label>
+                        <div className="errorsMsg">{this.state.errors.qty_days}</div>
                         </div>
 
                         <div className="form-group">
@@ -158,6 +241,17 @@ class BasicForm extends React.Component{
                             </label>
                         </div>
 
+                    </div>
+                    <div className="container">
+                        <div className="col col-md-8">
+                            <div className="successMsg">{this.state.msg}</div>
+                        </div>
+                    </div>
+                    <div className="container">
+                        <div className="col col-md-8">
+                            <button type="submit" className="btn btn-primary">Salvar</button>
+                        </div>
+                        
                     </div>
                 </form>
             </div>

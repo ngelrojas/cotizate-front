@@ -23,29 +23,32 @@ function  uploadImageCallBack(file) {
         );
 }
 
-
 class HistoryForm extends React.Component{
     constructor(){
         super();
         this.state = {
             fields: {},
             error: {},
+            excerpt: '',
+            descripcion: '' 
         }
     }
 
     onContentStateChange(contentState) {
-        
-        console.log(contentState);
+         
+        // console.log(contentState);
     };
     
-    onContentStateChange_(contentState) {
-        
-        console.log(contentState);
+    onContentStateChange_ = (contentState) => {
+        this.setState({descripcion: contentState.blocks[0].text}); 
+        // console.log(contentState);
     };
     
-    _onContentStateChange_(contentState) {
+    _onContentStateChange_ = (contentState) => {
         
-        console.log(contentState);
+        this.setState({excerpt: contentState.blocks[0].text});
+        //console.log(contentState.blocks[0].text );
+        //return contentState.blocks[0].text
     };
 
     handleChange = e =>{
@@ -55,10 +58,22 @@ class HistoryForm extends React.Component{
         this.setState({fields})
     }
 
+    handleSubmit = e => {
+        e.preventDefault();
+        let excerpt_data = this.state.excerpt;
+        let description_data = this.state.descripcion;
+        let basic_data = JSON.parse(window.localStorage.getItem("basic"));
+        console.log(data[0]);
+        console.log(excerpt_data);
+        console.log(description_data)
+        
+    }
+
+
     render(){
         return(
      <div className="container-site_on">
-                <form method="post"> 
+                <form method="post" onSubmit={this.handleSubmit}> 
                     <div  className="container form-step-one">
                         <div className="form-group">
                             <label className="col-md-8">
@@ -113,7 +128,11 @@ class HistoryForm extends React.Component{
                             </label>
                         </div>
                         
-
+                    </div>
+                    <div className="container">
+                        <div className="col col-md-8">
+                            <button type="submit" className="btn btn-primary">Salvar</button>
+                        </div>
                     </div>
                 </form>
             </div>        
