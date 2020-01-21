@@ -9,7 +9,7 @@ function  uploadImageCallBack(file) {
             xhr.open('POST', 'https://api.imgur.com/3/image');
             xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca');
             const data = new FormData();
-            data.append('image', file);
+              data.append('image', file);
             xhr.send(data);
             xhr.addEventListener('load', () => {
               const response = JSON.parse(xhr.responseText);
@@ -40,13 +40,13 @@ class HistoryForm extends React.Component{
     };
     
     onContentStateChange_ = (contentState) => {
-        this.setState({descripcion: contentState.blocks[0].text}); 
+        this.setState({descripcion: contentState}); 
         // console.log(contentState);
     };
     
     _onContentStateChange_ = (contentState) => {
         
-        this.setState({excerpt: contentState.blocks[0].text});
+        this.setState({excerpt: contentState});
         //console.log(contentState.blocks[0].text );
         //return contentState.blocks[0].text
     };
@@ -63,12 +63,28 @@ class HistoryForm extends React.Component{
         let excerpt_data = this.state.excerpt;
         let description_data = this.state.descripcion;
         let basic_data = JSON.parse(window.localStorage.getItem("basic"));
-        console.log(data[0]);
+        //console.log(data[0]);
         console.log(excerpt_data);
         console.log(description_data)
+        if(this.validateForm()){
+            
+
+            
+        }
         
     }
 
+    validateForm(){
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+        let msg = {}
+
+        if(!fields['video']){
+            formIsValid = false;
+            errors['video'] = 'Tu proyecto debe contener video.';
+        }
+    }
 
     render(){
         return(
@@ -131,7 +147,7 @@ class HistoryForm extends React.Component{
                     </div>
                     <div className="container">
                         <div className="col col-md-8">
-                            <button type="submit" className="btn btn-primary">Salvar</button>
+                            <button type="submit" className="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </form>
