@@ -30,7 +30,7 @@ class HistoryForm extends React.Component{
             fields: {},
             error: {},
             excerpt: '',
-            descripcion: '' 
+            descripcion: '',
         }
     }
 
@@ -46,8 +46,7 @@ class HistoryForm extends React.Component{
     
     _onContentStateChange_ = (contentState) => {
         
-        this.setState({excerpt: contentState});
-        //console.log(contentState.blocks[0].text );
+        // this.setState({excerpt: contentState}); 
         //return contentState.blocks[0].text
     };
 
@@ -120,7 +119,8 @@ class HistoryForm extends React.Component{
                                     link: { inDropdown: true },
                                     history: { inDropdown: true },
                                     image: { uploadCallback: uploadImageCallBack, 
-                                        alt: { present: true, mandatory: false } },
+                                        alt: { present: true, mandatory: false },
+                                        previewImage: true},
                                 }}
                             />
                             </label>

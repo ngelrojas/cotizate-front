@@ -140,7 +140,7 @@ class RewardForm extends React.Component{
                                     <td>TITULO</td>
                                     <td>VALOR</td>
                                     <td>MONEDA</td> 
-                                    <td colspan="2">OPCIONES</td>
+                                    <td colSpan="2">OPCIONES</td>
                                     <td>&nbsp;</td>
                                 </tr>
                             </thead>
