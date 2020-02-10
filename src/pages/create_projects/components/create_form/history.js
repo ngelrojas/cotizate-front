@@ -1,5 +1,4 @@
 import React from 'react'
-// import {Editor} from 'react-draft-wysiwyg'
 import {Editor} from '@tinymce/tinymce-react'
 
 class HistoryForm extends React.Component {
@@ -13,8 +12,12 @@ class HistoryForm extends React.Component {
     }
   }
 
-  handleEditorChange = (content, editor) => {
-    console.log('Content was updated:', content)
+  handleEditorExcerpt = (content, editor) => {
+    console.log('Content was updated excerpt:', content)
+  }
+
+  handleEditorDesc = (content, editor) => {
+    console.log('Content was updated descripcion:', content)
   }
 
   handleChange = e => {
@@ -85,7 +88,7 @@ class HistoryForm extends React.Component {
                   Cuenta un poco sobre tu proyecto (resumen)
                 </span>
                 <Editor
-                  initialValue="<p>This is the initial content of the editor</p>"
+                  initialValue="<p>escribe aqui el resumen de tu proyecto.</p>"
                   init={{
                     height: 500,
                     menubar: true,
@@ -110,11 +113,6 @@ class HistoryForm extends React.Component {
 
                         var reader = new FileReader()
                         reader.onload = function() {
-                          /*
-          Note: Now we need to register the blob in TinyMCEs image blob
-          registry. In the next release this part hopefully won't be
-          necessary, as we are looking to handle it internally.
-        */
                           var id = 'blobid' + new Date().getTime()
                           var blobCache =
                             window.tinymce.activeEditor.editorUpload.blobCache
@@ -131,7 +129,7 @@ class HistoryForm extends React.Component {
                       input.click()
                     },
                   }}
-                  onEditorChange={this.handleEditorChange}
+                  onEditorChange={this.handleEditorExcerpt}
                 />
               </label>
             </div>
@@ -141,6 +139,50 @@ class HistoryForm extends React.Component {
                   Cuenta por que tu proyecto es tan relevante, has una
                   descripcion completa de tu proyecto.
                 </span>
+                <Editor
+                  initialValue="<p>escribe aqui la descripcion completa de tu proyecto.</p>"
+                  init={{
+                    height: 500,
+                    menubar: true,
+
+                    plugins: [
+                      'advlist autolink lists link image charmap print preview anchor image',
+                      'imagetools earchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount',
+                    ],
+                    toolbar:
+                      'undo redo | formatselect | bold italic backcolor | \
+                     alignleft aligncenter alignright alignjustify | image | \
+                     imagetools bullist numlist outdent indent | removeformat | help',
+                    automatic_uploads: true,
+                    file_picker_types: 'image',
+                    file_picker_callback: function(cb, value, meta) {
+                      var input = document.createElement('input')
+                      input.setAttribute('type', 'file')
+                      input.setAttribute('accept', 'image/*')
+                      input.onchange = function() {
+                        var file = this.files[0]
+
+                        var reader = new FileReader()
+                        reader.onload = function() {
+                          var id = 'blobid' + new Date().getTime()
+                          var blobCache =
+                            window.tinymce.activeEditor.editorUpload.blobCache
+                          var base64 = reader.result.split(',')[1]
+                          var blobInfo = blobCache.create(id, file, base64)
+                          blobCache.add(blobInfo)
+
+                          /* call the callback and populate the Title field with the file name */
+                          cb(blobInfo.blobUri(), {title: file.name})
+                        }
+                        reader.readAsDataURL(file)
+                      }
+
+                      input.click()
+                    },
+                  }}
+                  onEditorChange={this.handleEditorDesc}
+                />
               </label>
             </div>
           </div>
