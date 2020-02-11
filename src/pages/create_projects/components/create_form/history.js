@@ -28,7 +28,7 @@ class HistoryForm extends React.Component {
     fields[e.target.name] = e.target.value
     this.setState({fields})
   }
-
+  // TODO: add list tags and replace ['2'] for a variable
   handleSubmit = async e => {
     e.preventDefault()
 
@@ -37,10 +37,11 @@ class HistoryForm extends React.Component {
       let description_data = this.state.description
       let basic_data = JSON.parse(window.localStorage.getItem('basic'))
       let is_token = window.sessionStorage.getItem('token')
+      let _msg = {}
       await API.post(
         `/campaing`,
         {
-          tite: basic_data[0],
+          title: basic_data[0],
           city: basic_data[1],
           category: basic_data[2],
           budget: basic_data[3],
@@ -51,8 +52,8 @@ class HistoryForm extends React.Component {
           linkedin: basic_data[8],
           twitter: basic_data[9],
           website: basic_data[10],
-          tags: 2,
-          video: this.state.video,
+          tags: ['2'],
+          video: this.state.fields.video,
           excerpt: excerpt_data,
           description: description_data,
         },
@@ -60,11 +61,14 @@ class HistoryForm extends React.Component {
           headers: {Authorization: 'token ' + is_token},
         },
       )
-        .then(res =>
-          this.setState({msg: 'su proyecto fue creado correctamente.'}),
-        )
+        .then(res => {
+          _msg['success'] = 'segunda parte del proyecto guardado.'
+          this.setState({msg: _msg})
+          window.localStorage.removeItem('basic')
+        })
         .catch(err => {
-          this.setState({msg: 'por favor revise su proyecto'})
+          _msg['error'] = 'por favor revise su proyecto'
+          this.setState({msg: _msg})
           console.log(err)
         })
     }
@@ -233,6 +237,10 @@ class HistoryForm extends React.Component {
             </div>
           </div>
           <div className="container">
+            <div className="col col-md-8 MsgSuccess">
+              {this.state.msg.success}
+            </div>
+            <div className="MsgError">{this.state.msg.error}</div>
             <div className="col col-md-8">
               <button type="submit" className="btn btn-primary">
                 Guardar

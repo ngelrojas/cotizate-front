@@ -48,3 +48,8 @@
 .tox-tinymce {
   margin-top: 15px !important;
 }
+.MsgSuccess {
+  color: #1e84c6;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
