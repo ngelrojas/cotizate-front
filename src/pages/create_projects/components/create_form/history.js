@@ -1,23 +1,25 @@
 import React from 'react'
 import {Editor} from '@tinymce/tinymce-react'
+import API from '../../../../conf/api.js'
 
 class HistoryForm extends React.Component {
   constructor() {
     super()
     this.state = {
       fields: {},
-      error: {},
+      errors: {},
+      msg: {},
       excerpt: '',
-      descripcion: '',
+      description: '',
     }
   }
 
   handleEditorExcerpt = (content, editor) => {
-    console.log('Content was updated excerpt:', content)
+    this.setState({excerpt: content})
   }
 
   handleEditorDesc = (content, editor) => {
-    console.log('Content was updated descripcion:', content)
+    this.setState({description: content})
   }
 
   handleChange = e => {
@@ -27,28 +29,69 @@ class HistoryForm extends React.Component {
     this.setState({fields})
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
-    let excerpt_data = this.state.excerpt
-    let description_data = this.state.descripcion
-    let basic_data = JSON.parse(window.localStorage.getItem('basic'))
-    //console.log(data[0]);
-    console.log(excerpt_data)
-    console.log(description_data)
+
     if (this.validateForm()) {
+      let excerpt_data = this.state.excerpt
+      let description_data = this.state.description
+      let basic_data = JSON.parse(window.localStorage.getItem('basic'))
+      let is_token = window.sessionStorage.getItem('token')
+      await API.post(
+        `/campaing`,
+        {
+          tite: basic_data[0],
+          city: basic_data[1],
+          category: basic_data[2],
+          budget: basic_data[3],
+          currencies: basic_data[4],
+          qty_days: basic_data[5],
+          facebook: basic_data[6],
+          instagram: basic_data[7],
+          linkedin: basic_data[8],
+          twitter: basic_data[9],
+          website: basic_data[10],
+          tags: 2,
+          video: this.state.video,
+          excerpt: excerpt_data,
+          description: description_data,
+        },
+        {
+          headers: {Authorization: 'token ' + is_token},
+        },
+      )
+        .then(res =>
+          this.setState({msg: 'su proyecto fue creado correctamente.'}),
+        )
+        .catch(err => {
+          this.setState({msg: 'por favor revise su proyecto'})
+          console.log(err)
+        })
     }
   }
 
   validateForm() {
     let fields = this.state.fields
+    let excerpt = this.state.excerpt
+    let description = this.state.description
     let errors = {}
     let formIsValid = true
-    let msg = {}
 
     if (!fields['video']) {
       formIsValid = false
       errors['video'] = 'Tu proyecto debe contener video.'
     }
+    if (!excerpt) {
+      formIsValid = false
+      errors['excerpt'] = 'Tu proyecto debe contener un resumen.'
+    }
+    if (!description) {
+      formIsValid = false
+      errors['description'] =
+        'Tu proyecto debe contener una description completa.'
+    }
+    this.setState({errors: errors})
+    return formIsValid
   }
 
   render() {
@@ -80,6 +123,7 @@ class HistoryForm extends React.Component {
                   name="video"
                   onChange={this.handleChange}
                 />
+                <div className="MsgError">{this.state.errors.video}</div>
               </label>
             </div>
             <div className="form-group">
@@ -88,7 +132,7 @@ class HistoryForm extends React.Component {
                   Cuenta un poco sobre tu proyecto (resumen)
                 </span>
                 <Editor
-                  initialValue="<p>escribe aqui el resumen de tu proyecto.</p>"
+                  initialValue=""
                   init={{
                     height: 500,
                     menubar: true,
@@ -131,6 +175,7 @@ class HistoryForm extends React.Component {
                   }}
                   onEditorChange={this.handleEditorExcerpt}
                 />
+                <div className="MsgError">{this.state.errors.excerpt}</div>
               </label>
             </div>
             <div className="form-group">
@@ -140,7 +185,7 @@ class HistoryForm extends React.Component {
                   descripcion completa de tu proyecto.
                 </span>
                 <Editor
-                  initialValue="<p>escribe aqui la descripcion completa de tu proyecto.</p>"
+                  initialValue=""
                   init={{
                     height: 500,
                     menubar: true,
@@ -183,6 +228,7 @@ class HistoryForm extends React.Component {
                   }}
                   onEditorChange={this.handleEditorDesc}
                 />
+                <div className="MsgError">{this.state.errors.description}</div>
               </label>
             </div>
           </div>

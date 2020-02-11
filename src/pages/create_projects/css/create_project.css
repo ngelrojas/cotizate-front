@@ -41,3 +41,10 @@
 .tox-notifications-container {
   display: none !important;
 }
+.MsgError {
+  color: red;
+  margin-top: 10px;
+}
+.tox-tinymce {
+  margin-top: 15px !important;
+}
