@@ -8,11 +8,12 @@ class RewardForm extends React.Component {
     this.state = {
       fields: {},
       errors: {},
+      des_reward: '',
     }
   }
 
   handleEditorReward = (content, editor) => {
-    console.log('Content was updated reward:', content)
+    this.setState({des_reward: content})
   }
 
   handleChange = e => {
@@ -86,7 +87,7 @@ class RewardForm extends React.Component {
                 <span className="form-sub-title">Descripcion</span>
 
                 <Editor
-                  initialValue="<p>escribe aqui la descripcion de la recompensa.</p>"
+                  initialValue=""
                   init={{
                     height: 500,
                     menubar: true,
