@@ -1,4 +1,6 @@
 import React from 'react'
+import API from '../../../../conf/api.js'
+import {TableReward} from './table-reward.js'
 import {Editor} from '@tinymce/tinymce-react'
 import './reward.css'
 
@@ -9,6 +11,7 @@ class RewardForm extends React.Component {
       fields: {},
       errors: {},
       des_reward: '',
+      msg: '',
     }
   }
 
@@ -16,18 +19,88 @@ class RewardForm extends React.Component {
     this.setState({des_reward: content})
   }
 
-  handleChange = e => {
+  handleChange = async e => {
     e.preventDefault()
     let fields = this.state.fields
     fields[e.target.name] = e.target.value
     this.setState({fields})
   }
 
+  handleSubmit = async e => {
+    e.preventDefault()
+    if (this.validateForm()) {
+      let campaing_id = window.localStorage.getItem('_id')
+      let token = window.sessionStorage.getItem('token')
+      let _msg = {}
+
+      await API.post(
+        `/reward`,
+        {
+          campaing: campaing_id,
+          title: this.state.fields.title_reward,
+          price: this.state.fields.price_reward,
+          type_reward: this.state.fields.type_reward,
+          delivery_data: this.state.fields.data,
+          delivery_place: this.state.fields.data,
+          description: this.state.des_reward,
+          currencies: this.state.fields.currencies,
+        },
+        {
+          headers: {Authorization: 'token ' + token},
+        },
+      )
+        .then(res => {
+          _msg['success'] = 'recompensa adicionada.'
+          this.setState({msg: _msg})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+
+  validateForm() {
+    let fields = this.state.fields
+    let des_reward = this.state.des_reward
+    let errors = {}
+    let formIsValid = true
+
+    if (!fields['title_reward']) {
+      formIsValid = false
+      errors['title_reward'] = 'las recomopensa deben contener un titulo.'
+    }
+
+    if (!fields['price_reward']) {
+      formIsValid = false
+      errors['price_reward'] = 'las recompensas deben tener un valor de precio.'
+    }
+
+    if (!fields['date']) {
+      formIsValid = false
+      errors['date'] = 'las recompensas deben una fecha de entrega.'
+    }
+
+    if (!fields['type_reward']) {
+      formIsValid = false
+      errors['type_reward'] =
+        'las recompensas debe contener un tipo de recompensa.'
+    }
+
+    if (des_reward.length === 0) {
+      formIsValid = false
+      errors['des_reward'] = 'las recomponesas deben contener una descricion.'
+    }
+
+    this.setState({errors: errors})
+
+    return formIsValid
+  }
+
   render() {
     return (
       <div className="container-site_on">
         <div className="row form-reward">
-          <form method="post" className="col-md-6">
+          <form method="post" className="col-md-6" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label className="col-md-10">
                 <span className="form-sub-title">
@@ -43,6 +116,7 @@ class RewardForm extends React.Component {
                   name="title_reward"
                   onChange={this.handleChange}
                 />
+                <div className="MsgError">{this.state.errors.title_reward}</div>
               </label>
               <label className="col-md-6">
                 <span className="form-sub-title">valor de la recompensa</span>
@@ -53,6 +127,7 @@ class RewardForm extends React.Component {
                   name="price_reward"
                   onChange={this.handleChange}
                 />
+                <div className="MsgError">{this.state.errors.price_reward}</div>
               </label>
               <label className="col-md-4">
                 <span className="form-sub-title">Moneda</span>
@@ -60,6 +135,7 @@ class RewardForm extends React.Component {
                   className="form-control"
                   name="currencies"
                   onChange={this.handleChange}>
+                  <option value="0">Seleccionar una Moneda</option>
                   <option value={this.state.fields.currencies || '1'}>
                     Bolivianos
                   </option>
@@ -79,6 +155,22 @@ class RewardForm extends React.Component {
                   name="date"
                   onChange={this.handleChange}
                 />
+                <div className="MsgError">{this.state.errors.date}</div>
+              </label>
+              <label className="col-md-10">
+                <span className="form-sub-title">Tipo de Recompensa</span>
+                <select
+                  className="form-control"
+                  name="type_reward"
+                  onChange={this.handleChange}>
+                  <option value={this.state.fields.type_reward || '1'}>
+                    Donacion
+                  </option>
+                  <option value={this.state.fields.type_reward || '2'}>
+                    Contribucion
+                  </option>
+                </select>
+                <div className="MsgError">{this.state.errors.type_reward}</div>
               </label>
             </div>
 
@@ -130,6 +222,7 @@ class RewardForm extends React.Component {
                   }}
                   onEditorChange={this.handleEditorReward}
                 />
+                <div className="MsgError">{this.state.errors.des_reward}</div>
               </label>
             </div>
             <div className="row">
@@ -140,29 +233,7 @@ class RewardForm extends React.Component {
               </div>
             </div>
           </form>
-          <div className="list-rewards col-md-6">
-            <h6>LISTA DE PREMIOS</h6>
-            <table className="table">
-              <thead>
-                <tr>
-                  <td>TITULO</td>
-                  <td>VALOR</td>
-                  <td>MONEDA</td>
-                  <td colSpan="2">OPCIONES</td>
-                  <td>&nbsp;</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>new reward</td>
-                  <td>45.25</td>
-                  <td>bolivanos</td>
-                  <td>editar</td>
-                  <td>eliminar</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <TableReward data={this.state.fields} />
         </div>
       </div>
     )

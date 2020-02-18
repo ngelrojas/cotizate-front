@@ -69,7 +69,6 @@ class HistoryForm extends React.Component {
         tags.map(tag => {
           list_tags.push(tag.id)
         })
-      console.log(list_tags.length)
 
       if (basic_data) {
         await API.post(
@@ -97,8 +96,10 @@ class HistoryForm extends React.Component {
         )
           .then(res => {
             _msg['success'] = 'segunda parte del proyecto guardado.'
+            let _id = res.data.id
             this.setState({msg: _msg})
             window.localStorage.removeItem('basic')
+            window.localStorage.setItem('_id', _id)
           })
           .catch(err => {
             _msg['error'] = 'por favor revise su proyecto'
