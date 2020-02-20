@@ -2,7 +2,10 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {MdClear, MdCreate} from 'react-icons/md'
 
-export const TableReward = ({data}) => {
+export const TableReward = ({rewards}) => {
+  function deleteReward(id) {
+    console.log(id)
+  }
   return (
     <div className="list-rewards col-md-6">
       <h6>LISTA DE PREMIOS</h6>
@@ -17,21 +20,24 @@ export const TableReward = ({data}) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{data.title_reward}</td>
-            <td>{data.price_reward}</td>
-            <td>{data.currencies}</td>
-            <td>
-              <Link to="#">
-                <MdCreate />
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <MdClear />
-              </Link>
-            </td>
-          </tr>
+          {rewards &&
+            rewards.map(reward => (
+              <tr key={reward.id}>
+                <td>{reward.title}</td>
+                <td>{reward.price}</td>
+                <td>{reward.currencies === 1 ? 'Bolivianos' : 'Dolares'}</td>
+                <td>
+                  <Link to={`${reward.id}`}>
+                    <MdCreate />
+                  </Link>
+                </td>
+                <td>
+                  <Link to="#" onClick={deleteReward(reward.id)}>
+                    <MdClear />
+                  </Link>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

@@ -1,6 +1,9 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import {MdClear, MdCreate} from 'react-icons/md'
 import API from '../../../../conf/api.js'
-import {TableReward} from './table-reward.js'
+import API_URL from '../../../../conf/apis.js'
+// import {TableReward} from './table-reward.js'
 import {Editor} from '@tinymce/tinymce-react'
 import './reward.css'
 
@@ -11,7 +14,9 @@ class RewardForm extends React.Component {
       fields: {},
       errors: {},
       des_reward: '',
-      msg: '',
+      msg: {},
+      initial_value: '',
+      rewards: [],
     }
   }
 
@@ -26,12 +31,23 @@ class RewardForm extends React.Component {
     this.setState({fields})
   }
 
+  async getRewards() {
+    let campaing_id = window.localStorage.getItem('_id')
+    const data = await fetch(API_URL + `/rewards/${campaing_id}`)
+    const rewards = await data.json()
+    this.setState({rewards: rewards})
+  }
+
   handleSubmit = async e => {
     e.preventDefault()
+
     if (this.validateForm()) {
       let campaing_id = window.localStorage.getItem('_id')
       let token = window.sessionStorage.getItem('token')
-      let _msg = {}
+      let date = this.state.fields.date
+      let msg = {}
+
+      msg['success'] = 'recompensa adicionada.'
 
       await API.post(
         `/reward`,
@@ -40,8 +56,8 @@ class RewardForm extends React.Component {
           title: this.state.fields.title_reward,
           price: this.state.fields.price_reward,
           type_reward: this.state.fields.type_reward,
-          delivery_data: this.state.fields.data,
-          delivery_place: this.state.fields.data,
+          delivery_data: date + ' 00:00',
+          delivery_place: date + ' 00:00 ',
           description: this.state.des_reward,
           currencies: this.state.fields.currencies,
         },
@@ -50,13 +66,28 @@ class RewardForm extends React.Component {
         },
       )
         .then(res => {
-          _msg['success'] = 'recompensa adicionada.'
-          this.setState({msg: _msg})
+          this.getRewards()
+
+          this.setState({
+            msg: msg,
+            initial_value: '',
+            rewards: [...this.state.rewards, ...res.data],
+          })
         })
         .catch(err => {
           console.log(err)
         })
+
+      this.clear_fields(this.state.fields)
     }
+  }
+
+  clear_fields = fields => {
+    fields['title_reward'] = ''
+    fields['price_reward'] = ''
+    fields['currencies'] = ''
+    fields['date'] = ''
+    fields['type_reward'] = ''
   }
 
   validateForm() {
@@ -96,7 +127,12 @@ class RewardForm extends React.Component {
     return formIsValid
   }
 
+  deleteReward = id => {
+    console.log(id)
+  }
+
   render() {
+    const {rewards} = this.state
     return (
       <div className="container-site_on">
         <div className="row form-reward">
@@ -163,6 +199,7 @@ class RewardForm extends React.Component {
                   className="form-control"
                   name="type_reward"
                   onChange={this.handleChange}>
+                  <option value="0">Tipo de Recompensa</option>
                   <option value={this.state.fields.type_reward || '1'}>
                     Donacion
                   </option>
@@ -179,7 +216,7 @@ class RewardForm extends React.Component {
                 <span className="form-sub-title">Descripcion</span>
 
                 <Editor
-                  initialValue=""
+                  initialValue={this.state.initial_value}
                   init={{
                     height: 500,
                     menubar: true,
@@ -226,6 +263,7 @@ class RewardForm extends React.Component {
               </label>
             </div>
             <div className="row">
+              <div className="alert">{this.state.msg.success}</div>
               <div className="col-6">
                 <button type="submit" className="btn btn-primary">
                   CREAR
@@ -233,7 +271,42 @@ class RewardForm extends React.Component {
               </div>
             </div>
           </form>
-          <TableReward data={this.state.fields} />
+          <div className="list-rewards col-md-6">
+            <h6>LISTA DE PREMIOS</h6>
+            <table className="table">
+              <thead>
+                <tr>
+                  <td>TITULO</td>
+                  <td>VALOR</td>
+                  <td>MONEDA</td>
+                  <td colSpan="2">&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </thead>
+              <tbody>
+                {rewards &&
+                  rewards.map(reward => (
+                    <tr key={reward.id}>
+                      <td>{reward.title}</td>
+                      <td>{reward.price}</td>
+                      <td>
+                        {reward.currencies === 1 ? 'Bolivianos' : 'Dolares'}
+                      </td>
+                      <td>
+                        <Link to={`${reward.id}`}>
+                          <MdCreate />
+                        </Link>
+                      </td>
+                      <td>
+                        <Link to="#" onClick={this.deleteReward(reward.id)}>
+                          <MdClear />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     )
