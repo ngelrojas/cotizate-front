@@ -6,12 +6,13 @@ import BasicForm from './basic.js'
 import HistoryForm from './history.js'
 import RewardForm from './reward.js'
 import API_URL from '../../../../conf/apis.js'
+import './update_project.css'
 
 class UpdateProjectForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      campaing: {},
+      campaing: [],
     }
   }
 
@@ -21,33 +22,35 @@ class UpdateProjectForm extends React.Component {
   }
 
   async getCampaings() {
-    const campaingId = this.props.match.params.campaingId
-    const token = window.localStorage.getItem('token')
-    const data = await fetch(API_URL + `campaing/${campaingId}`, {
+    let campaingId = this.props.match.params.campaingId
+    window.localStorage.setItem('campaingId', campaingId)
+    let token = window.sessionStorage.getItem('token')
+    await fetch(API_URL + `/campaing/${campaingId}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: 'token ' + token,
       },
     })
-    const campaing = data.json()
-    console.log(campaing)
-    this.setState({campaing: campaing})
+      .then(resp => resp.json())
+      .then(response => {
+        this.setState({campaing: response.data})
+        window.localStorage.setItem('campaing', JSON.stringify(response.data))
+      })
   }
 
   componentDidMount() {
-    let token = this.getToken()
     this.getCampaings()
-    if (token === null) {
-      window.location = '/'
-    }
   }
 
   render() {
+    const {campaing} = this.state
     return (
       <div className="container-site_on">
         <div className="title-steps">
-          <h4>Estas Actualizando {this.state.campaing.title}.</h4>
+          <h4>
+            Estas Actualizando{' '}
+            <span className="title-steps__title">{campaing.title}</span>.
+          </h4>
         </div>
 
         <Tabs>

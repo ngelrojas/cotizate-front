@@ -14,6 +14,7 @@ class UpdateProject extends Component {
   }
 
   getCampaings = () => {
+    window.localStorage.removeItem('_id')
     let token = window.sessionStorage.getItem('token')
     API.get(`/campaing`, {
       headers: {Authorization: 'token ' + token},
@@ -52,7 +53,7 @@ class UpdateProject extends Component {
                     <th>MONEDA</th>
                     <th>DIAS</th>
                     <th>CATEGORIAS</th>
-                    <th colspan="2"></th>
+                    <th colSpan="2"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,15 +66,15 @@ class UpdateProject extends Component {
                         <td>{campaing.currencies.name}</td>
                         <td>{campaing.qty_days}</td>
                         <td>{campaing.category.name}</td>
-                        <td colspan="2">
+                        <td colSpan="2">
                           <Link
                             className="btn"
-                            to={`/project/update-projects/${campaing.id}/update`}>
+                            to={`/project/update/${campaing.id}`}>
                             <MdCreate />
                           </Link>
                           <Link
                             className="btn"
-                            to={`/project/update-projects/${campaing.id}/delete`}>
+                            to={`/project/delete/${campaing.id}`}>
                             <MdClear />
                           </Link>
                         </td>

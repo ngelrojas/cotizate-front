@@ -31,7 +31,7 @@ class App extends Component {
             />
             <Route path="/project/update-projects" component={UpdateProject} />
             <Route
-              path="/project/update-projects/:campaingId/update"
+              path="/project/update/:campaingId"
               component={UpdateProjectForm}
             />
             <Route path="/project/preview" component={PreviewProject} />

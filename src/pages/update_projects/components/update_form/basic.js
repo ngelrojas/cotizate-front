@@ -9,6 +9,7 @@ class BasicForm extends React.Component {
       errors: {},
       msg: '',
       categories: [],
+      campaing: {},
     }
   }
 
@@ -27,6 +28,14 @@ class BasicForm extends React.Component {
 
   componentDidMount() {
     this.getCategories()
+    this.getCampaings()
+
+    // console.log(camp['title'])
+  }
+
+  getCampaings = () => {
+    let camp = JSON.parse(window.localStorage.getItem('campaing'))
+    this.setState({fields: camp})
   }
 
   handleSubmit = e => {
@@ -35,25 +44,26 @@ class BasicForm extends React.Component {
     let msg = ''
 
     if (this.validateForm()) {
-      let fieldArray = [
-        this.state.fields.title,
-        this.state.fields.city,
-        this.state.fields.category,
-        this.state.fields.budget,
-        this.state.fields.currencies,
-        this.state.fields.qty_days,
-        this.state.fields.facebook,
-        this.state.fields.instagram,
-        this.state.fields.linkedin,
-        this.state.fields.twitter,
-        this.state.fields.website,
-      ]
+      console.log(this.state.fields)
+      /*let fieldArray = [*/
+      //this.state.fields.title,
+      //this.state.fields.city,
+      //this.state.fields.category,
+      //this.state.fields.budget,
+      //this.state.fields.currencies,
+      //this.state.fields.qty_days,
+      //this.state.fields.facebook,
+      //this.state.fields.instagram,
+      //this.state.fields.linkedin,
+      //this.state.fields.twitter,
+      //this.state.fields.website,
+      //]
 
-      window.localStorage.setItem('basic', JSON.stringify(fieldArray))
-      msg = 'primera parte del proyecto actualizado. '
-      this.setState({
-        msg: msg,
-      })
+      //window.localStorage.setItem('basic', JSON.stringify(fieldArray))
+      //msg = 'primera parte del proyecto actualizado. '
+      //this.setState({
+      //msg: msg,
+      /*})*/
     }
   }
 
@@ -101,6 +111,7 @@ class BasicForm extends React.Component {
 
   render() {
     const {categories} = this.state
+    console.log(this.state.fields.category)
     return (
       <div className="container-site_on">
         <form method="post" onSubmit={this.handleSubmit}>
@@ -147,12 +158,9 @@ class BasicForm extends React.Component {
                   value={this.state.fields.category || ''}
                   name="category"
                   onChange={this.handleChange}>
-                  <option>Seleccionar categoria</option>
                   {categories &&
                     categories.map(category => (
-                      <option value={category.id} key={category.id}>
-                        {category.name}
-                      </option>
+                      <option key={category.id}>{category.name}</option>
                     ))}
                 </select>
               </label>
@@ -161,7 +169,7 @@ class BasicForm extends React.Component {
             <div className="form-group">
               <label className="col-md-6">
                 <span className="form-sub-title">
-                  Cuanto dinerp necesitas para tu proyecto ?
+                  Cuanto dinero necesitas para tu proyecto ?
                 </span>
                 <input
                   type="text"
