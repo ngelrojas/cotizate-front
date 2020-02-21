@@ -1,6 +1,5 @@
 import React from 'react'
 import API_URL from '../../../../conf/apis.js'
-import '../../css/step-one.css'
 
 class BasicForm extends React.Component {
   constructor() {
@@ -51,7 +50,7 @@ class BasicForm extends React.Component {
       ]
 
       window.localStorage.setItem('basic', JSON.stringify(fieldArray))
-      msg = 'primera parte del proyecto guardado. '
+      msg = 'primera parte del proyecto actualizado. '
       this.setState({
         msg: msg,
       })

@@ -100,3 +100,12 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.btn-link {
+  color: #ffffff !important;
+}
+.btn-link:hover {
+  text-decoration: none;
+}
+.link-profile {
+  color: #f37a22 !important;
+}

@@ -5,17 +5,13 @@ import Tabs from '../../../tabs/Tabs.js'
 import BasicForm from './basic.js'
 import HistoryForm from './history.js'
 import RewardForm from './reward.js'
-import './create_project.css'
-import API from '../../../../conf/api.js'
-import URL_API from '../../../../conf/apis.js'
+import API_URL from '../../../../conf/apis.js'
 
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-
-class CreateProjectForm extends React.Component {
+class UpdateProjectForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      fields: {},
+      campaing: {},
     }
   }
 
@@ -24,8 +20,24 @@ class CreateProjectForm extends React.Component {
     return token
   }
 
+  async getCampaings() {
+    const campaingId = this.props.match.params.campaingId
+    const token = window.localStorage.getItem('token')
+    const data = await fetch(API_URL + `campaing/${campaingId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'token ' + token,
+      },
+    })
+    const campaing = data.json()
+    console.log(campaing)
+    this.setState({campaing: campaing})
+  }
+
   componentDidMount() {
     let token = this.getToken()
+    this.getCampaings()
     if (token === null) {
       window.location = '/'
     }
@@ -35,7 +47,7 @@ class CreateProjectForm extends React.Component {
     return (
       <div className="container-site_on">
         <div className="title-steps">
-          <h4>Por favor siga todos los pasos para crear su proyecto.</h4>
+          <h4>Estas Actualizando {this.state.campaing.title}.</h4>
         </div>
 
         <Tabs>
@@ -74,7 +86,7 @@ class CreateProjectForm extends React.Component {
               </div>
               <div className="col-12">
                 <p>
-                  <Link className="link-profile" to="/update-projects">
+                  <Link className="link-profile" to="#">
                     ir a mis proyectos
                   </Link>
                 </p>
@@ -89,4 +101,4 @@ class CreateProjectForm extends React.Component {
   }
 }
 
-export default CreateProjectForm
+export default UpdateProjectForm

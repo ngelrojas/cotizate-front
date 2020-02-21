@@ -74,7 +74,7 @@ class CreateProjectForm extends React.Component {
               </div>
               <div className="col-12">
                 <p>
-                  <Link className="link-profile" to="/update-projects">
+                  <Link className="link-profile" to="#">
                     ir a mis proyectos
                   </Link>
                 </p>

@@ -85,7 +85,7 @@ class PersonalDataAdd extends React.Component{
                 headers: {'Authorization': 'token ' + token}   
            }).then(res => {
                 this.setState({msg: 'sus datos se actualizaron correctament.'})
-                console.log(res) 
+                
                 }).catch(err => {
                     this.setState({msg: 'por favor revise que todos los campos esten completos.'})
                 console.log(err) 
