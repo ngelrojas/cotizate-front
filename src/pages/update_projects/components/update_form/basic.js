@@ -1,5 +1,6 @@
 import React from 'react'
 import API_URL from '../../../../conf/apis.js'
+// import API from '../../../../conf/api.js'
 
 class BasicForm extends React.Component {
   constructor() {
@@ -26,16 +27,19 @@ class BasicForm extends React.Component {
     this.setState({categories: data})
   }
 
-  componentDidMount() {
-    this.getCategories()
-    this.getCampaings()
-
-    // console.log(camp['title'])
-  }
-
   getCampaings = () => {
-    let camp = JSON.parse(window.localStorage.getItem('campaing'))
-    this.setState({fields: camp})
+    let campaingId = window.localStorage.getItem('campaingId')
+    let token = window.sessionStorage.getItem('token')
+    fetch(API_URL + `/campaing/${campaingId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'token ' + token,
+      },
+    })
+      .then(resp => resp.json())
+      .then(response => {
+        this.setState({fields: response.data})
+      })
   }
 
   handleSubmit = e => {
@@ -44,26 +48,35 @@ class BasicForm extends React.Component {
     let msg = ''
 
     if (this.validateForm()) {
-      console.log(this.state.fields)
-      /*let fieldArray = [*/
-      //this.state.fields.title,
-      //this.state.fields.city,
-      //this.state.fields.category,
-      //this.state.fields.budget,
-      //this.state.fields.currencies,
-      //this.state.fields.qty_days,
-      //this.state.fields.facebook,
-      //this.state.fields.instagram,
-      //this.state.fields.linkedin,
-      //this.state.fields.twitter,
-      //this.state.fields.website,
-      //]
-
-      //window.localStorage.setItem('basic', JSON.stringify(fieldArray))
-      //msg = 'primera parte del proyecto actualizado. '
-      //this.setState({
-      //msg: msg,
-      /*})*/
+      let campaingId = window.localStorage.getItem('campaingId')
+      let token = window.sessionStorage.getItem('token')
+      console.log(this.state.fields.category)
+      /*fetch(API_URL + `/campaing`, {*/
+      //method: 'PUT',
+      //headers: {
+      //Authorization: 'token ' + token,
+      //'Content-Type': 'application/json',
+      //},
+      //body: JSON.stringify({
+      //id: campaingId,
+      //title: this.state.fields.title,
+      //city: this.state.fields.city,
+      //category: this.state.fields.category.id,
+      //budget: this.state.fields.budget,
+      //currencies: this.state.fields.currencies.id,
+      //qty_days: this.state.fields.qty_days,
+      //facebook: this.state.fields.facebook,
+      //instagram: this.state.fields.instagram,
+      //linkedin: this.state.fields.linkedin,
+      //twitter: this.state.fields.twitter,
+      //website: this.state.fields.website,
+      //}),
+      //})
+      //.then(resp => resp.json())
+      //.then(response => {
+      //console.log(response)
+      //})
+      /*.catch(err => console.log(err))*/
     }
   }
 
@@ -109,9 +122,14 @@ class BasicForm extends React.Component {
     return formIsValid
   }
 
+  componentDidMount() {
+    this.getCampaings()
+    this.getCategories()
+  }
+
   render() {
     const {categories} = this.state
-    console.log(this.state.fields.category)
+
     return (
       <div className="container-site_on">
         <form method="post" onSubmit={this.handleSubmit}>
@@ -160,7 +178,9 @@ class BasicForm extends React.Component {
                   onChange={this.handleChange}>
                   {categories &&
                     categories.map(category => (
-                      <option key={category.id}>{category.name}</option>
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
                     ))}
                 </select>
               </label>
@@ -186,7 +206,13 @@ class BasicForm extends React.Component {
                   name="currencies"
                   value={this.state.fields.currencies || ''}
                   onChange={this.handleChange}>
-                  <option value="">Seleccionar</option>
+                  {this.state.fields.currencies ? (
+                    <option value={this.state.fields.currencies.id}>
+                      {this.state.fields.currencies.name}
+                    </option>
+                  ) : (
+                    'no data'
+                  )}
                   <option value="1">Bolivianos</option>
                   <option value="2">Dolares</option>
                 </select>
@@ -280,7 +306,7 @@ class BasicForm extends React.Component {
           <div className="container">
             <div className="col col-md-8">
               <button type="submit" className="btn btn-primary">
-                GUARDAR
+                ACTUALIZAR
               </button>
             </div>
           </div>

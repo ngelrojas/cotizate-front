@@ -21,36 +21,16 @@ class UpdateProjectForm extends React.Component {
     return token
   }
 
-  async getCampaings() {
+  componentDidMount() {
     let campaingId = this.props.match.params.campaingId
     window.localStorage.setItem('campaingId', campaingId)
-    let token = window.sessionStorage.getItem('token')
-    await fetch(API_URL + `/campaing/${campaingId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: 'token ' + token,
-      },
-    })
-      .then(resp => resp.json())
-      .then(response => {
-        this.setState({campaing: response.data})
-        window.localStorage.setItem('campaing', JSON.stringify(response.data))
-      })
-  }
-
-  componentDidMount() {
-    this.getCampaings()
   }
 
   render() {
-    const {campaing} = this.state
     return (
       <div className="container-site_on">
         <div className="title-steps">
-          <h4>
-            Estas Actualizando{' '}
-            <span className="title-steps__title">{campaing.title}</span>.
-          </h4>
+          <h4>Por favor verifique que todos sus datos sean correctos.</h4>
         </div>
 
         <Tabs>
