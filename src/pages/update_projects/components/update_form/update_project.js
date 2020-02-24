@@ -5,7 +5,6 @@ import Tabs from '../../../tabs/Tabs.js'
 import BasicForm from './basic.js'
 import HistoryForm from './history.js'
 import RewardForm from './reward.js'
-import API_URL from '../../../../conf/apis.js'
 import './update_project.css'
 
 class UpdateProjectForm extends React.Component {

@@ -23,29 +23,37 @@ class App extends Component {
           <HeaderContent />
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/explore-project" component={ExplorerProject} />
-            <Route path="/create-project" component={CreateProject} />
+            <Route exact path="/explore-project" component={ExplorerProject} />
+            <Route exact path="/create-project" component={CreateProject} />
             <Route
+              exact
               path="/project/create-project"
               component={CreateProjectForm}
             />
-            <Route path="/project/update-projects" component={UpdateProject} />
             <Route
+              exact
+              path="/project/update-projects"
+              component={UpdateProject}
+            />
+            <Route
+              exact
               path="/project/update/:campaingId"
               component={UpdateProjectForm}
             />
-            <Route path="/project/preview" component={PreviewProject} />
-            <Route path="/description" component={DescriptionProject} />
-            <Route path="/terms-and-contiditions" component={TermsPage} />
+            <Route exact path="/project/preview" component={PreviewProject} />
+            <Route exact path="/description" component={DescriptionProject} />
+            <Route exact path="/terms-and-contiditions" component={TermsPage} />
             <Route
+              exact
               path="/activation-account/:uuid/:token"
               component={ActivationRegister}
             />
             <Route
+              exact
               path="/recovery-password/:uuid/:token"
               component={RecoveryPassword}
             />
-            <Route path="/profile/me" component={ProfileUser} />
+            <Route exact path="/profile/me" component={ProfileUser} />
           </Switch>
         </div>
       </HashRouter>

@@ -7,8 +7,8 @@ import {Editor} from '@tinymce/tinymce-react'
 import './reward.css'
 
 class RewardForm extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       fields: {},
       errors: {},
@@ -30,11 +30,23 @@ class RewardForm extends React.Component {
     this.setState({fields})
   }
 
-  async getRewards() {
-    let campaing_id = window.localStorage.getItem('_id')
-    const data = await fetch(API_URL + `/rewards/${campaing_id}`)
-    const rewards = await data.json()
-    this.setState({rewards: rewards})
+  getRewards = () => {
+    let campaingId = window.localStorage.getItem('campaingId')
+    let token = window.sessionStorage.getItem('token')
+    fetch(API_URL + `/reward/${campaingId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'token ' + token,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        this.setState({rewards: response})
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   handleSubmit = async e => {
@@ -123,6 +135,14 @@ class RewardForm extends React.Component {
     this.setState({errors: errors})
 
     return formIsValid
+  }
+
+  handleClick = e => {
+    console.log('here ', e)
+  }
+
+  componentDidMount() {
+    this.getRewards()
   }
 
   render() {
@@ -221,9 +241,7 @@ class RewardForm extends React.Component {
                       'insertdatetime media table paste code help wordcount',
                     ],
                     toolbar:
-                      'undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | image | \
-                     imagetools bullist numlist outdent indent | removeformat | help',
+                      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | imagetools bullist numlist outdent indent | removeformat | help',
                     automatic_uploads: true,
                     file_picker_types: 'image',
                     file_picker_callback: function(cb, value, meta) {
@@ -242,7 +260,6 @@ class RewardForm extends React.Component {
                           var blobInfo = blobCache.create(id, file, base64)
                           blobCache.add(blobInfo)
 
-                          /* call the callback and populate the Title field with the file name */
                           cb(blobInfo.blobUri(), {title: file.name})
                         }
                         reader.readAsDataURL(file)
@@ -266,7 +283,7 @@ class RewardForm extends React.Component {
             </div>
           </form>
 
-          <TableReward rewards={rewards} />
+          <TableReward rewards={rewards} reward_btn={this.handleClick} />
         </div>
       </div>
     )

@@ -11,6 +11,7 @@ class BasicForm extends React.Component {
       msg: '',
       categories: [],
       campaing: {},
+      auxfields: {},
     }
   }
 
@@ -19,6 +20,13 @@ class BasicForm extends React.Component {
     let fields = this.state.fields
     fields[e.target.name] = e.target.value
     this.setState({fields})
+  }
+
+  auxChange = e => {
+    e.preventDefault()
+    let auxfields = this.state.auxfields
+    auxfields[e.target.name] = e.target.value
+    this.setState({auxfields})
   }
 
   async getCategories() {
@@ -50,33 +58,36 @@ class BasicForm extends React.Component {
     if (this.validateForm()) {
       let campaingId = window.localStorage.getItem('campaingId')
       let token = window.sessionStorage.getItem('token')
-      console.log(this.state.fields.category)
-      /*fetch(API_URL + `/campaing`, {*/
-      //method: 'PUT',
-      //headers: {
-      //Authorization: 'token ' + token,
-      //'Content-Type': 'application/json',
-      //},
-      //body: JSON.stringify({
-      //id: campaingId,
-      //title: this.state.fields.title,
-      //city: this.state.fields.city,
-      //category: this.state.fields.category.id,
-      //budget: this.state.fields.budget,
-      //currencies: this.state.fields.currencies.id,
-      //qty_days: this.state.fields.qty_days,
-      //facebook: this.state.fields.facebook,
-      //instagram: this.state.fields.instagram,
-      //linkedin: this.state.fields.linkedin,
-      //twitter: this.state.fields.twitter,
-      //website: this.state.fields.website,
-      //}),
-      //})
-      //.then(resp => resp.json())
-      //.then(response => {
-      //console.log(response)
-      //})
-      /*.catch(err => console.log(err))*/
+      fetch(API_URL + `/campaing`, {
+        method: 'PUT',
+        headers: {
+          Authorization: 'token ' + token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: campaingId,
+          title: this.state.fields.title,
+          city: this.state.fields.city,
+          category: this.state.auxfields.category,
+          budget: this.state.fields.budget,
+          currencies: this.state.auxfields.currencies,
+          qty_days: this.state.fields.qty_days,
+          facebook: this.state.fields.facebook,
+          instagram: this.state.fields.instagram,
+          linkedin: this.state.fields.linkedin,
+          twitter: this.state.fields.twitter,
+          website: this.state.fields.website,
+        }),
+      })
+        .then(resp => resp.json())
+        .then(response => {
+          msg = 'datos de su proyecto actualizado.'
+          this.setState({msg})
+        })
+        .catch(err => {
+          let error = 'por favor elija una categoria y un tipo de moneda.'
+          this.setState({msg: error})
+        })
     }
   }
 
@@ -173,9 +184,9 @@ class BasicForm extends React.Component {
                 </span>
                 <select
                   className="form-control"
-                  value={this.state.fields.category || ''}
+                  value={this.state.auxfields.category || ''}
                   name="category"
-                  onChange={this.handleChange}>
+                  onChange={this.auxChange}>
                   {categories &&
                     categories.map(category => (
                       <option key={category.id} value={category.id}>
@@ -204,15 +215,8 @@ class BasicForm extends React.Component {
                 <select
                   className="form-control"
                   name="currencies"
-                  value={this.state.fields.currencies || ''}
-                  onChange={this.handleChange}>
-                  {this.state.fields.currencies ? (
-                    <option value={this.state.fields.currencies.id}>
-                      {this.state.fields.currencies.name}
-                    </option>
-                  ) : (
-                    'no data'
-                  )}
+                  value={this.state.auxfields.currencies || ''}
+                  onChange={this.auxChange}>
                   <option value="1">Bolivianos</option>
                   <option value="2">Dolares</option>
                 </select>

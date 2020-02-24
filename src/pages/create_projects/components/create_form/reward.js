@@ -1,5 +1,4 @@
 import React from 'react'
-// import {Link} from 'react-router-dom'
 import API from '../../../../conf/api.js'
 import API_URL from '../../../../conf/apis.js'
 import {TableReward} from './table-reward.js'

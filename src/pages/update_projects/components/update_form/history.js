@@ -54,13 +54,35 @@ class HistoryForm extends React.Component {
     this.setState({tags: tag})
   }
 
+  getCampaings = () => {
+    let campaingId = window.localStorage.getItem('campaingId')
+    let token = window.sessionStorage.getItem('token')
+    fetch(API_URL + `/campaing/${campaingId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'token ' + token,
+      },
+    })
+      .then(resp => resp.json())
+      .then(response => {
+        this.setState({
+          fields: response.data,
+          selectedShips: response.data.tags,
+        })
+      })
+  }
+
   handleSubmit = async e => {
     e.preventDefault()
     if (this.validateForm()) {
       let excerpt_data = this.state.excerpt
+        ? this.state.excerpt
+        : this.state.fields.excerpt
       let description_data = this.state.description
-      let basic_data = JSON.parse(window.localStorage.getItem('basic'))
-      let is_token = window.sessionStorage.getItem('token')
+        ? this.state.description
+        : this.state.fields.description
+      let campaingId = window.localStorage.getItem('campaingId')
+      let token = window.sessionStorage.getItem('token')
       let _msg = {}
       let tags = this.state.selectedShips
       let list_tags = []
@@ -70,52 +92,34 @@ class HistoryForm extends React.Component {
           list_tags.push(tag.id)
         })
 
-      if (basic_data) {
-        await API.post(
-          `/campaing`,
-          {
-            title: basic_data[0],
-            city: basic_data[1],
-            category: basic_data[2],
-            budget: basic_data[3],
-            currencies: basic_data[4],
-            qty_days: basic_data[5],
-            facebook: basic_data[6],
-            instagram: basic_data[7],
-            linkedin: basic_data[8],
-            twitter: basic_data[9],
-            website: basic_data[10],
-            tags: list_tags,
-            video: this.state.fields.video,
-            excerpt: excerpt_data,
-            description: description_data,
-          },
-          {
-            headers: {Authorization: 'token ' + is_token},
-          },
-        )
-          .then(res => {
-            _msg['success'] = 'segunda parte del proyecto guardado.'
-            let _id = res.data.id
-            this.setState({msg: _msg})
-            window.localStorage.removeItem('basic')
-            window.localStorage.setItem('_id', _id)
-          })
-          .catch(err => {
-            _msg['error'] = 'por favor revise su proyecto'
-            this.setState({msg: _msg})
-            console.log(err)
-          })
-      } else {
-        alert('por favor complete el apartado de Basico de su proyecto.')
-      }
+      fetch(API_URL + `/campaing`, {
+        method: 'PUT',
+        headers: {
+          Authorization: 'token ' + token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: campaingId,
+          video: this.state.fields.video,
+          excerpt: excerpt_data,
+          description: description_data,
+          tags: list_tags,
+        }),
+      })
+        .then(resp => resp.json())
+        .then(response => {
+          _msg['success'] = 'segunda parte del proyecto actualizada.'
+          this.setState({msg: _msg})
+        })
+        .catch(err => {
+          _msg['error'] = 'por favor intentalo mas tarde.'
+          this.setState({msg: _msg})
+        })
     }
   }
 
   validateForm() {
     let fields = this.state.fields
-    let excerpt = this.state.excerpt
-    let description = this.state.description
     let errors = {}
     let formIsValid = true
 
@@ -123,11 +127,11 @@ class HistoryForm extends React.Component {
       formIsValid = false
       errors['video'] = 'Tu proyecto debe contener video.'
     }
-    if (!excerpt) {
+    if (!fields['excerpt']) {
       formIsValid = false
       errors['excerpt'] = 'Tu proyecto debe contener un resumen.'
     }
-    if (!description) {
+    if (!fields['description']) {
       formIsValid = false
       errors['description'] =
         'Tu proyecto debe contener una description completa.'
@@ -140,13 +144,13 @@ class HistoryForm extends React.Component {
     return formIsValid
   }
   componentDidMount() {
+    this.getCampaings()
     this.getTags()
   }
 
   render() {
     const {tags} = this.state
     const {selectedShips} = this.state
-
     return (
       <div className="container-site_on">
         <form method="post" onSubmit={this.handleSubmit}>
@@ -220,7 +224,7 @@ class HistoryForm extends React.Component {
                   Cuenta un poco sobre tu proyecto (resumen)
                 </span>
                 <Editor
-                  initialValue=""
+                  initialValue={this.state.fields.excerpt}
                   init={{
                     height: 500,
                     menubar: true,
@@ -231,9 +235,7 @@ class HistoryForm extends React.Component {
                       'insertdatetime media table paste code help wordcount',
                     ],
                     toolbar:
-                      'undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | image | \
-                     imagetools bullist numlist outdent indent | removeformat | help',
+                      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | imagetools bullist numlist outdent indent | removeformat | help',
                     automatic_uploads: true,
                     file_picker_types: 'image',
                     file_picker_callback: function(cb, value, meta) {
@@ -252,7 +254,6 @@ class HistoryForm extends React.Component {
                           var blobInfo = blobCache.create(id, file, base64)
                           blobCache.add(blobInfo)
 
-                          /* call the callback and populate the Title field with the file name */
                           cb(blobInfo.blobUri(), {title: file.name})
                         }
                         reader.readAsDataURL(file)
@@ -273,7 +274,7 @@ class HistoryForm extends React.Component {
                   descripcion completa de tu proyecto.
                 </span>
                 <Editor
-                  initialValue=""
+                  initialValue={this.state.fields.description}
                   init={{
                     height: 500,
                     menubar: true,
@@ -284,9 +285,7 @@ class HistoryForm extends React.Component {
                       'insertdatetime media table paste code help wordcount',
                     ],
                     toolbar:
-                      'undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | image | \
-                     imagetools bullist numlist outdent indent | removeformat | help',
+                      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | imagetools bullist numlist outdent indent | removeformat | help',
                     automatic_uploads: true,
                     file_picker_types: 'image',
                     file_picker_callback: function(cb, value, meta) {
@@ -305,7 +304,6 @@ class HistoryForm extends React.Component {
                           var blobInfo = blobCache.create(id, file, base64)
                           blobCache.add(blobInfo)
 
-                          /* call the callback and populate the Title field with the file name */
                           cb(blobInfo.blobUri(), {title: file.name})
                         }
                         reader.readAsDataURL(file)

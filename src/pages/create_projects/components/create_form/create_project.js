@@ -6,8 +6,6 @@ import BasicForm from './basic.js'
 import HistoryForm from './history.js'
 import RewardForm from './reward.js'
 import './create_project.css'
-import API from '../../../../conf/api.js'
-import URL_API from '../../../../conf/apis.js'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
