@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {MdCreate, MdClear} from 'react-icons/md'
 
 export const TableReward = ({rewards, reward_btn}) => {
   return (
@@ -12,7 +13,6 @@ export const TableReward = ({rewards, reward_btn}) => {
             <td>VALOR</td>
             <td>MONEDA</td>
             <td>TIPO</td>
-            <td>FECHA</td>
             <td colSpan="2"></td>
           </tr>
         </thead>
@@ -26,12 +26,16 @@ export const TableReward = ({rewards, reward_btn}) => {
                 <td>
                   {reward.type_reward === 1 ? 'Donacion' : 'Contribucion'}
                 </td>
-                <td>{`${new Date(reward.delivery_data).toDateString()}`}</td>
                 <td colSpan="2">
-                  <Link to="#" onClick={() => reward_btn(reward.id)}>
-                    edit
-                  </Link>{' '}
-                  |<Link to="#">delete</Link>
+                  <Link
+                    to={`/project/update/${reward.campaing}`}
+                    className="btn"
+                    onClick={() => reward_btn(reward.id)}>
+                    <MdCreate />
+                  </Link>
+                  <Link className="btn" to="#">
+                    <MdClear />
+                  </Link>
                 </td>
               </tr>
             ))}

@@ -58,6 +58,8 @@ class BasicForm extends React.Component {
     if (this.validateForm()) {
       let campaingId = window.localStorage.getItem('campaingId')
       let token = window.sessionStorage.getItem('token')
+      // console.log(this.state.auxfields.category)
+      // console.log(this.state.auxfields.currencies)
       fetch(API_URL + `/campaing`, {
         method: 'PUT',
         headers: {

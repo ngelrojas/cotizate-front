@@ -4,6 +4,8 @@ import API from '../../../../conf/api.js'
 import API_URL from '../../../../conf/apis.js'
 import {TableReward} from './table-reward.js'
 import {Editor} from '@tinymce/tinymce-react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import './reward.css'
 
 class RewardForm extends React.Component {
@@ -16,11 +18,13 @@ class RewardForm extends React.Component {
       msg: '',
       initial_value: '',
       rewards: [],
+      startDate: '',
     }
   }
 
   handleEditorReward = (content, editor) => {
     this.setState({des_reward: content})
+    console.log(content)
   }
 
   handleChange = async e => {
@@ -28,6 +32,12 @@ class RewardForm extends React.Component {
     let fields = this.state.fields
     fields[e.target.name] = e.target.value
     this.setState({fields})
+  }
+
+  handleDate = date => {
+    this.setState({
+      startDate: date,
+    })
   }
 
   getRewards = () => {
@@ -53,20 +63,29 @@ class RewardForm extends React.Component {
     e.preventDefault()
 
     if (this.validateForm()) {
-      let campaing_id = window.localStorage.getItem('_id')
+      let campaing_id = window.localStorage.getItem('campaingId')
       let token = window.sessionStorage.getItem('token')
-      let date = this.state.fields.date
+      let date = this.state.startDate
+        ? this.state.startDate
+        : this.state.fields.delivery_data
       let msg = ''
-
-      await API.post(
+      /*console.log('begin')*/
+      //console.log(this.state.fields.title)
+      //console.log(this.state.fields.price)
+      //console.log(date)
+      //console.log(this.state.des_reward)
+      //console.log(this.state.fields.currencies)
+      //console.log(this.state.fields.type_reward)
+      /*console.log('end')*/
+      await API.put(
         `/reward`,
         {
           campaing: campaing_id,
-          title: this.state.fields.title_reward,
-          price: this.state.fields.price_reward,
+          title: this.state.fields.title,
+          price: this.state.fields.price,
           type_reward: this.state.fields.type_reward,
-          delivery_data: date + ' 00:00',
-          delivery_place: date + ' 00:00 ',
+          delivery_data: date,
+          delivery_place: date,
           description: this.state.des_reward,
           currencies: this.state.fields.currencies,
         },
@@ -77,7 +96,7 @@ class RewardForm extends React.Component {
         .then(res => {
           this.getRewards()
 
-          msg = 'recompensa adicionada.'
+          msg = 'recompensa actualizada.'
           this.setState({
             msg: msg,
             initial_value: '',
@@ -93,33 +112,34 @@ class RewardForm extends React.Component {
   }
 
   clear_fields = fields => {
-    fields['title_reward'] = ''
-    fields['price_reward'] = ''
-    fields['currencies'] = '1'
+    fields['title'] = ''
+    fields['price'] = ''
+    fields['currencies'] = '0'
     fields['date'] = ''
-    fields['type_reward'] = '2'
+    fields['type_reward'] = '0'
   }
 
   validateForm() {
     let fields = this.state.fields
     let des_reward = this.state.des_reward
+    // let date = this.state.startDate
     let errors = {}
     let formIsValid = true
 
-    if (!fields['title_reward']) {
+    if (!fields['title']) {
       formIsValid = false
-      errors['title_reward'] = 'las recomopensa deben contener un titulo.'
+      errors['title'] = 'las recomopensa deben contener un titulo.'
     }
 
-    if (!fields['price_reward']) {
+    if (!fields['price']) {
       formIsValid = false
       errors['price_reward'] = 'las recompensas deben tener un valor de precio.'
     }
 
-    if (!fields['date']) {
-      formIsValid = false
-      errors['date'] = 'las recompensas deben una fecha de entrega.'
-    }
+    //if (date.length === 0) {
+    //formIsValid = false
+    //errors['date'] = 'las recompensas deben una fecha de entrega.'
+    /*}*/
 
     if (!fields['type_reward']) {
       formIsValid = false
@@ -137,8 +157,27 @@ class RewardForm extends React.Component {
     return formIsValid
   }
 
-  handleClick = e => {
-    console.log('here ', e)
+  getRewardDetail = async rewardId => {
+    let token = window.sessionStorage.getItem('token')
+
+    await API.get(`/reward-detail/${rewardId}`, {
+      headers: {Authorization: 'token ' + token},
+    })
+      .then(response => {
+        this.setState({
+          fields: response.data.data,
+        })
+        this.noise()
+      })
+      .catch(err => console.log(err))
+  }
+
+  handleClick = rewardId => {
+    this.getRewardDetail(rewardId)
+  }
+
+  noise = () => {
+    return this.state.fields.title
   }
 
   componentDidMount() {
@@ -162,29 +201,30 @@ class RewardForm extends React.Component {
                 <input
                   type="text"
                   className="form-control"
-                  value={this.state.fields.title_reward || ''}
-                  name="title_reward"
+                  value={this.state.fields.title || ''}
+                  name="title"
                   onChange={this.handleChange}
                 />
-                <div className="MsgError">{this.state.errors.title_reward}</div>
+                <div className="MsgError">{this.state.errors.title}</div>
               </label>
               <label className="col-md-6">
                 <span className="form-sub-title">valor de la recompensa</span>
                 <input
                   type="numeric"
                   className="form-control"
-                  value={this.state.fields.price_reward || ''}
-                  name="price_reward"
+                  value={this.state.fields.price || ''}
+                  name="price"
                   onChange={this.handleChange}
                 />
-                <div className="MsgError">{this.state.errors.price_reward}</div>
+                <div className="MsgError">{this.state.errors.price}</div>
               </label>
               <label className="col-md-4">
                 <span className="form-sub-title">Moneda</span>
                 <select
                   className="form-control"
                   name="currencies"
-                  onChange={this.handleChange}>
+                  onChange={this.handleChange}
+                  value={this.state.fields.currencies}>
                   <option value="0">Seleccionar una Moneda</option>
                   <option value={this.state.fields.currencies || '1'}>
                     Bolivianos
@@ -197,27 +237,30 @@ class RewardForm extends React.Component {
             </div>
             <div className="form-group">
               <label className="col-md-10">
-                <span className="form-sub-title">Fecha estimada</span>
-                <input
-                  type="date"
+                <span className="form-sub-title">
+                  Fecha estimada:{' '}
+                  {`${new Date(
+                    this.state.fields.delivery_data,
+                  ).toLocaleDateString()}`}
+                </span>
+
+                <DatePicker
                   className="form-control"
-                  value={this.state.fields.date || ''}
                   name="date"
-                  onChange={this.handleChange}
+                  selected={this.state.startDate}
+                  onChange={this.handleDate}
                 />
-                <div className="MsgError">{this.state.errors.date}</div>
               </label>
               <label className="col-md-10">
                 <span className="form-sub-title">Tipo de Recompensa</span>
                 <select
                   className="form-control"
                   name="type_reward"
-                  onChange={this.handleChange}>
+                  onChange={this.handleChange}
+                  value={this.state.fields.type_reward}>
                   <option value="0">Tipo de Recompensa</option>
-                  <option value={this.state.fields.type_reward || '1'}>
-                    Donacion
-                  </option>
-                  <option value={this.state.fields.type_reward || '2'}>
+                  <option value="1">Donacion</option>
+                  <option defaultValue value="2">
                     Contribucion
                   </option>
                 </select>
@@ -228,9 +271,8 @@ class RewardForm extends React.Component {
             <div className="form-group">
               <label className="col-md-10">
                 <span className="form-sub-title">Descripcion</span>
-
                 <Editor
-                  initialValue={this.state.initial_value}
+                  initialValue={this.state.fields.description}
                   init={{
                     height: 500,
                     menubar: true,
@@ -277,7 +319,7 @@ class RewardForm extends React.Component {
               <div className="MsgSuccess">{this.state.msg}</div>
               <div className="col-6">
                 <button type="submit" className="btn btn-primary">
-                  CREAR RECOMPENSA
+                  ACTUALIZAR RECOMPENSA
                 </button>
               </div>
             </div>
