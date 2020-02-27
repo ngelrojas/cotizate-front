@@ -109,3 +109,25 @@
 .link-profile {
   color: #f37a22 !important;
 }
+.form-sub-warning {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+.react-sanfona {
+}
+.item-profile {
+  background-color: #ccc;
+  padding: 1%;
+}
+.item-profile > h3 {
+  font-size: 18px;
+  padding: 1%;
+  color: #f37a22;
+}
+.txt-profile {
+  color: #595959;
+}
+.txt-link-profile {
+  color: #1e84c6 !important;
+}

@@ -14,7 +14,7 @@ class UpdateProject extends Component {
   }
 
   getCampaings = () => {
-    window.localStorage.removeItem('_id')
+    window.localStorage.removeItem('campaingId')
     let token = window.sessionStorage.getItem('token')
     API.get(`/campaing`, {
       headers: {Authorization: 'token ' + token},

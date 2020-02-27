@@ -5,6 +5,7 @@ import Tabs from '../../../tabs/Tabs.js'
 import BasicForm from './basic.js'
 import HistoryForm from './history.js'
 import RewardForm from './reward.js'
+import {Accordion, AccordionItem} from 'react-sanfona'
 import './create_project.css'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
@@ -57,26 +58,31 @@ class CreateProjectForm extends React.Component {
 
           <div label="Mi Perfil">
             <div className="row">
-              <div className="col-12">
-                <p>
-                  Para poder concluir con la etapa de publicacion del proyecto
-                </p>
-              </div>
-              <div className="col-12">
-                <p>
-                  por favor debe actualizar su {'  '}
-                  <Link className="link-profile" to="/profile/me">
-                    perfil
-                  </Link>
-                </p>
-              </div>
-              <div className="col-12">
-                <p>
-                  <Link className="link-profile" to="/update-projects">
-                    ir a mis proyectos
-                  </Link>
-                </p>
-              </div>
+              <Accordion className="col col-12">
+                <AccordionItem
+                  className="item-profile"
+                  title="ACTUALIZAR PERFIL">
+                  <div className="col col-12">
+                    <p className="txt-profile">
+                      por favor debe actualizar su {'  '}
+                      <Link className="txt-link-profile" to="/profile/me">
+                        perfil
+                      </Link>
+                    </p>
+                  </div>
+                </AccordionItem>
+                <AccordionItem
+                  className="item-profile"
+                  title="LISTA DE PROYECTOS">
+                  <div className="col col-12">
+                    <p className="txt-profile">
+                      <Link className="txt-link-profile" to="/update-projects">
+                        ir a mis proyectos
+                      </Link>
+                    </p>
+                  </div>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </Tabs>

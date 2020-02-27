@@ -2,7 +2,9 @@ import React from 'react'
 import API from '../../../../conf/api.js'
 import API_URL from '../../../../conf/apis.js'
 import {TableReward} from './table-reward.js'
+import DatePicker from 'react-datepicker'
 import {Editor} from '@tinymce/tinymce-react'
+import 'react-datepicker/dist/react-datepicker.css'
 import './reward.css'
 
 class RewardForm extends React.Component {
@@ -15,6 +17,7 @@ class RewardForm extends React.Component {
       msg: '',
       initial_value: '',
       rewards: [],
+      startDate: '',
     }
   }
 
@@ -29,8 +32,14 @@ class RewardForm extends React.Component {
     this.setState({fields})
   }
 
+  handleDate = date => {
+    this.setState({
+      startDate: date,
+    })
+  }
+
   async getRewards() {
-    let campaing_id = window.localStorage.getItem('_id')
+    let campaing_id = window.localStorage.getItem('campaingId')
     const data = await fetch(API_URL + `/rewards/${campaing_id}`)
     const rewards = await data.json()
     this.setState({rewards: rewards})
@@ -40,9 +49,9 @@ class RewardForm extends React.Component {
     e.preventDefault()
 
     if (this.validateForm()) {
-      let campaing_id = window.localStorage.getItem('_id')
+      let campaing_id = window.localStorage.getItem('campaingId')
       let token = window.sessionStorage.getItem('token')
-      let date = this.state.fields.date
+      let date = this.state.startDate
       let msg = ''
 
       await API.post(
@@ -52,8 +61,8 @@ class RewardForm extends React.Component {
           title: this.state.fields.title_reward,
           price: this.state.fields.price_reward,
           type_reward: this.state.fields.type_reward,
-          delivery_data: date + ' 00:00',
-          delivery_place: date + ' 00:00 ',
+          delivery_data: date,
+          delivery_place: date,
           description: this.state.des_reward,
           currencies: this.state.fields.currencies,
         },
@@ -64,7 +73,7 @@ class RewardForm extends React.Component {
         .then(res => {
           this.getRewards()
 
-          msg = 'recompensa adicionada.'
+          msg = 'Recompensa Adicionada.'
           this.setState({
             msg: msg,
             initial_value: '',
@@ -82,41 +91,41 @@ class RewardForm extends React.Component {
   clear_fields = fields => {
     fields['title_reward'] = ''
     fields['price_reward'] = ''
-    fields['currencies'] = '1'
+    fields['currencies'] = '0'
     fields['date'] = ''
-    fields['type_reward'] = '2'
+    fields['type_reward'] = '0'
   }
 
   validateForm() {
     let fields = this.state.fields
     let des_reward = this.state.des_reward
+    let date = this.state.startDate
     let errors = {}
     let formIsValid = true
 
     if (!fields['title_reward']) {
       formIsValid = false
-      errors['title_reward'] = 'las recomopensa deben contener un titulo.'
+      errors['title_reward'] = ' deben contener un titulo.'
     }
 
     if (!fields['price_reward']) {
       formIsValid = false
-      errors['price_reward'] = 'las recompensas deben tener un valor de precio.'
+      errors['price_reward'] = 'deben contener un valor de precio.'
     }
 
-    if (!fields['date']) {
+    if (date.length === 0) {
       formIsValid = false
-      errors['date'] = 'las recompensas deben una fecha de entrega.'
+      errors['date'] = 'deben contener una fecha de entrega.'
     }
 
     if (!fields['type_reward']) {
       formIsValid = false
-      errors['type_reward'] =
-        'las recompensas debe contener un tipo de recompensa.'
+      errors['type_reward'] = 'debe contener un tipo de recompensa.'
     }
 
     if (des_reward.length === 0) {
       formIsValid = false
-      errors['des_reward'] = 'las recomponesas deben contener una descricion.'
+      errors['des_reward'] = 'deben contener una descripcion.'
     }
 
     this.setState({errors: errors})
@@ -135,6 +144,11 @@ class RewardForm extends React.Component {
                 <span className="form-sub-title">
                   Describe cuales son las Recompensas que ofreces.
                 </span>
+                <p>
+                  <span className="form-sub-warning">
+                    *Todos los campos son Obligatorios.
+                  </span>
+                </p>
               </label>
               <label className="col-md-10">
                 <span className="form-sub-title">Titulo de recompensa</span>
@@ -177,12 +191,11 @@ class RewardForm extends React.Component {
             <div className="form-group">
               <label className="col-md-10">
                 <span className="form-sub-title">Fecha estimada</span>
-                <input
-                  type="date"
+                <DatePicker
                   className="form-control"
-                  value={this.state.fields.date || ''}
                   name="date"
-                  onChange={this.handleChange}
+                  selected={this.state.startDate}
+                  onChange={this.handleDate}
                 />
                 <div className="MsgError">{this.state.errors.date}</div>
               </label>
@@ -207,7 +220,11 @@ class RewardForm extends React.Component {
             <div className="form-group">
               <label className="col-md-10">
                 <span className="form-sub-title">Descripcion</span>
-
+                <p>
+                  <span className="form-sub-title">
+                    * La descripcion solo debe contener 35 palabras.
+                  </span>
+                </p>
                 <Editor
                   initialValue={this.state.initial_value}
                   init={{
@@ -220,9 +237,7 @@ class RewardForm extends React.Component {
                       'insertdatetime media table paste code help wordcount',
                     ],
                     toolbar:
-                      'undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | image | \
-                     imagetools bullist numlist outdent indent | removeformat | help',
+                      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | imagetools bullist numlist outdent indent | removeformat | help',
                     automatic_uploads: true,
                     file_picker_types: 'image',
                     file_picker_callback: function(cb, value, meta) {
@@ -241,7 +256,6 @@ class RewardForm extends React.Component {
                           var blobInfo = blobCache.create(id, file, base64)
                           blobCache.add(blobInfo)
 
-                          /* call the callback and populate the Title field with the file name */
                           cb(blobInfo.blobUri(), {title: file.name})
                         }
                         reader.readAsDataURL(file)
@@ -255,10 +269,10 @@ class RewardForm extends React.Component {
                 <div className="MsgError">{this.state.errors.des_reward}</div>
               </label>
             </div>
-            <div className="row">
+            <div className="row-dev">
               <div className="MsgSuccess">{this.state.msg}</div>
               <div className="col-6">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary btn-sm">
                   CREAR RECOMPENSA
                 </button>
               </div>

@@ -1,7 +1,6 @@
 import React from 'react'
 import {Editor} from '@tinymce/tinymce-react'
 import FilteredMultiSelect from 'react-filtered-multiselect'
-import API from '../../../../conf/api.js'
 import API_URL from '../../../../conf/apis.js'
 
 class HistoryForm extends React.Component {
@@ -16,6 +15,7 @@ class HistoryForm extends React.Component {
       tags: '',
       selectedShips: [],
       sendTags: [],
+      visible: false,
     }
   }
 
@@ -108,10 +108,17 @@ class HistoryForm extends React.Component {
       })
         .then(resp => resp.json())
         .then(response => {
-          _msg['success'] = 'segunda parte del proyecto actualizada.'
-          this.setState({msg: _msg})
+          _msg['success'] = response.excerpt
+            ? 'El resumen de su proyecto no debe contener mas 35 palabras o 255 letras.'
+            : 'Segunda parte del proyecto actualizada.'
+
+          this.setState({
+            msg: _msg,
+            visible: true,
+          })
         })
         .catch(err => {
+          console.log(err)
           _msg['error'] = 'por favor intentalo mas tarde.'
           this.setState({msg: _msg})
         })
@@ -223,8 +230,13 @@ class HistoryForm extends React.Component {
                 <span className="form-sub-title">
                   Cuenta un poco sobre tu proyecto (resumen)
                 </span>
+                <p>
+                  <span className="form-sub-title">
+                    * El resumen solo debe contener 32 palabras.
+                  </span>
+                </p>
                 <Editor
-                  initialValue={this.state.fields.excerpt}
+                  value={this.state.fields.excerpt}
                   init={{
                     height: 500,
                     menubar: true,
@@ -274,7 +286,7 @@ class HistoryForm extends React.Component {
                   descripcion completa de tu proyecto.
                 </span>
                 <Editor
-                  initialValue={this.state.fields.description}
+                  value={this.state.fields.description}
                   init={{
                     height: 500,
                     menubar: true,
@@ -319,13 +331,16 @@ class HistoryForm extends React.Component {
             </div>
           </div>
           <div className="container">
-            <div className="col col-md-8 MsgSuccess">
+            <div
+              className={`col col-md-8 MsgSuccess ${
+                this.state.visible ? 'fadeIn' : 'fadeOut'
+              }`}>
               {this.state.msg.success}
             </div>
             <div className="MsgError">{this.state.msg.error}</div>
             <div className="col col-md-8">
-              <button type="submit" className="btn btn-primary">
-                Guardar
+              <button type="submit" className="btn btn-sm btn-primary">
+                ACTUALIZAR
               </button>
             </div>
           </div>

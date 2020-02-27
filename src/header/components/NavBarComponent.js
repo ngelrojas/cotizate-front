@@ -10,6 +10,7 @@ import {
   MdExpandMore,
   MdPersonOutline,
   MdViewHeadline,
+  MdCreate,
 } from 'react-icons/md'
 import API from '../../conf/api.js'
 import './css/menus.css'
@@ -128,6 +129,11 @@ class NavBarComponent extends Component {
                     <li>
                       <NavLink to="/profile/me">
                         Mi perfil <MdPersonOutline />
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/project/create-project">
+                        Crear Proyectos <MdCreate />
                       </NavLink>
                     </li>
                     <li>

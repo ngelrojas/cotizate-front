@@ -51,7 +51,7 @@ class UpdateProjectForm extends React.Component {
             </div>
           </div>
 
-          <div label="Mi Perfil">
+          <div label="Pre-Visualizacion">
             <div className="row">
               <div className="col-12">
                 <p>

@@ -33,6 +33,8 @@ class CreateProject extends Component {
 
   componentDidMount() {
     this.getCompleteBio()
+    window.localStorage.removeItem('campaingId')
+    window.localStorage.removeItem('basic')
   }
 
   render() {

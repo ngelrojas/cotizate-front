@@ -24,9 +24,7 @@ export const TableReward = ({rewards}) => {
                 <td>
                   {reward.type_reward === 1 ? 'Donacion' : 'Contribucion'}
                 </td>
-                <td>{`${new Date(
-                  reward.delivery_data,
-                ).toLocalDateString()}`}</td>
+                <td>{`${new Date(reward.delivery_data).toDateString()}`}</td>
               </tr>
             ))}
         </tbody>

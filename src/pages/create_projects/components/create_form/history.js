@@ -99,7 +99,7 @@ class HistoryForm extends React.Component {
             let _id = res.data.id
             this.setState({msg: _msg})
             window.localStorage.removeItem('basic')
-            window.localStorage.setItem('_id', _id)
+            window.localStorage.setItem('campaingId', _id)
           })
           .catch(err => {
             _msg['error'] = 'por favor revise su proyecto'
@@ -191,8 +191,7 @@ class HistoryForm extends React.Component {
               <label className="col-md-8">
                 <p>
                   <span className="form-sub-title">
-                    Agregar un video o imagen para la parte superior de tu
-                    proyecto.
+                    Agregar un video para la parte superior de tu proyecto.
                   </span>
                 </p>
                 <p>
@@ -203,7 +202,7 @@ class HistoryForm extends React.Component {
                 </p>
               </label>
               <label className="col-md-8">
-                <span className="form-sub-title">Coloca un video</span>
+                <span className="form-sub-title">Coloca tu video</span>
                 <input
                   type="text"
                   className="form-control"
@@ -219,6 +218,11 @@ class HistoryForm extends React.Component {
                 <span className="form-sub-title">
                   Cuenta un poco sobre tu proyecto (resumen)
                 </span>
+                <p>
+                  <span className="form-sub-title">
+                    * El resumen solo debe contener 35 palabras.
+                  </span>
+                </p>
                 <Editor
                   initialValue=""
                   init={{
@@ -231,9 +235,7 @@ class HistoryForm extends React.Component {
                       'insertdatetime media table paste code help wordcount',
                     ],
                     toolbar:
-                      'undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | image | \
-                     imagetools bullist numlist outdent indent | removeformat | help',
+                      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | imagetools bullist numlist outdent indent | removeformat | help',
                     automatic_uploads: true,
                     file_picker_types: 'image',
                     file_picker_callback: function(cb, value, meta) {
@@ -252,7 +254,6 @@ class HistoryForm extends React.Component {
                           var blobInfo = blobCache.create(id, file, base64)
                           blobCache.add(blobInfo)
 
-                          /* call the callback and populate the Title field with the file name */
                           cb(blobInfo.blobUri(), {title: file.name})
                         }
                         reader.readAsDataURL(file)
@@ -284,9 +285,7 @@ class HistoryForm extends React.Component {
                       'insertdatetime media table paste code help wordcount',
                     ],
                     toolbar:
-                      'undo redo | formatselect | bold italic backcolor | \
-                     alignleft aligncenter alignright alignjustify | image | \
-                     imagetools bullist numlist outdent indent | removeformat | help',
+                      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | imagetools bullist numlist outdent indent | removeformat | help',
                     automatic_uploads: true,
                     file_picker_types: 'image',
                     file_picker_callback: function(cb, value, meta) {
@@ -305,7 +304,6 @@ class HistoryForm extends React.Component {
                           var blobInfo = blobCache.create(id, file, base64)
                           blobCache.add(blobInfo)
 
-                          /* call the callback and populate the Title field with the file name */
                           cb(blobInfo.blobUri(), {title: file.name})
                         }
                         reader.readAsDataURL(file)
@@ -326,7 +324,7 @@ class HistoryForm extends React.Component {
             </div>
             <div className="MsgError">{this.state.msg.error}</div>
             <div className="col col-md-8">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary btn-sm">
                 Guardar
               </button>
             </div>

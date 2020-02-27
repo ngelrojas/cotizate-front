@@ -34,8 +34,9 @@ class BasicForm extends React.Component {
     e.preventDefault()
 
     let msg = ''
+    let is_key = window.localStorage.getItem('basic') === null ? true : false
 
-    if (this.validateForm()) {
+    if (this.validateForm() && is_key) {
       let fieldArray = [
         this.state.fields.title,
         this.state.fields.city,
@@ -130,6 +131,7 @@ class BasicForm extends React.Component {
                 <input
                   type="text"
                   className="form-control"
+                  placeholder="Pais - ciudad"
                   value={this.state.fields.city || ''}
                   name="city"
                   onChange={this.handleChange}
@@ -162,7 +164,7 @@ class BasicForm extends React.Component {
             <div className="form-group">
               <label className="col-md-6">
                 <span className="form-sub-title">
-                  Cuanto dinerp necesitas para tu proyecto ?
+                  Cuanto dinero necesitas para tu proyecto ?
                 </span>
                 <input
                   type="text"
@@ -272,7 +274,7 @@ class BasicForm extends React.Component {
           </div>
           <div className="container">
             <div className="col col-md-8">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary btn-sm">
                 GUARDAR
               </button>
             </div>

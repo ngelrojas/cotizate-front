@@ -1,6 +1,5 @@
 import React from 'react'
 import API_URL from '../../../../conf/apis.js'
-// import API from '../../../../conf/api.js'
 
 class BasicForm extends React.Component {
   constructor() {
@@ -12,6 +11,7 @@ class BasicForm extends React.Component {
       categories: [],
       campaing: {},
       auxfields: {},
+      visible: false,
     }
   }
 
@@ -58,8 +58,6 @@ class BasicForm extends React.Component {
     if (this.validateForm()) {
       let campaingId = window.localStorage.getItem('campaingId')
       let token = window.sessionStorage.getItem('token')
-      // console.log(this.state.auxfields.category)
-      // console.log(this.state.auxfields.currencies)
       fetch(API_URL + `/campaing`, {
         method: 'PUT',
         headers: {
@@ -83,8 +81,11 @@ class BasicForm extends React.Component {
       })
         .then(resp => resp.json())
         .then(response => {
-          msg = 'datos de su proyecto actualizado.'
-          this.setState({msg})
+          msg = 'Primera parte de su proyecto actualizado.'
+          this.setState({
+            msg,
+            visible: true,
+          })
         })
         .catch(err => {
           let error = 'por favor elija una categoria y un tipo de moneda.'
@@ -247,7 +248,7 @@ class BasicForm extends React.Component {
               <label className="col-md-8">
                 <span className="form-sub-title">
                   Adicione sus redes sociales (opcional), si no tiene redes
-                  sociales adicione 'no', o en aquelas que no tuviese.
+                  sociales adicione 'no', o en aquellas que no tuviese.
                 </span>
               </label>
               <label className="col-md-8">
@@ -306,12 +307,17 @@ class BasicForm extends React.Component {
           </div>
           <div className="container">
             <div className="col col-md-8">
-              <div className="successMsg">{this.state.msg}</div>
+              <div
+                className={`successMsg ${
+                  this.state.visible ? 'fadeIn' : 'fadeOut'
+                }`}>
+                {this.state.msg}
+              </div>
             </div>
           </div>
           <div className="container">
             <div className="col col-md-8">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-sm btn-primary">
                 ACTUALIZAR
               </button>
             </div>
