@@ -20,9 +20,7 @@ class CreateProject extends Component {
     API.get(`/user/biography/complete-bio`, {
       headers: {Authorization: 'token ' + token},
     })
-      .then(resp => {
-        console.log('can create a new project.')
-      })
+      .then(resp => {})
       .catch(err => {
         let blocks = {}
         blocks['css_block'] = 'disabled'

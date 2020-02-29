@@ -20,7 +20,6 @@ class UpdateProject extends Component {
       headers: {Authorization: 'token ' + token},
     })
       .then(resp => {
-        console.log(resp.data)
         this.setState({campaings: resp.data})
       })
       .catch(err => {

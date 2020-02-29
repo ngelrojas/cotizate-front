@@ -103,23 +103,19 @@ class NavBarComponent extends Component {
                 <NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink to="/create-project">CREAR PROYECTOS</NavLink>{' '}
+                <NavLink to="/create-project">CREAR PROYECTOS</NavLink>
               </li>
               <li className="nav-logo-cotizate">
                 <NavLink to="/">
                   <img src={LogoCotizate} alt="cotizate" />
-                </NavLink>{' '}
+                </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink to="#" onClick={() => this.openModalReg()}>
-                  MENU
-                </NavLink>{' '}
+                  CATEGORIAS
+                </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/#" onClick={() => this.openModalLogin()}>
-                  MENU
-                </NavLink>{' '}
-              </li>
+
               <li className="nav-item user-menu__name">
                 <NavLink to="#" onClick={() => this.openSubmenu()}>
                   hola, {this.state.data_user.name} <MdExpandMore />
@@ -166,6 +162,9 @@ class NavBarComponent extends Component {
                 </NavLink>{' '}
               </li>
               <li className="nav-item">
+                <NavLink to="/#">CATEGORIAS</NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="#" onClick={() => this.openModalReg()}>
                   REGISTRARSE
                 </NavLink>{' '}
@@ -174,9 +173,6 @@ class NavBarComponent extends Component {
                 <NavLink to="/#" onClick={() => this.openModalLogin()}>
                   ENTRAR
                 </NavLink>{' '}
-              </li>
-              <li className="nav-item">
-                <NavLink to="/#">MENU</NavLink>{' '}
               </li>
             </ul>
           )}

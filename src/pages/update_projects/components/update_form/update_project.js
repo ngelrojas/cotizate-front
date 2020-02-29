@@ -12,6 +12,7 @@ class UpdateProjectForm extends React.Component {
     super()
     this.state = {
       campaing: [],
+      campaing_id: '',
     }
   }
 
@@ -22,6 +23,7 @@ class UpdateProjectForm extends React.Component {
 
   componentDidMount() {
     let campaingId = this.props.match.params.campaingId
+    this.setState({campaing_id: campaingId})
     window.localStorage.setItem('campaingId', campaingId)
   }
 
@@ -55,21 +57,10 @@ class UpdateProjectForm extends React.Component {
             <div className="row">
               <div className="col-12">
                 <p>
-                  Para poder concluir con la etapa de publicacion del proyecto
-                </p>
-              </div>
-              <div className="col-12">
-                <p>
-                  por favor debe actualizar su {'  '}
-                  <Link className="link-profile" to="/profile/me">
-                    perfil
-                  </Link>
-                </p>
-              </div>
-              <div className="col-12">
-                <p>
-                  <Link className="link-profile" to="#">
-                    ir a mis proyectos
+                  <Link
+                    className="link-profile btn btn-small btn-outline-dark"
+                    to={`/project/preview/${this.state.campaing_id}`}>
+                    Pre Visualizar proyecto
                   </Link>
                 </p>
               </div>

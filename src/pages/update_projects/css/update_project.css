@@ -38,3 +38,31 @@
   font-weight: bold;
   font-size: 12px;
 }
+.preview-h {
+  text-transform: uppercase;
+  text-align: justify;
+}
+.botton-save {
+  color: #ffffff !important;
+}
+.row-tags {
+  margin-top: 2%;
+  margin-bottom: 10%;
+}
+.tag-item {
+  text-transform: uppercase;
+  color: #f37a22;
+}
+.reward-title {
+  text-transform: uppercase;
+  color: #1e84c6;
+}
+.preview-p {
+  text-align: justify;
+}
+.box-reward {
+  margin-top: 15%;
+}
+.preview-content {
+  width: 100%;
+}

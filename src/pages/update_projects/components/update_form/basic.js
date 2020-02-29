@@ -44,8 +44,9 @@ class BasicForm extends React.Component {
         Authorization: 'token ' + token,
       },
     })
-      .then(resp => resp.json())
+      .then(res => res.json())
       .then(response => {
+        console.log(response.data)
         this.setState({fields: response.data})
       })
   }
