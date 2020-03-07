@@ -54,6 +54,26 @@ class HistoryForm extends React.Component {
     this.setState({tags: tag})
   }
 
+  handleSaveRaised = async id => {
+    let token = window.sessionStorage.getItem('token')
+    await API.post(
+      `/raised`,
+      {
+        amount: 0,
+        before_amount: 0,
+        count: 0,
+        campaing: id,
+      },
+      {headers: {Authorization: 'token ' + token}},
+    )
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   handleSubmit = async e => {
     e.preventDefault()
     if (this.validateForm()) {
@@ -100,6 +120,7 @@ class HistoryForm extends React.Component {
             this.setState({msg: _msg})
             window.localStorage.removeItem('basic')
             window.localStorage.setItem('campaingId', _id)
+            this.handleSaveRaised(_id)
           })
           .catch(err => {
             _msg['error'] = 'por favor revise su proyecto'

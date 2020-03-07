@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Modal from 'react-awesome-modal'
 import FormReg from './FormRegister'
 import FormLogin from './FormLogin'
@@ -26,6 +26,8 @@ class NavBarComponent extends Component {
       showSubMenu: false,
       isCreateProject: false,
       data_user: {},
+      showSubMenuCategory: false,
+      categories: [],
     }
   }
 
@@ -65,6 +67,18 @@ class NavBarComponent extends Component {
     })
   }
 
+  OpenMenuCategory = () => {
+    this.setState({showSubMenuCategory: true}, () => {
+      document.addEventListener('click', this.CloseMenuCategory)
+    })
+  }
+
+  CloseMenuCategory = () => {
+    this.setState({showSubMenuCategory: false}, () => {
+      document.removeEventListener('click', this.CloseMenuCategory)
+    })
+  }
+
   Logout = () => {
     window.sessionStorage.removeItem('token')
     this.setState({isToken: ''})
@@ -87,11 +101,24 @@ class NavBarComponent extends Component {
       })
   }
 
+  getCategories = () => {
+    API.get(`/category-list`)
+      .then(response => {
+        console.log(response.data)
+        this.setState({categories: response.data})
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   componentDidMount() {
     this.handlerCP()
+    this.getCategories()
   }
 
   render() {
+    const {categories} = this.state
     return (
       <div className="container-fluid">
         <div
@@ -100,47 +127,57 @@ class NavBarComponent extends Component {
           {this.state.isToken ? (
             <ul className="user-menu topBotomBordersOut navbar-nav mx-auto text-center">
               <li className="nav-item">
-                <NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink>
+                <Link to="/explore-project">EXPLORAR PROYECTOS</Link>
               </li>
               <li className="nav-item">
-                <NavLink to="/create-project">CREAR PROYECTOS</NavLink>
+                <Link to="/create-project">CREAR PROYECTOS</Link>
               </li>
               <li className="nav-logo-cotizate">
-                <NavLink to="/">
+                <Link to="/">
                   <img src={LogoCotizate} alt="cotizate" />
-                </NavLink>
+                </Link>
               </li>
               <li className="nav-item">
-                <NavLink to="#" onClick={() => this.openModalReg()}>
-                  CATEGORIAS
-                </NavLink>
+                <Link to="#" onClick={() => this.OpenMenuCategory()}>
+                  CATEGORIAS <MdExpandMore />
+                </Link>
+                <ul className="submenu-categories">
+                  {this.state.showSubMenuCategory
+                    ? categories &&
+                      categories.map(category => (
+                        <li key={category.id}>
+                          <Link to={`/${category.name}`}>{category.name}</Link>
+                        </li>
+                      ))
+                    : null}
+                </ul>
               </li>
 
               <li className="nav-item user-menu__name">
-                <NavLink to="#" onClick={() => this.openSubmenu()}>
+                <Link to="#" onClick={() => this.openSubmenu()}>
                   hola, {this.state.data_user.name} <MdExpandMore />
-                </NavLink>
+                </Link>
                 {this.state.showSubMenu ? (
                   <ul className="submenu-user">
                     <li>
-                      <NavLink to="/profile/me">
+                      <Link to="/profile/me">
                         Mi perfil <MdPersonOutline />
-                      </NavLink>
+                      </Link>
                     </li>
                     <li>
-                      <NavLink to="/project/create-project">
+                      <Link to="/project/create-project">
                         Crear Proyectos <MdCreate />
-                      </NavLink>
+                      </Link>
                     </li>
                     <li>
-                      <NavLink to="/project/update-projects">
+                      <Link to="/project/update-projects">
                         Mis Proyectos <MdViewHeadline />
-                      </NavLink>
+                      </Link>
                     </li>
                     <li>
-                      <NavLink to="/#" onClick={() => this.Logout()}>
+                      <Link to="/#" onClick={() => this.Logout()}>
                         Salir <MdInput />
-                      </NavLink>
+                      </Link>
                     </li>
                   </ul>
                 ) : null}
@@ -149,30 +186,30 @@ class NavBarComponent extends Component {
           ) : (
             <ul className="topBotomBordersOut navbar-nav mx-auto text-center">
               <li className="nav-item">
-                <NavLink to="/explore-project">EXPLORAR PROYECTOS</NavLink>
+                <Link to="/explore-project">EXPLORAR PROYECTOS</Link>
               </li>
               <li className="nav-item">
-                <NavLink to="/#" onClick={() => this.openModalLogin()}>
+                <Link to="/#" onClick={() => this.openModalLogin()}>
                   CREAR PROYECTOS
-                </NavLink>{' '}
+                </Link>{' '}
               </li>
               <li className="nav-logo-cotizate">
-                <NavLink to="/">
+                <Link to="/">
                   <img src={LogoCotizate} alt="cotizate" />
-                </NavLink>{' '}
+                </Link>{' '}
               </li>
               <li className="nav-item">
-                <NavLink to="/#">CATEGORIAS</NavLink>
+                <Link to="/#">CATEGORIAS</Link>
               </li>
               <li className="nav-item">
-                <NavLink to="#" onClick={() => this.openModalReg()}>
+                <Link to="#" onClick={() => this.openModalReg()}>
                   REGISTRARSE
-                </NavLink>{' '}
+                </Link>{' '}
               </li>
               <li className="nav-item">
-                <NavLink to="/#" onClick={() => this.openModalLogin()}>
+                <Link to="/#" onClick={() => this.openModalLogin()}>
                   ENTRAR
-                </NavLink>{' '}
+                </Link>{' '}
               </li>
             </ul>
           )}
@@ -187,9 +224,9 @@ class NavBarComponent extends Component {
           <FormReg />
           <div className="btn-close-wrapper-reg">
             <div className="btn-close-wrapp-reg">
-              <NavLink to="#" onClick={() => this.closeModalReg()}>
+              <Link to="#" onClick={() => this.closeModalReg()}>
                 <img src={close} alt="cotizate" className="btnclose-reg" />{' '}
-              </NavLink>
+              </Link>
             </div>
           </div>
         </Modal>
@@ -203,9 +240,9 @@ class NavBarComponent extends Component {
           <FormLogin />
           <div className="btn-close-wrapper-login">
             <div className="btn-close-wrapp-login">
-              <NavLink to="#" onClick={() => this.closeModalLogin()}>
+              <Link to="#" onClick={() => this.closeModalLogin()}>
                 <img src={close} alt="cotizate" className="btnclose-login" />{' '}
-              </NavLink>
+              </Link>
             </div>
           </div>
         </Modal>

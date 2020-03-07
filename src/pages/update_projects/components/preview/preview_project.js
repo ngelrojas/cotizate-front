@@ -21,6 +21,7 @@ class PreviewProject extends React.Component {
       me: {},
       biography: {},
       rewards: [],
+      raised: [],
     }
   }
 
@@ -34,7 +35,6 @@ class PreviewProject extends React.Component {
       },
     })
       .then(response => {
-        console.log(response.data)
         this.setState({rewards: response.data})
       })
       .catch(err => {
@@ -49,7 +49,6 @@ class PreviewProject extends React.Component {
       headers: {Authorization: 'token ' + token},
     })
       .then(resp => {
-        console.log(resp.data)
         this.setState({me: resp.data})
       })
       .catch(e => {
@@ -64,7 +63,6 @@ class PreviewProject extends React.Component {
       headers: {Authorization: 'token ' + token},
     })
       .then(resp => {
-        console.log(resp.data)
         this.setState({biography: resp.data})
       })
       .catch(err => {
@@ -82,7 +80,6 @@ class PreviewProject extends React.Component {
       },
     })
       .then(response => {
-        console.log(response.data.data)
         this.setState({fields: response.data.data})
       })
       .catch(err => {
@@ -90,11 +87,24 @@ class PreviewProject extends React.Component {
       })
   }
 
+  getRaised = () => {
+    let campaingId = window.localStorage.getItem('campaingId')
+    let token = window.sessionStorage.getItem('token')
+    API.get(`/raised/${campaingId}`, {
+      headers: {
+        Authorization: 'token ' + token,
+      },
+    }).then(response => {
+      this.setState({raised: response.data.data})
+    })
+  }
+
   componentDidMount() {
     this.getCampaings()
     this.currentUser()
     this.getPersonalDataAdd()
     this.getReward()
+    this.getRaised()
   }
 
   render() {
@@ -107,6 +117,10 @@ class PreviewProject extends React.Component {
       },
     }
     const {rewards} = this.state
+    const progressbar = {
+      width: `${this.state.raised.count / 100}%`,
+      backgroundColor: '#f37a22',
+    }
     return (
       <div className="container-site_on">
         <div className="container">
@@ -209,18 +223,25 @@ class PreviewProject extends React.Component {
               <div className="data-preview-bar">
                 <div className="progress">
                   <div
-                    className="progress-bar"
+                    style={progressbar}
+                    className="progress-ba"
                     role="progressbar"
-                    aria-valuenow="25"
+                    aria-valuenow={this.state.raised.count}
                     aria-valuemin="0"
-                    aria-valuemax="100">
-                    25%
-                  </div>
+                    aria-valuemax="100"></div>
                 </div>
               </div>
 
               <div className="data-preview-meta">
-                <h5>ALCANZADO 15000 USD</h5>
+                <h5>
+                  ALCANZADO {this.state.raised.amount}{' '}
+                  {`${
+                    this.state.fields.currencies
+                      ? this.state.fields.currencies.symbol
+                      : ''
+                  }
+                  `}
+                </h5>
               </div>
 
               <div className="data-preview-apoyado">
@@ -295,7 +316,7 @@ class PreviewProject extends React.Component {
                     </button>
                   </div>
                 </div>
-                <div class="box-contributions">
+                <div className="box-contributions">
                   <h5 className="box-txt d-flex justify-content-center">
                     RECOMPESAS
                   </h5>

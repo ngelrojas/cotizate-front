@@ -1,31 +1,55 @@
-.submenu-user{
-    position: absolute;
-    list-style-type: none;
-    margin-top: 10px;
-    padding: 0px;
-    z-index: 100;
-    background-color: #eee;
-    min-width: 6%;
+.submenu-user {
+  position: absolute;
+  list-style-type: none;
+  margin-top: 10px;
+  padding: 0px;
+  z-index: 100;
+  background-color: #eee;
+  min-width: 6%;
+  margin-left: -3%;
 }
-.submenu-user > li{
-    text-align: right;
-    margin-top: 5px;
-    margin-bottom: 5px;
+.submenu-user > li {
+  text-align: right;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-.submenu-user > li > a{
-    text-align: center;
+.submenu-user > li > a {
+  text-align: center;
+  text-transform: uppercase;
 }
-.submenu-user > li a:hover{
-    color: #f37a22!important; 
+.submenu-user > li a:hover {
+  color: #f37a22 !important;
 }
-.submenu-user > li > a >svg{
-    margin-top: -4px;
-    margin-right: -10px;
-    margin-left: 5px;
+.submenu-user > li > a > svg {
+  margin-top: -4px;
+  margin-right: -10px;
+  margin-left: 5px;
 }
-.user-menu > .user-menu__name > a > svg{
-    margin-top: -5px;
+.user-menu > .user-menu__name > a > svg {
+  margin-top: -5px;
 }
-.user-menu__name > a{
-    text-transform: uppercase;
+.user-menu__name > a {
+  text-transform: uppercase;
+}
+/*category menu*/
+.submenu-categories {
+  position: absolute;
+  list-style-type: none;
+  margin-top: 10px;
+  padding: 0px;
+  z-index: 100;
+  background-color: #eee;
+  min-width: 6%;
+}
+.submenu-categories > li {
+  text-align: right;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.submenu-categories > li > a {
+  text-align: center;
+  text-transform: uppercase;
+}
+.submenu-categories > li a:hover {
+  color: #f37a22 !important;
 }
