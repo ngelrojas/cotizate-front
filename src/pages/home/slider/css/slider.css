@@ -1,48 +1,60 @@
-.slider{
-    height: auto!important;
+.slider {
+  height: auto !important;
 }
-.slider .slider-body{
-    text-align: center;
+.slider .slider-body {
+  text-align: center;
 }
-.slider-container{
-    margin-top: 3%;
+.slider-container {
+  margin-top: 3%;
 }
-.slider-buttons{
-    text-align: right;
-    margin-bottom: 3%;
+.slider-buttons {
+  text-align: right;
+  margin-bottom: 3%;
 }
-.slider-buttons > button{
-    background-color: #eeeeee;
-    padding: 10px;
-    cursor: pointer;
+.slider-buttons > button {
+  background-color: #eeeeee;
+  padding: 10px;
+  cursor: pointer;
 }
-.slider-buttons > button > img{
-    width: 22px;
-    height: 22px;
-    color: #f37a22;
+.slider-buttons > button > img {
+  width: 22px;
+  height: 22px;
+  color: #f37a22;
 }
-.slider-buttons > button:hover{
-    background-color: #1e84c6;
+.slider-buttons > button:hover {
+  background-color: #1e84c6;
 }
 
-.slider-txt-category > h5{
-    color: #1e84c6;
-    font-weight: bold;
+.slider-txt-category > h5 {
+  color: #1e84c6;
+  font-weight: bold;
 }
-.slider-imgs{
-    width: 100%;
-}
-.slider-imgs > div{
-  overflow-x: hidden!important;
+.slider-imgs {
   width: 100%;
 }
-.inner > button{
-    background-color:#f37a22;
-    color: #eeeeee;
-    font-weight: bold;
+.slider-imgs > div {
+  overflow-x: hidden !important;
+  width: 100%;
 }
-.inner > button:hover{
-    background-color: #eeeeee;
-    color: #f37a22;
-    font-weight: bold;
+.inner > button {
+  background-color: #f37a22;
+  color: #eeeeee;
+  font-weight: bold;
+}
+.inner > button:hover {
+  background-color: #eeeeee;
+  color: #f37a22;
+  font-weight: bold;
+}
+.slider-imgs > .slider-txt > div {
+  padding: 3%;
+  margin: 1%;
+  background-color: #fff;
+  text-align: center;
+}
+.slider-imgs > .slider-txt > div > a {
+  text-transform: uppercase;
+}
+.slider-imgs > .slider-txt > div > a:hover {
+  text-decoration: none;
 }

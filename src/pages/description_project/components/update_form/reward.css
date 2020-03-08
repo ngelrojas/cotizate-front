@@ -1,0 +1,8 @@
+.form-reward{
+    margin-top: 5%;
+}
+
+.form-reward > .list-rewards > h6{
+    text-align: center;
+    color: #9a9a9a;
+}

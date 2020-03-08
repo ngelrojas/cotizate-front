@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
 import Modal from 'react-awesome-modal'
 import FormReg from './FormRegister'
@@ -15,7 +15,7 @@ import {
 import API from '../../conf/api.js'
 import './css/menus.css'
 
-class NavBarComponent extends Component {
+class NavBarComponent extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -199,7 +199,19 @@ class NavBarComponent extends Component {
                 </Link>{' '}
               </li>
               <li className="nav-item">
-                <Link to="/#">CATEGORIAS</Link>
+                <Link to="#" onClick={() => this.OpenMenuCategory()}>
+                  CATEGORIAS <MdExpandMore />
+                </Link>
+                <ul className="submenu-categories">
+                  {this.state.showSubMenuCategory
+                    ? categories &&
+                      categories.map(category => (
+                        <li key={category.id}>
+                          <Link to={`/${category.name}`}>{category.name}</Link>
+                        </li>
+                      ))
+                    : null}
+                </ul>
               </li>
               <li className="nav-item">
                 <Link to="#" onClick={() => this.openModalReg()}>

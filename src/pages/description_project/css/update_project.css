@@ -1,0 +1,68 @@
+.update-project > h5 {
+  margin-top: 5%;
+  margin-bottom: 10%;
+  text-align: center;
+}
+.table .thead-dark th {
+  color: #fff;
+  background-color: #f37a22 !important;
+  border-color: #f37a22 !important;
+}
+
+.table td,
+.table th {
+  text-align: center;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker-popper {
+  z-index: 100 !important;
+}
+.fadeOut {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+}
+.fadeIn {
+  opacity: 1;
+  width: auto;
+  height: 40px;
+  transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+}
+.form-sub-warning {
+  color: red;
+  font-weight: bold;
+  font-size: 12px;
+}
+.preview-h {
+  text-transform: uppercase;
+  text-align: justify;
+}
+.botton-save {
+  color: #ffffff !important;
+}
+.row-tags {
+  margin-top: 2%;
+  margin-bottom: 10%;
+}
+.tag-item {
+  text-transform: uppercase;
+  color: #f37a22;
+}
+.reward-title {
+  text-transform: uppercase;
+  color: #1e84c6;
+}
+.preview-p {
+  text-align: justify;
+}
+.box-reward {
+  margin-top: 15%;
+}
+.preview-content {
+  width: 100%;
+}

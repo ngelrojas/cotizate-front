@@ -8,7 +8,7 @@ import CreateProjectForm from './pages/create_projects/components/create_form/cr
 import UpdateProject from './pages/update_projects/update_projects'
 import UpdateProjectForm from './pages/update_projects/components/update_form/update_project'
 import PreviewProject from './pages/update_projects/components/preview/preview_project'
-import DescriptionProject from './pages/create_projects/components/preview/preview_project'
+import DescriptionProject from './pages/description_project/components/preview/preview_project'
 import HomePage from './pages/home/HomePage'
 import TermsPage from './pages/terms/TermsComponent'
 import ActivationRegister from './pages/activation/activation_register'
@@ -45,7 +45,11 @@ class App extends Component {
               path="/project/preview/:campaingId"
               component={PreviewProject}
             />
-            <Route exact path="/description" component={DescriptionProject} />
+            <Route
+              exact
+              path="/proyecto/:slug"
+              component={DescriptionProject}
+            />
             <Route exact path="/terms-and-contiditions" component={TermsPage} />
             <Route
               exact
