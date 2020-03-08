@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.7882898a.chunk.css",
-    "main.js": "/static/js/main.9ebcf572.chunk.js",
-    "main.js.map": "/static/js/main.9ebcf572.chunk.js.map",
+    "main.css": "/static/css/main.8c4eaa0f.chunk.css",
+    "main.js": "/static/js/main.28f4d34b.chunk.js",
+    "main.js.map": "/static/js/main.28f4d34b.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.6c427cc5.js",
     "runtime-main.js.map": "/static/js/runtime-main.6c427cc5.js.map",
     "static/css/2.9e56dc5c.chunk.css": "/static/css/2.9e56dc5c.chunk.css",
-    "static/js/2.f3077175.chunk.js": "/static/js/2.f3077175.chunk.js",
-    "static/js/2.f3077175.chunk.js.map": "/static/js/2.f3077175.chunk.js.map",
+    "static/js/2.4c9f1305.chunk.js": "/static/js/2.4c9f1305.chunk.js",
+    "static/js/2.4c9f1305.chunk.js.map": "/static/js/2.4c9f1305.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.f7cfa863f9f6253c1bf9a4cc3d0bcee2.js": "/precache-manifest.f7cfa863f9f6253c1bf9a4cc3d0bcee2.js",
+    "precache-manifest.b6336b0509cb5760fa3fe538e90eb09d.js": "/precache-manifest.b6336b0509cb5760fa3fe538e90eb09d.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.9e56dc5c.chunk.css.map": "/static/css/2.9e56dc5c.chunk.css.map",
-    "static/css/main.7882898a.chunk.css.map": "/static/css/main.7882898a.chunk.css.map",
-    "static/js/2.f3077175.chunk.js.LICENSE": "/static/js/2.f3077175.chunk.js.LICENSE",
-    "static/media/background-one.jpg": "/static/media/background-one.3b70e2c3.jpg",
+    "static/css/main.8c4eaa0f.chunk.css.map": "/static/css/main.8c4eaa0f.chunk.css.map",
+    "static/js/2.4c9f1305.chunk.js.LICENSE": "/static/js/2.4c9f1305.chunk.js.LICENSE",
     "static/media/cancel.svg": "/static/media/cancel.14b18e86.svg",
     "static/media/cotizate-tech.png": "/static/media/cotizate-tech.9a1e152c.png",
+    "static/media/cotizate.svg": "/static/media/cotizate.d8da2ba4.svg",
     "static/media/facebook.svg": "/static/media/facebook.20caac44.svg",
     "static/media/gps.svg": "/static/media/gps.77c4fc22.svg",
     "static/media/heart.svg": "/static/media/heart.9d53d97b.svg",
@@ -32,8 +32,8 @@
   "entrypoints": [
     "static/js/runtime-main.6c427cc5.js",
     "static/css/2.9e56dc5c.chunk.css",
-    "static/js/2.f3077175.chunk.js",
-    "static/css/main.7882898a.chunk.css",
-    "static/js/main.9ebcf572.chunk.js"
+    "static/js/2.4c9f1305.chunk.js",
+    "static/css/main.8c4eaa0f.chunk.css",
+    "static/js/main.28f4d34b.chunk.js"
   ]
 }
