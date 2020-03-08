@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import FooterHome from '../../../../footer/FooterComponent'
 import YouTube from 'react-youtube'
-import '../../css/update_project.css'
+import '../../css/description_project.css'
 import Tabs from '../../../tabs/Tabs'
 import avatar from './img/rounded.jpg'
 import heart from './img/heart.svg'
@@ -11,9 +11,10 @@ import twitter from '../../../../footer/img/twitter.svg'
 import linkedin from '../../../../footer/img/linkedin.svg'
 import instagram from '../../../../footer/img/instagram.svg'
 import RewardCard from './card_rewards/rewards.js'
+import BtnStripe from '../../../../pages/components/btnstripe/BtnStripe.Component'
 import API from '../../../../conf/api.js'
 
-class DescriptionProject extends React.Component {
+class PreviewProject extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -22,12 +23,21 @@ class DescriptionProject extends React.Component {
       biography: {},
       rewards: [],
       raised: [],
+      campaing_id: 0,
+      fields_pay: {},
     }
   }
 
-  getReward = () => {
-    let campaingId = this.state.fields.id
+  handleChange = e => {
+    e.preventDefault()
+    let fields_pay = this.state.fields_pay
+    fields_pay[e.target.name] = e.target.value
+    this.setState({
+      fields_pay,
+    })
+  }
 
+  getReward = campaingId => {
     API.get(`/rewards/${campaingId}`)
       .then(response => {
         this.setState({rewards: response.data})
@@ -38,21 +48,26 @@ class DescriptionProject extends React.Component {
   }
 
   getCampaings = () => {
-    let campaingId = this.props.match.params.slug
+    let campaing_slug = this.props.match.params.slug
 
-    API.get(`/campaings/${campaingId}`)
+    API.get(`/campaings/${campaing_slug}`)
       .then(response => {
-        this.setState({fields: response.data.data})
+        console.log(response.data.data)
+        this.setState({
+          fields: response.data.data,
+        })
+        this.getRaised(response.data.data.id)
+        this.getReward(response.data.data.id)
       })
       .catch(err => {
         console.log(err)
       })
   }
 
-  getRaised = () => {
-    let campaingId = this.state.fields.id
+  getRaised = campaingId => {
     API.get(`/raised-public/${campaingId}`)
       .then(response => {
+        console.log(response.data.data)
         this.setState({raised: response.data.data})
       })
       .catch(err => {
@@ -69,7 +84,7 @@ class DescriptionProject extends React.Component {
   render() {
     const opts = {
       height: '390',
-      width: '640',
+      width: '698',
       playerVars: {
         autoplay: 0,
       },
@@ -83,19 +98,25 @@ class DescriptionProject extends React.Component {
       <div className="container-site_on">
         <div className="container">
           <div className="row preview-row">
-            <div className="col-8">
+            <div className="col-8 preview-left__content">
               <h5 className="preview-h">{this.state.fields.title}</h5>
               <div className="preview-videos">
                 <YouTube videoId={this.state.fields.video} opts={opts} />
               </div>
               <div className="row preview-spans">
                 <div className="col-4">
-                  {this.state.fields.category
-                    ? this.state.fields.category.name
-                    : ''}
+                  {this.state.fields.category ? (
+                    <Link to={`/categoria/${this.state.fields.category.slug}`}>
+                      {this.state.fields.category.name}
+                    </Link>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 <div className="col-4"></div>
-                <div className="col-4">{this.state.fields.city}</div>
+                <div className="col-4 preview-left__city">
+                  {this.state.fields.city}
+                </div>
               </div>
               <div className="row preview-tabs preview-content">
                 <Tabs>
@@ -110,7 +131,7 @@ class DescriptionProject extends React.Component {
 
                     <div className="row justify-content-center row-tags">
                       <div className="col col-12">
-                        <h4 className="preview-p">TAGS</h4>
+                        <h6 className="preview-p">TAGS</h6>
                       </div>
 
                       {this.state.fields.tags
@@ -121,33 +142,32 @@ class DescriptionProject extends React.Component {
                           ))
                         : ''}
                     </div>
-                    <div className="btn-save d-flex justify-content-center">
-                      <Link
-                        to={`/project/update/${this.state.fields.id}`}
-                        className="btn btn-sm btn-primary botton-save">
-                        RETORNAR
-                      </Link>
-                    </div>
                   </div>
                   <div label="Novedades">
                     <div className="row">
-                      <h5>novedades</h5>
+                      <div className="preview-p">
+                        <h5>novedades</h5>
+                      </div>
                     </div>
                   </div>
-                  <div label="Apoyadores">
+                  <div label="Seguidores">
                     <div className="row">
-                      <h5>apoyadores</h5>
+                      <div className="preview-p">
+                        <h5>seguidores</h5>
+                      </div>
                     </div>
                   </div>
                   <div label="Comentarios">
                     <div className="row">
-                      <h5>comentarios</h5>
+                      <div className="preview-h">
+                        <h5>comentarios</h5>
+                      </div>
                     </div>
                   </div>
                 </Tabs>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-4 preview-right__content">
               <h5 className="h5-t">PROYECTO CREADO POR</h5>
               <div className="avatar">
                 <img
@@ -156,26 +176,32 @@ class DescriptionProject extends React.Component {
                   className="rounded-circle rounded-sm"
                 />
                 <div className="data-preview">
-                  <p>anonimo </p>
+                  <p>
+                    {this.state.fields.user
+                      ? `${this.state.fields.user.name} ${this.state.fields.user.last_name}`
+                      : ''}{' '}
+                  </p>
                   <p>
                     <span>sitio web: </span>
-                    anonimo
+                    {this.state.fields.website}
                   </p>
                   <p>
                     <span>email: </span>
-                    anonimo
+                    {this.state.fields.user
+                      ? `${this.state.fields.user.email}`
+                      : ''}
                   </p>
                 </div>
               </div>
-              <div className="data-preview-meta">
-                <h5>
-                  <span className="txt-budget">META </span>
+              <div className="row data-preview-meta">
+                <div className="col-6 data-preview-meta__txt">META </div>
+                <div className="col-6 data-preview-meta__price">
                   {`${this.state.fields.budget} ${
                     this.state.fields.currencies
                       ? this.state.fields.currencies.symbol
                       : ''
                   }`}
-                </h5>
+                </div>
               </div>
 
               <div className="data-preview-bar">
@@ -190,40 +216,41 @@ class DescriptionProject extends React.Component {
                 </div>
               </div>
 
-              <div className="data-preview-meta">
-                <h5>
-                  ALCANZADO {this.state.raised.amount}{' '}
+              <div className="row data-preview-meta">
+                <div className="col-6 data-preview-meta__txt">ALCANZADO</div>
+                <div className="col-6 data-preview-meta__price">
+                  {this.state.raised.amount}{' '}
                   {`${
                     this.state.fields.currencies
                       ? this.state.fields.currencies.symbol
                       : ''
                   }
                   `}
-                </h5>
-              </div>
-
-              <div className="data-preview-apoyado">
-                <p>Apoyado por 60 personas</p>
-              </div>
-
-              <div className="data-preview-followers">
-                <div className="heart">
-                  <span>
-                    seguir{' '}
-                    <img
-                      className="img-heart"
-                      src={heart}
-                      alt="cotizate like"
-                    />
-                  </span>
                 </div>
-                <div className="heart-count">
-                  <span>seguidores 5</span>
+              </div>
+              <div className="row">
+                <div className="col-6 data-preview-followers">
+                  <div className="heart">
+                    <span>
+                      seguir{' '}
+                      <img
+                        className="img-heart"
+                        src={heart}
+                        alt="cotizate like"
+                      />
+                    </span>
+                  </div>
+                  <div className="heart-count">
+                    <span>seguidores 5</span>
+                  </div>
+                </div>
+                <div className="col-6 data-preview-apoyado">
+                  <p>Apoyado por 60 personas</p>
                 </div>
               </div>
 
               <div className="data-preveiw-social-network">
-                <div className="data-preview-meta d-flex justify-content-center">
+                <div className="data-preview-meta__share d-flex justify-content-center">
                   <h5>Comparte este proyecto</h5>
                 </div>
                 <div className="icons-social-networks">
@@ -253,7 +280,7 @@ class DescriptionProject extends React.Component {
                       <img
                         src={instagram}
                         alt="cotizate instagram"
-                        className="img-responsive-social-preview"
+                        className="img-responsive-social-preview instagram"
                       />
                     </div>
                   </div>
@@ -265,13 +292,30 @@ class DescriptionProject extends React.Component {
                   <div className="inline-form d-flex justify-content-center">
                     <label>
                       <span>Contribuir sin recompensa</span>
-                      <input type="text" className="form-control" />
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="cantidad"
+                        name="contribuir"
+                        value={this.state.fields_pay.contribuir || ''}
+                        onChange={this.handleChange}
+                      />
                     </label>
                   </div>
                   <div className="d-flex justify-content-center">
-                    <button className="btn btn-warning btn-contributions btn-lg">
-                      CONTRIBUIR
-                    </button>
+                    <BtnStripe
+                      symbol={
+                        this.state.fields.currencies
+                          ? this.state.fields.currencies.symbol
+                          : '$USD'
+                      }
+                      price={
+                        this.state.fields_pay.contribuir
+                          ? this.state.fields_pay.contribuir
+                          : 0
+                      }
+                      campaingid={this.state.fields.id}
+                    />
                   </div>
                 </div>
                 <div className="box-contributions">
@@ -294,4 +338,4 @@ class DescriptionProject extends React.Component {
   }
 }
 
-export default DescriptionProject
+export default PreviewProject

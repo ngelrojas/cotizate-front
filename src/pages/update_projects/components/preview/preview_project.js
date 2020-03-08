@@ -110,9 +110,8 @@ class PreviewProject extends React.Component {
   render() {
     const opts = {
       height: '390',
-      width: '640',
+      width: '698',
       playerVars: {
-        // https://developers.google.com/youtube/player_parameters
         autoplay: 0,
       },
     }
@@ -125,7 +124,7 @@ class PreviewProject extends React.Component {
       <div className="container-site_on">
         <div className="container">
           <div className="row preview-row">
-            <div className="col-8">
+            <div className="col-8 preview-left__content">
               <h5 className="preview-h">{this.state.fields.title}</h5>
               <div className="preview-videos">
                 <YouTube videoId={this.state.fields.video} opts={opts} />
@@ -137,7 +136,9 @@ class PreviewProject extends React.Component {
                     : ''}
                 </div>
                 <div className="col-4"></div>
-                <div className="col-4">{this.state.fields.city}</div>
+                <div className="col-4 preview-left__city">
+                  {this.state.fields.city}
+                </div>
               </div>
               <div className="row preview-tabs preview-content">
                 <Tabs>
@@ -189,7 +190,7 @@ class PreviewProject extends React.Component {
                 </Tabs>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-4 preview-right__content">
               <h5 className="h5-t">PROYECTO CREADO POR</h5>
               <div className="avatar">
                 <img
@@ -209,15 +210,15 @@ class PreviewProject extends React.Component {
                   </p>
                 </div>
               </div>
-              <div className="data-preview-meta">
-                <h5>
-                  <span className="txt-budget">META </span>
+              <div className="row data-preview-meta">
+                <div className="col-6 data-preview-meta__txt">META </div>
+                <div className="col-6 data-preview-meta__price">
                   {`${this.state.fields.budget} ${
                     this.state.fields.currencies
                       ? this.state.fields.currencies.symbol
                       : ''
                   }`}
-                </h5>
+                </div>
               </div>
 
               <div className="data-preview-bar">
@@ -232,40 +233,41 @@ class PreviewProject extends React.Component {
                 </div>
               </div>
 
-              <div className="data-preview-meta">
-                <h5>
-                  ALCANZADO {this.state.raised.amount}{' '}
+              <div className="row data-preview-meta">
+                <div className="col-6 data-preview-meta__txt">ALCANZADO</div>
+                <div className="col-6 data-preview-meta__price">
+                  {this.state.raised.amount}{' '}
                   {`${
                     this.state.fields.currencies
                       ? this.state.fields.currencies.symbol
                       : ''
                   }
                   `}
-                </h5>
-              </div>
-
-              <div className="data-preview-apoyado">
-                <p>Apoyado por 60 personas</p>
-              </div>
-
-              <div className="data-preview-followers">
-                <div className="heart">
-                  <span>
-                    seguir{' '}
-                    <img
-                      className="img-heart"
-                      src={heart}
-                      alt="cotizate like"
-                    />
-                  </span>
                 </div>
-                <div className="heart-count">
-                  <span>seguidores 5</span>
+              </div>
+              <div className="row">
+                <div className="col-6 data-preview-followers">
+                  <div className="heart">
+                    <span>
+                      seguir{' '}
+                      <img
+                        className="img-heart"
+                        src={heart}
+                        alt="cotizate like"
+                      />
+                    </span>
+                  </div>
+                  <div className="heart-count">
+                    <span>seguidores 5</span>
+                  </div>
+                </div>
+                <div className="col-6 data-preview-apoyado">
+                  <p>Apoyado por 60 personas</p>
                 </div>
               </div>
 
               <div className="data-preveiw-social-network">
-                <div className="data-preview-meta d-flex justify-content-center">
+                <div className="data-preview-meta__share d-flex justify-content-center">
                   <h5>Comparte este proyecto</h5>
                 </div>
                 <div className="icons-social-networks">
@@ -295,7 +297,7 @@ class PreviewProject extends React.Component {
                       <img
                         src={instagram}
                         alt="cotizate instagram"
-                        className="img-responsive-social-preview"
+                        className="img-responsive-social-preview instagram"
                       />
                     </div>
                   </div>
@@ -307,11 +309,15 @@ class PreviewProject extends React.Component {
                   <div className="inline-form d-flex justify-content-center">
                     <label>
                       <span>Contribuir sin recompensa</span>
-                      <input type="text" className="form-control" />
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="cantidad"
+                      />
                     </label>
                   </div>
                   <div className="d-flex justify-content-center">
-                    <button className="btn btn-warning btn-contributions btn-lg">
+                    <button className="btn btn-primary btn-contributions btn-sm">
                       CONTRIBUIR
                     </button>
                   </div>

@@ -57,4 +57,5 @@
 }
 .slider-imgs > .slider-txt > div > a:hover {
   text-decoration: none;
+  color: #f37a22 !important;
 }

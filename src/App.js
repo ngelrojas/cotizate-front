@@ -45,11 +45,13 @@ class App extends Component {
               path="/project/preview/:campaingId"
               component={PreviewProject}
             />
+
             <Route
               exact
               path="/proyecto/:slug"
               component={DescriptionProject}
             />
+
             <Route exact path="/terms-and-contiditions" component={TermsPage} />
             <Route
               exact

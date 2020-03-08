@@ -47,7 +47,6 @@ class HomePage extends React.Component {
   getCategories = () => {
     API.get(`/category-list`)
       .then(response => {
-        console.log(response.data)
         this.setState({categories: response.data})
       })
       .catch(err => {

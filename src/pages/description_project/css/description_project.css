@@ -75,8 +75,9 @@
 .preview-spans {
   width: 100%;
 }
-.preview-spans > div {
-  color: #9a9a9a;
+.preview-spans > div > a {
+  color: #9a9a9a !important;
+  text-decoration: none;
 }
 .tab-list-item {
   padding: 1.5rem 1rem !important;
@@ -127,6 +128,7 @@
 }
 .data-preview-meta__price {
   color: #f37a22;
+  text-align: right;
 }
 .data-preview-apoyado {
   margin-top: 10%;

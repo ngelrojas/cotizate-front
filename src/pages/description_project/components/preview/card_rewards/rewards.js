@@ -1,4 +1,5 @@
 import React from 'react'
+import BtnStripe from '../../../../components/btnstripe/BtnStripe.Component'
 
 export default function RewardCard({reward}) {
   return (
@@ -11,7 +12,7 @@ export default function RewardCard({reward}) {
           <div className="row">
             <div className="col-6 box-contributions-1">
               <span>
-                {`${reward.price} ${reward.currencies === 1 ? '$Bs' : '$Usd'}`}{' '}
+                {`${reward.price} ${reward.currencies === 1 ? '$BS' : '$USD'}`}{' '}
               </span>
             </div>
 
@@ -23,9 +24,11 @@ export default function RewardCard({reward}) {
                 }}></div>
             </div>
             <div className="col-12 box-contributions-bnt d-flex justify-content-center">
-              <button className="btn btn-warnings btn-lg btn-contributions">
-                CONTRIBUIR
-              </button>
+              <BtnStripe
+                symbol={reward.currencies === 1 ? '$Bs' : '$Usd'}
+                price={reward.price}
+                campaingid={reward.campaing}
+              />
             </div>
           </div>
         </div>
